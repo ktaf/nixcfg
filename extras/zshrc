@@ -1,0 +1,21 @@
+# Use powerline
+USE_POWERLINE="true"
+
+# Basic auto/tab complete:
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots) 
+
+## USER AREA
+##
+export PATH=$PATH:$HOME/minio-binaries/
+
+alias rebase='git checkout master && git pull && git checkout - && git rebase master'
+
+# KUBE Editor
+export KUBE_EDITOR="code -w"
+autoload -U compinit; compinit
+
+export PATH="${PATH}:${HOME}/.krew/bin"

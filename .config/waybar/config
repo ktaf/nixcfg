@@ -1,0 +1,156 @@
+{
+  "height":30,
+  "margin": "0 0 0 0",
+  "layer":"bottom",
+  "position":"top",
+  "mod":"dock",
+  "exclusive":true,
+  "passthrough":false,
+  "gtk-layer-shell":true,
+  "modules-left":[
+    "custom/launcher",
+    "sway/workspaces",
+    "sway/mode",
+    "temperature",
+    "memory",
+    "cpu"
+  ],
+  "modules-center":[
+    "mpris"
+  ],
+  "modules-right":[
+    "clock",
+    "backlight",
+    "pulseaudio",
+    "battery",
+    "custom/vpn",
+    "keyboard-state",
+    "sway/language",
+    "tray",
+    "custom/power-menu"
+  ],
+  "sway/workspaces":{
+    "format":"{icon}",
+    "format-icons":{
+      "1":"一",
+      "2":"二",
+      "3":"三",
+      "4":"四",
+      "5":"五",
+      "6":"六",
+      "7":"七",
+      "8":"八",
+      "9":"九",
+      "10":"十"
+    }
+  },
+  "sway/mode":{
+    "format":"<span style=\"italic\">{}</span>"
+  },
+  "tray":{
+    "icon-size":16,
+    "spacing":8
+  },
+  "clock": {
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format": "{:%a, %d %b, %H:%M}"
+},
+  "cpu":{
+    "interval":10,
+    "format":" {usage}%",
+    "max-length":10,
+    "on-click":"alacritty -e sh -c 'htop -s PERCENT_CPU'"
+  },
+  "memory":{
+    "interval":30,
+    "format":" {}%",
+    "format-alt":" {used:0.1f}GB",
+    "max-length":10,
+    "on-click":"alacritty -e sh -c 'htop -s PERCENT_MEM'"
+  },
+  "mpris":{
+    "format":"{player_icon} {title}",
+    "format-paused":"<b>{status_icon}</b>",
+    "player-icons":{
+      "default":"▶",
+      "mpv":"🎵"
+    },
+    "status-icons":{
+      "paused":"⏸"
+    }
+  },
+  "temperature":{
+    "thermal-zone":1,
+    "format":" {temperatureC}°",
+    "critical-threshold":70,
+    "format-critical":" {temperatureC}°"
+  },
+  "backlight":{
+    "format":"{icon}",
+    "format-icons":[
+      "",
+      ""
+    ],
+    "tooltip-format":"{percent}%"
+  },
+  "battery":{
+    "bat":"BAT0",
+    "adapter":"ADP0",
+    "interval":60,
+    "states":{
+      "warning":19,
+      "critical":9
+    },
+    "max-length":20,
+    "format":"{icon} ",
+    "format-warning":"{icon}",
+    "format-critical":"{icon}",
+    "format-charging":"<span font-family='Font Awesome 6 Free'></span>",
+    "format-plugged":"󰚥",
+    "format-notcharging":"󰚥",
+    "format-alt":"{icon}<small> {time}</small>",
+    "format-full":"󰂄",
+    "format-icons":[
+      "󱊡",
+      "󱊢",
+      "󱊣"
+    ]
+  },
+  "pulseaudio":{
+    "format":"{icon}",
+    "format-bluetooth":"{icon}",
+    "format-muted":"",
+    "format-icons":{
+      "headphones":"",
+      "handsfree":"",
+      "headset":"",
+      "phone":"",
+      "portable":"",
+      "car":"",
+      "default":[
+        "",
+        ""
+      ]
+    },
+    "on-click":"pavucontrol"
+  },
+  "sway/language":{
+    "format":"{flag}",
+    "min-length":3,
+    "tooltip":true,
+    "tooltip-format":"{long}"
+  },
+  "custom/launcher":{
+    "format":"󱄅",
+    "on-click":"rofi -show drun &"
+  },
+  "custom/vpn":{
+    "format":"VPN",
+    "on-click":"swaymsg 'workspace 9; exec alacritty -e sudo openfortivpn --no-dns'"
+  },
+  "custom/power-menu":{
+    "format":" ⏻ ",
+    "tooltip-format":"Lock, Reboot, Power",
+    "on-click":"wlogout"
+  }
+}
