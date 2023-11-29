@@ -1,5 +1,5 @@
 {
-  description = "ktaf-nixos";
+  description = "ktaf NixOS configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -21,7 +21,6 @@
           specialArgs = { inherit user; };
           modules = [
             ./configuration.nix
-            ./hardware-configuration.nix
             nixos-hardware.nixosModules.dell-xps-15-9510
             nixos-hardware.nixosModules.dell-xps-15-9510-nvidia
             nixos-hardware.nixosModules.common-hidpi

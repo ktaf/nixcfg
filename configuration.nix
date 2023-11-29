@@ -1,14 +1,13 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, inputs, ... }: {
   # Include the results of the hardware scan.
-  imports = [
+  imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
     ./modules/shell.nix
     ./modules/users.nix
-    # ./modules/nvidia.nix
     ./modules/gaming.nix
     ./modules/sway.nix
     ./modules/vm.nix
-    # ./modules/symlinks.nix
+    # ./modules/nvidia.nix
   ];
 
   nix = {
@@ -23,12 +22,7 @@
       dates = "daily";
     };
   };
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    git
-    # linuxKernel.packages.linux_6_5.nvidia_x11_beta
-  ];
+  environment.systemPackages = with pkgs; [ vim wget git ];
 
   #fonts
   fonts.packages = with pkgs; [
