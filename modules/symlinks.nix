@@ -16,13 +16,12 @@ with lib;
 
   config = {
 
-    system.activationScripts.binbash = if config.environment.binbash != null
-      then ''
+    system.activationScripts.binbash =
+      if config.environment.binbash != null then ''
         mkdir -m 0755 -p /bin
         ln -sfn ${config.environment.usrbinenv} /bin/.bash.tmp
         mv /bin/.bash.tmp /usr/bin/bash # atomically replace /usr/bin/env
-      ''
-      else ''
+      '' else ''
         rm -f /bin/bash
         rmdir -p /bin || true
       '';

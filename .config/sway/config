@@ -16,6 +16,10 @@ assign [class="Slack"] 3
 exec telegram-desktop &
 assign [app_id="org.telegram.desktop"] 4
 
+set $laptop eDP-1
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -86,8 +90,8 @@ input * xkb_layout "us,ir"
 input * xkb_options "grp:alt_shift_toggle"
 
 ### Key bindings# Autofocus on hover, also when switching workspaces
-        focus_follows_mouse always
-#
+    focus_follows_mouse always
+    
     # Start a terminal
     bindsym $mod+Return exec $term
 
@@ -243,7 +247,7 @@ bindsym $mod+Shift+Print exec "wf-recorder -a -o eDP-1 -f /home/$USER/screenshot
 # Window Rules
 #
 
-for_window [title="Picture in picture"] floating enable, sticky toggle # Fix Chrome PIP
+for_window [title="Picture-in-picture"] floating enable, sticky toggle # Fix Chrome PIP
 for_window [app_id="blueman-manager"] floating enable, resize set width 680 height 400, \
     move position center
 for_window [app_id="pavucontrol"] floating enable, resize set width 680 height 400, \

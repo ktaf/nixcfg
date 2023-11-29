@@ -4,7 +4,7 @@
     ./hardware-configuration.nix
     ./modules/shell.nix
     ./modules/users.nix
-    ./modules/nvidia.nix
+    # ./modules/nvidia.nix
     ./modules/gaming.nix
     ./modules/sway.nix
     ./modules/vm.nix
@@ -18,100 +18,74 @@
       auto-optimise-store = true;
       warn-dirty = false; # remove git warnings
     };
+    gc = {
+      automatic = true;
+      dates = "daily";
+    };
   };
   environment.systemPackages = with pkgs; [
     vim
     wget
     git
-    # # Added to contorl acpi events, keep version same as kernel #in_triage
-    linuxKernel.packages.linux_6_5.acpi_call
+    # linuxKernel.packages.linux_6_5.nvidia_x11_beta
   ];
 
   #fonts
   fonts.packages = with pkgs; [
     font-awesome
-    (nerdfonts.override {
-      fonts = [ "IBMPlexMono" "Hack" "FiraCode" "JetBrainsMono" ];
-    })
+    nerdfonts
+    ibm-plex
+    hack-font
+    fira-code
+    fira-code-nerdfont
+    fira-code-symbols
+    jetbrains-mono
   ];
-  #emojis
-  services.gollum.emoji = true;
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.kernelPackages = pkgs.linuxPackages_6_5; # pkgs.linuxPackages_latest
-
-  # Define your hostname
-  networking.hostName = "nixos";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
+  boot = {
+    loader = {
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 5;
+      };
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
+      };
+    };
+    kernelPackages = pkgs.linuxPackages_6_6; # pkgs.linuxPackages_latest
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Tallinn";
+  location.provider = "geoclue2";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_GB.UTF-8";
-    LC_IDENTIFICATION = "en_GB.UTF-8";
-    LC_MEASUREMENT = "en_GB.UTF-8";
-    LC_MONETARY = "en_GB.UTF-8";
-    LC_NAME = "en_GB.UTF-8";
-    LC_NUMERIC = "en_GB.UTF-8";
-    LC_PAPER = "en_GB.UTF-8";
-    LC_TELEPHONE = "en_GB.UTF-8";
-    LC_TIME = "en_GB.UTF-8";
-  };
-
-  # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-
-  };
-
-  services.xserver.displayManager.lightdm.enable = false;
+  i18n.defaultLocale = "en_GB.UTF-8";
 
   #swaylock pass verify
-  security.pam.services.swaylock = { };
-
-  #Flatpak
-  services.flatpak.enable = true;
-  #locate
-  services.locate.enable = true;
-
-  # Enable sound with pipewire.
-  sound = {
-    enable = true;
-    mediaKeys.enable = true;
+  security = {
+    pam.services.swaylock = { };
+    rtkit.enable = true;
   };
-  hardware.pulseaudio = {
-    enable = false;
-    extraModules = [ pkgs.pulseaudio-modules-bt ];
-  };
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
 
-    #isDefault
-    wireplumber.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
+  hardware = {
+    pulseaudio = {
+      enable = false;
+      extraModules = [ pkgs.pulseaudio-modules-bt ];
+    };
+    bluetooth = { enable = true; };
+    opengl.extraPackages = with pkgs;
+      [
+        # trying to fix `WLR_RENDERER=vulkan sway`
+        vulkan-validation-layers
+      ];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  services.dbus.enable = true;
   # XDG Configuration
   xdg.portal = {
     enable = true;
@@ -120,59 +94,126 @@
       xdg-desktop-portal
       xdg-desktop-portal-gtk
     ];
-    wlr.enable = true;
+    wlr = {
+      enable = true;
+      # settings = {
+      #   screencast = {
+      #     output_name = "eDP-1";
+      #     max_fps = 30;
+      #     chooser_type = "simple";
+      #     chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+      #   };
+      # };
+    };
+  };
+
+  # Enable sound
+  sound = {
+    enable = true;
+    mediaKeys.enable = true;
   };
 
   # List services that you want to enable:
+  services = {
+    #emojis
+    gollum.emoji = true;
+    # Enable the X11 windowing system.
+    xserver = {
+      enable = true;
+      displayManager.lightdm.enable = false;
+    };
+    #Flatpak
+    flatpak.enable = true;
+    # flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    #locate
+    # locate.enable = true;
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+    # Enable Pipewire
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      #jack.enable = true;
 
-  # Enable the Bluethooth daemon.
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
+      #isDefault
+      wireplumber.enable = true;
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+      # use the example session manager (no others are packaged yet so this is enabled by default,
+      # no need to redefine it in your config for now)
+      #media-session.enable = true;
+    };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+    # Enable the OpenSSH daemon.
+    openssh.enable = true;
 
-  #tlp
-  services.tlp.enable = true;
+    # Enable the Bluethooth daemon.
+    blueman.enable = true;
 
-  #auto-cpufreq
-  services.auto-cpufreq.enable = true;
+    # Enable CUPS to print documents.
+    printing.enable = true;
 
-  #upower dbus
-  services.upower.enable = true;
+    # Enable touchpad support (enabled default in most desktopManager).
+    xserver.libinput.enable = true;
 
-  # Enable Firmware manager
-  services.fwupd = {
-    enable = true;
-    package = pkgs.fwupd;
+    dbus = {
+      enable = true;
+      packages = with pkgs; [ dconf ];
+    };
+
+    #tlp
+    tlp = {
+      enable = true;
+      settings = {
+        PCIE_ASPM_ON_BAT = "powersupersave";
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+        CPU_MAX_PERF_ON_AC = "100";
+        CPU_MAX_PERF_ON_BAT = "60";
+        STOP_CHARGE_THRESH_BAT1 = "95";
+        STOP_CHARGE_THRESH_BAT0 = "95";
+      };
+    };
+
+    #auto-cpufreq
+    auto-cpufreq.enable = true;
+
+    #upower dbus
+    upower.enable = true;
+
+    gnome = {
+      # Solve 'org.freedesktop.secrets' error
+      gnome-keyring.enable = true;
+      # Solve AT-SPI error
+      at-spi2-core.enable = true;
+    };
+    # Enable Firmware manager
+    fwupd = {
+      enable = true;
+      package = pkgs.fwupd;
+    };
   };
-
-  # Solve AT-SPI error
-  services.gnome.at-spi2-core.enable = true;
 
   # This is needed for FortinetSSL VPN 
   environment.etc."ppp/options".text = "ipcp-accept-remote";
 
-  # Custom DNS
-  networking.resolvconf.enable = false;
-  networking.nameservers = [ "8.8.8.8" "1.1.1.1" ];
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  #For Chromecast from chrome
-  #    networking.firewall.allowedUDPPortRanges = [ { from = 32768; to = 60999; } ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
-  # networking.firewall = {
-  #   allowedUDPPorts = [ 51820 ];
-  # };
-  # system.autoUpgrade.enable = true;  
-  # system.autoUpgrade.allowReboot = true; 
-  system.autoUpgrade.channel = "https://channels.nixos.org/nixos-23.05";
-  system.stateVersion = "23.05"; # Did you read the comment?
+  networking = {
+    networkmanager.enable = true;
+
+    hostName = "xps9510";
+
+    # Custom DNS
+    resolvconf.enable = false;
+    nameservers = [ "192.168.1.100" "8.8.8.8" "1.1.1.1" ];
+    firewall = {
+      enable = false;
+      ##Open ports in the firewall.
+      # allowedTCPPorts = [ ... ];
+      ##For Chromecast from chrome
+      # allowedUDPPortRanges = [ { from = 32768; to = 60999; } ];
+      # allowedUDPPorts = [ 51820 ];
+    };
+  };
+  system.stateVersion = "23.11"; # Did you read the comment?
 }

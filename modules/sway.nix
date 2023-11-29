@@ -13,6 +13,7 @@ let
     executable = true;
 
     text = ''
+      systemctl --user import-environment XDG_SESSION_TYPE XDG_CURRENT_DESKTOP
       dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
       systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
       systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
@@ -35,8 +36,12 @@ let
     in ''
       export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
       gnome_schema=org.gnome.desktop.interface
-      gsettings set $gnome_schema gtk-theme 'Dracula'
+      gsettings set $gnome_schema gtk-theme 'Nordic'
     '';
+    # gsettings set $gnome-schema gtk-theme 'Your theme'
+    # gsettings set $gnome-schema icon-theme 'Your icon theme'
+    # gsettings set $gnome-schema cursor-theme 'Your cursor Theme'
+    # gsettings set $gnome-schema font-name 'Your font name'
   };
 
 in {
@@ -44,40 +49,29 @@ in {
     alacritty # gpu accelerated terminal
     autotiling
     dbus-sway-environment
-    configure-gtk
-    wayland
-    wlr-randr
-    wayland
-    wayland-scanner
-    wayland-utils
-    wayland-protocols
     egl-wayland
     glfw-wayland
-    xdg-utils # for opening default programs when clicking links
-    glib # gsettings
-    dracula-theme # gtk theme
-    gnome3.adwaita-icon-theme # default gnome cursors
-    #########Login#########
-    swaylock-effects
-    swayidle
-    swappy
-    swaycons
-    swaysome
-    swww
-    wlogout
+    gnome.gnome-themes-extra
+    gtk4
+    grim
+    nordic
+    papirus-icon-theme
     swaybg
-    grim # screenshot functionality
-    slurp # screenshot functionality
-    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
-    mako # notification system developed by swaywm maintainer
-    wdisplays # tool to configure displays
+    swaycons
+    swayidle
+    swaylock-effects
+    swaysome
+    slurp
+    wdisplays
+    wlr-randr
+    wayland
+    wayland-protocols
+    wayland-scanner
+    wayland-utils
+    wlogout
+    xcur2png
+    xdg-utils
   ];
-
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
-  };
 
   # xdg-desktop-portal works by exposing a series of D-Bus interfaces
   # known as portals under a well-known name
@@ -100,4 +94,8 @@ in {
     extraOptions = [ "--unsupported-gpu" ];
     extraPackages = with pkgs; [ light ];
   };
+  environment.etc.zprofile.text = ''
+    # If running from tty1 start sway
+    [ "$(tty)" = "/dev/tty1" ] && exec sway
+  '';
 }

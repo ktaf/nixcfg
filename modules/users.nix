@@ -24,10 +24,13 @@
     ];
     packages = with pkgs; [
       auto-cpufreq
+      cinnamon.nemo-with-extensions
+      nemo-qml-plugin-dbus
+      cinnamon.nemo-python
       waybar # topbar
       kanshi # laptop dncies
       rofi
-      mako
+      mako # notification system developed by swaywm maintainer
       rofimoji # Drawer + notifications
       jellyfin-ffmpeg # multimedia libs
       viewnior # image viewr
@@ -62,15 +65,15 @@
       jetbrains-mono
       libva
       linuxHeaders
+      lshw
       lxappearance
       networkmanagerapplet
       noto-fonts-emoji
-      nvidia-vaapi-driver
-      libva-utils
       glxinfo
       go
       openssl
       unzip
+      usbutils
       polkit_gnome
       python3Full
       python311Packages.pip
@@ -78,20 +81,6 @@
       xdg-desktop-portal
       xdg-desktop-portal-gtk
       electron
-      xdg-utils # for opening default programs when clicking links
-      grim # screenshot functionality
-      slurp # screenshot functionality
-      wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
-      wdisplays # tool to configure displays
-      ####GTK Customization####
-      nordic
-      gnome.gnome-themes-extra
-      papirus-icon-theme
-      gtk3
-      glib # gsettings
-      xcur2png
-      rubyPackages.glib2
-      libcanberra-gtk3 # notification sound
       #########System#########
       google-chrome
       firefox
@@ -104,24 +93,12 @@
   # QT
   qt = {
     enable = true;
+    style = "adwaita-dark";
     platformTheme = "qt5ct";
   };
 
-  #thunar
-  programs.thunar = {
-    enable = true;
-    plugins = with pkgs.xfce; [
-      thunar-archive-plugin
-      thunar-volman
-      thunar-dropbox-plugin
-      thunar-media-tags-plugin
-    ];
-  };
   services.gvfs.enable = true;
   services.tumbler.enable = true;
-
-  #gnome outside gnome
-  programs.dconf.enable = true;
 
   #Steam
   programs.steam = {
@@ -138,16 +115,4 @@
     xkbVariant = "latitude";
     xkbOptions = "grp:alt_shift_toggle";
   };
-
-  # User etc/
-  environment.etc."xdg/user-dirs.defaults".text = ''
-    DESKTOP=System/Desktop
-    DOWNLOAD=System/Downloads
-    TEMPLATES=System/Templates
-    PUBLICSHARE=System/Public
-    DOCUMENTS=System/Documents
-    MUSIC=Media/music
-    PICTURES=Media/photos
-    VIDEOS=Media/video 
-  '';
 }

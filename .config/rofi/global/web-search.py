@@ -39,8 +39,8 @@ import html
 #####                      C O N F I G U R A T I O N                      ######
 ################################################################################
 SEARCH_ENGINE = 'google'            # or 'duckduckgo'
-BROWSER = 'firefox'                 # or 'firefox', 'chromium', 'brave', 'lynx'
-TERMINAL = ['kitty', '--']          # or ['st', '-e'] or something like that
+BROWSER = 'google-chrome-stable'    # or 'firefox', 'chromium', 'brave', 'lynx'
+TERMINAL = ['alacritty', '--']          # or ['st', '-e'] or something like that
 ################################################################################
 
 CONFIG = {

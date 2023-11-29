@@ -1,21 +1,44 @@
+# Function to get the Git branch name
+function git_branch() {
+    BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if [[ -n "${BRANCH_NAME}" ]]; then
+        if (( ${#BRANCH_NAME} > 20 )); then
+            BRANCH_NAME="${BRANCH_NAME:0:17}..."
+        fi
+        if [[ -n $(git status --porcelain) ]]; then
+            echo "%F{11}${BRANCH_NAME}±%f"
+        else
+            echo "%F{2}${BRANCH_NAME}%f"
+        fi
+    fi
+}
+
+# Load vcs_info for Git status
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' check-for-changes true
+
+# Update the precmd function to call vcs_info, colorize_git_branch, and truncate_git_branch
+precmd() { vcs_info; }
+
+# Define the prompt
+PROMPT='%F{13}󱄅%f %F{12}%~%f$(git_branch) ➜ '
+
+
+##########################################
 # Use powerline
 USE_POWERLINE="true"
 
-# Basic auto/tab complete:
-autoload -U compinit
-zstyle ':completion:*' menu select
-zmodload zsh/complist
-compinit
-_comp_options+=(globdots) 
+# USER AREA
+#
 
-## USER AREA
-##
+# KUBE Editor
+export KUBE_EDITOR="code -w"
+
 export PATH=$PATH:$HOME/minio-binaries/
 
 alias rebase='git checkout master && git pull && git checkout - && git rebase master'
 
-# KUBE Editor
-export KUBE_EDITOR="code -w"
 autoload -U compinit; compinit
 
 export PATH="${PATH}:${HOME}/.krew/bin"

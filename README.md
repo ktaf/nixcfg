@@ -1,8 +1,6 @@
-# NixOS - SwayWM
+# NixOS
 
 My own NixOS setup.
-
-Create this to try a new setup based on another Wayland compositor tiling window manager Sway WM, Idk if it was Hyprland itself or my the configuration but overall I felt like Hyprland is not stable yet! 
 
 
 ```

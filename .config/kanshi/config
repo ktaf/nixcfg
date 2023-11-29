@@ -1,13 +1,12 @@
 profile home-docked {
-  output "Dell Inc. DELL P2422H 45TNRM3" mode 1920x1080@60.000Hz position 0,0
-  output "Dell Inc. DELL P2422H 85WNRM3" mode 1920x1080@60.000Hz position 1920,0
-  output eDP-1 mode 1920x1200@59.950001Hz position 1080,1460
+  output "Dell Inc. DELL S3422DWG FSF4KK3" mode 3440x1440@59.973Hz position 0,0
+  output eDP-1 mode 1920x1200@59.950001Hz position 860,1440
   exec if grep -q open /proc/acpi/button/lid/LID0/state; then swaymsg output eDP-1 enable; else swaymsg output eDP-1 disable; fi
 }
 
 profile office-docked {
-  output "Dell Inc. DELL P2419H 4HYPH73" mode 1920x1080@60.000Hz position 0,0
-  output "Dell Inc. DELL P2419H GGVPH73" mode 1920x1080@60.000Hz position 1920,0
+  output "Dell Inc. DELL P2422H 85WNRM3" mode 1920x1080@60.000Hz position 0,0
+  output "Dell Inc. DELL P2422H 45TNRM3" mode 1920x1080@60.000Hz position  1920,0
   output eDP-1 mode 1920x1200@59.950001Hz position 960,1080
   exec if grep -q open /proc/acpi/button/lid/LID0/state; then swaymsg output eDP-1 enable; else swaymsg output eDP-1 disable; fi
 }
