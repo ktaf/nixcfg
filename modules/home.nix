@@ -13,7 +13,7 @@
   home = {
     username = "${user}";
     homeDirectory = "/home/${user}";
-    stateVersion = "23.11";
+    stateVersion = "24.05";
 
     packages = with pkgs; [
       # android-studio
@@ -26,6 +26,7 @@
       dbeaver
       dig
       dmidecode
+      docker-compose
       elinks
       eza
       ffmpeg
@@ -57,6 +58,7 @@
       openfortivpn
       openh264
       openra
+      opera
       pciutils
       qbittorrent
       qdigidoc
@@ -70,6 +72,8 @@
       tdesktop
       tfautomv
       trousers
+      vault
+      vsh
       vscode
       winbox
       wsdd
