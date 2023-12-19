@@ -36,7 +36,6 @@
       fzf
       github-desktop
       gnome.gnome-keyring
-      google-cloud-sdk
       grive2
       imv
       jq

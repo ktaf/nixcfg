@@ -2,11 +2,11 @@
   # Include the results of the hardware scan.
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
-    ./modules/shell.nix
-    ./modules/users.nix
-    ./modules/gaming.nix
-    ./modules/sway.nix
-    ./modules/vm.nix
+    ../../modules/shell.nix
+    ../../modules/users.nix
+    ../../modules/gaming.nix
+    ../../modules/sway.nix
+    ../../modules/vm.nix
     # ./modules/nvidia.nix
   ];
 
@@ -79,6 +79,8 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
   # XDG Configuration
   xdg.portal = {

@@ -20,7 +20,7 @@
           inherit system;
           specialArgs = { inherit user; };
           modules = [
-            ./configuration.nix
+            ./hosts/xps9510/configuration.nix
             nixos-hardware.nixosModules.dell-xps-15-9510
             nixos-hardware.nixosModules.dell-xps-15-9510-nvidia
             nixos-hardware.nixosModules.common-hidpi
