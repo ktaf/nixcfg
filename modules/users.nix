@@ -81,6 +81,12 @@
       xdg-desktop-portal
       xdg-desktop-portal-gtk
       electron
+      direnv
+      nix-direnv
+      kitty
+      nodejs_18
+      gnumake
+      gcc
       #########System#########
       google-chrome
       firefox

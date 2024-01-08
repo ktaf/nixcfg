@@ -28,6 +28,7 @@
       dmidecode
       docker-compose
       elinks
+      etcher
       eza
       ffmpeg
       fluxcd

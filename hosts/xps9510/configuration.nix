@@ -6,6 +6,7 @@
     ../../modules/users.nix
     ../../modules/gaming.nix
     ../../modules/sway.nix
+    ../../modules/yubikey.nix
     ../../modules/vm.nix
     # ./modules/nvidia.nix
   ];
@@ -80,7 +81,8 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
+  nixpkgs.config.permittedInsecurePackages =
+    [ "electron-25.9.0" "electron-19.1.9" ];
 
   # XDG Configuration
   xdg.portal = {
