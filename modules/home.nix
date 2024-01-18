@@ -19,6 +19,7 @@
       # android-studio
       # android-tools
       anydesk
+      awscli2
       bat
       bitwarden
       cifs-utils
@@ -26,6 +27,7 @@
       dbeaver
       dig
       dmidecode
+      dnscontrol
       docker-compose
       elinks
       etcher
@@ -66,7 +68,7 @@
       remmina
       ripgrep
       s3cmd
-      samba4Full
+      # samba4Full
       slack
       terraform
       tdesktop

@@ -42,3 +42,6 @@ alias rebase='git checkout master && git pull && git checkout - && git rebase ma
 autoload -U compinit; compinit
 
 export PATH="${PATH}:${HOME}/.krew/bin"
+
+####
+eval "$(dnscontrol shell-completion zsh)"

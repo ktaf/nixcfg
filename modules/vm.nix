@@ -12,6 +12,7 @@
     spice
     spice-gtk
     spice-protocol
+    qemu_kvm
     win-virtio
     win-spice
   ];

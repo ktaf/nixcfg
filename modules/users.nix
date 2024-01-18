@@ -32,7 +32,7 @@
       rofi
       mako # notification system developed by swaywm maintainer
       rofimoji # Drawer + notifications
-      jellyfin-ffmpeg # multimedia libs
+      # jellyfin-ffmpeg # multimedia libs
       viewnior # image viewr
       pavucontrol # Volume control
       font-awesome

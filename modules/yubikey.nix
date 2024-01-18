@@ -11,8 +11,8 @@
       pinentry-gnome
       yubikey-personalization
       yubikey-personalization-gui
-      yubikey-manager
-      yubikey-manager-qt
+      # yubikey-manager
+      # yubikey-manager-qt
       yubico-piv-tool
       # yubioath-flutter
     ];
