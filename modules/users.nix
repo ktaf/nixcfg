@@ -115,10 +115,4 @@
       true; # Open ports in the firewall for Source Dedicated Server
   };
 
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "us,ir";
-    xkbVariant = "latitude";
-    xkbOptions = "grp:alt_shift_toggle";
-  };
 }

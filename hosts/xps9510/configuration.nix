@@ -49,7 +49,7 @@
         efiSysMountPoint = "/boot/efi";
       };
     };
-    kernelPackages = pkgs.linuxPackages_6_6; # pkgs.linuxPackages_latest
+    kernelPackages = pkgs.linuxPackages_6_7; # pkgs.linuxPackages_latest
   };
 
   # Set your time zone.
@@ -119,6 +119,12 @@
     xserver = {
       enable = true;
       displayManager.lightdm.enable = false;
+      # Configure keymap in X11
+      xkb = {
+        layout = "us,ir";
+        variant = "latitude";
+        options = "grp:alt_shift_toggle";
+      };
     };
     #Flatpak
     flatpak.enable = true;
