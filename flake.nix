@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { nixpkgs, home-manager, nixos-hardware, ... }@inputs:
+  outputs = { nixpkgs, home-manager, nixos-hardware, ... }:
     let
       user = "kourosh";
       system = "x86_64-linux";
@@ -23,7 +23,6 @@
             ./hosts/xps9510/configuration.nix
             nixos-hardware.nixosModules.dell-xps-15-9510
             nixos-hardware.nixosModules.dell-xps-15-9510-nvidia
-            # nixos-hardware.nixosModules.common-hidpi
             home-manager.nixosModules.home-manager
             {
               home-manager = {
