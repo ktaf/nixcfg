@@ -34,6 +34,22 @@
             }
           ];
         };
+        lat7310 = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit user; };
+          modules = [
+            ./hosts/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = { inherit user; };
+                users.${user} = import ./modules/home.nix;
+              };
+            }
+          ];
+        };
       };
     };
 }

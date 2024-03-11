@@ -57,18 +57,16 @@
       peek
       linux-firmware
       sshpass
-      imagemagick
+      # imagemagick
       flameshot
       bluez
       blueman
       htop
-      jetbrains-mono
       libva
       linuxHeaders
       lshw
       lxappearance
       networkmanagerapplet
-      noto-fonts-emoji
       glxinfo
       go
       openssl
@@ -87,6 +85,8 @@
       nodejs_18
       gnumake
       gcc
+      glib
+      cmake
       #########System#########
       google-chrome
       firefox

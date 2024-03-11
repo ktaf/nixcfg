@@ -16,31 +16,26 @@
     stateVersion = "24.05";
 
     packages = with pkgs; [
-      # android-studio
-      # android-tools
       anydesk
       awscli2
       bat
       bitwarden
       cifs-utils
       curl
-      dbeaver
       dig
       dmidecode
       dnscontrol
       docker-compose
       elinks
       etcher
-      eza
+      eza # better ls command
+      zoxide # better cd command
       ffmpeg
       fluxcd
-      flutter
       fwupd
       fzf
-      github-desktop
       gnome.gnome-keyring
       grive2
-      imv
       jq
       kind
       krew
@@ -50,7 +45,6 @@
       libdigidocpp
       libudfread
       libinput
-      microsoft-edge
       neofetch
       nix-zsh-completions
       nmap
@@ -60,7 +54,6 @@
       openfortivpn
       openh264
       openra
-      opera
       pciutils
       qbittorrent
       qdigidoc
@@ -74,10 +67,10 @@
       tdesktop
       tfautomv
       trousers
-      vault
       vsh
       vscode
       winbox
+      whois
       wsdd
       zoom
     ];

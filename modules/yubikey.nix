@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ pkgs, ... }: {
   # Enable smartcard daemon, to read TOPT tokens from yubikey
   services.pcscd.enable = true;
   services.udev.packages = with pkgs; [ yubikey-personalization ];
