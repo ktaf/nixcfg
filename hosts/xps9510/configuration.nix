@@ -8,7 +8,7 @@
     ../../modules/sway.nix
     ../../modules/yubikey.nix
     ../../modules/vm.nix
-    # ./modules/nvidia.nix
+    # ../../modules/nvidia.nix
   ];
 
   nix = {
@@ -139,7 +139,7 @@
       alsa.support32Bit = true;
       pulse.enable = true;
       # If you want to use JACK applications, uncomment this
-      #jack.enable = true;
+      jack.enable = true;
 
       #isDefault
       wireplumber.enable = true;
