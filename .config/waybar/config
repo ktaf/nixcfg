@@ -23,7 +23,7 @@
     "backlight",
     "pulseaudio",
     "battery",
-    "custom/vpn",
+    // "custom/vpn",
     "keyboard-state",
     "sway/language",
     "tray",
@@ -144,10 +144,10 @@
     "format":"󱄅",
     "on-click":"rofi -show drun &"
   },
-  "custom/vpn":{
-    "format":"VPN",
-    "on-click":"swaymsg 'workspace 9; exec alacritty -e sudo openfortivpn --no-dns'"
-  },
+  // "custom/vpn":{
+  //   "format":"VPN",
+  //   "on-click":"swaymsg 'workspace 9; exec alacritty -e sudo openfortivpn --no-dns'"
+  // },
   "custom/power-menu":{
     "format":" ⏻ ",
     "tooltip-format":"Lock, Reboot, Power",
