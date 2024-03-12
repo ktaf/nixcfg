@@ -38,7 +38,7 @@
           inherit system;
           specialArgs = { inherit user; };
           modules = [
-            ./hosts/configuration.nix
+            ./hosts/lat7310/configuration.nix
             home-manager.nixosModules.home-manager
             {
               home-manager = {
