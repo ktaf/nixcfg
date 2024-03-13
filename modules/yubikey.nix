@@ -6,9 +6,6 @@
     systemPackages = with pkgs; [
       gnupg
       pcsctools
-      # pinentry
-      # pinentry-qt
-      pinentry-gnome
       yubikey-personalization
       yubikey-personalization-gui
       # yubikey-manager
@@ -27,7 +24,7 @@
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      pinentryFlavor = "gnome3";
+      pinentryPackage = pkgs.pinentry-gnome3;
       settings = {
         default-cache-ttl = 900;
         max-cache-ttl = 999999;
