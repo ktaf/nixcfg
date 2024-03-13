@@ -23,7 +23,7 @@
     "backlight",
     "pulseaudio",
     "battery",
-    "custom/vpn",
+    // "custom/vpn",
     "keyboard-state",
     "sway/language",
     "tray",
