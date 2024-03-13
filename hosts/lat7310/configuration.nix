@@ -4,7 +4,6 @@
     ./hardware-configuration.nix
     ../../modules/shell.nix
     ../../modules/users.nix
-    ../../modules/gaming.nix
     ../../modules/sway.nix
     ../../modules/yubikey.nix
     ../../modules/vm.nix

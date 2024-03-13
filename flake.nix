@@ -16,7 +16,7 @@
       lib = nixpkgs.lib;
     in {
       nixosConfigurations = {
-        xps9510 = nixpkgs.lib.nixosSystem {
+        xps9510 = lib.nixosSystem {
           inherit system;
           specialArgs = { inherit user; };
           modules = [
@@ -29,12 +29,12 @@
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 extraSpecialArgs = { inherit user; };
-                users.${user} = import ./modules/home.nix;
+                users.${user} = import ./hosts/xps9510/home.nix;
               };
             }
           ];
         };
-        lat7310 = nixpkgs.lib.nixosSystem {
+        lat7310 = lib.nixosSystem {
           inherit system;
           specialArgs = { inherit user; };
           modules = [
@@ -45,7 +45,7 @@
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 extraSpecialArgs = { inherit user; };
-                users.${user} = import ./modules/home.nix;
+                users.${user} = import ./hosts/lat7310/home.nix;
               };
             }
           ];
