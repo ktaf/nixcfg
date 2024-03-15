@@ -27,7 +27,6 @@
       dnscontrol
       docker-compose
       elinks
-      etcher
       eza # better ls command
       zoxide # better cd command
       ffmpeg
