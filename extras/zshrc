@@ -37,7 +37,7 @@ export KUBE_EDITOR="code -w"
 
 export PATH=$PATH:$HOME/minio-binaries/
 
-alias rebase='git checkout master && git pull && git checkout - && git rebase master'
+alias rebase='n=$(git branch -l master main|xargs echo) && git checkout $n && git pull && git checkout - && git rebase $n'
 
 autoload -U compinit; compinit
 
