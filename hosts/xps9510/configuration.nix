@@ -159,7 +159,7 @@
     printing.enable = true;
 
     # Enable touchpad support (enabled default in most desktopManager).
-    xserver.libinput.enable = true;
+    libinput.enable = true;
 
     dbus = {
       enable = true;

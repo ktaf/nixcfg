@@ -47,7 +47,7 @@
         # efiSysMountPoint = "/boot/efi";
       };
     };
-    kernelPackages = pkgs.linuxPackages_6_7; # pkgs.linuxPackages_latest
+    kernelPackages = pkgs.linuxPackages_6_8; # pkgs.linuxPackages_latest
   };
 
   # Set your time zone.
@@ -157,7 +157,7 @@
     printing.enable = true;
 
     # Enable touchpad support (enabled default in most desktopManager).
-    xserver.libinput.enable = true;
+    libinput.enable = true;
 
     dbus = {
       enable = true;

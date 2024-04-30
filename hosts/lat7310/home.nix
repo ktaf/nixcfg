@@ -16,8 +16,8 @@
     stateVersion = "24.05";
 
     packages = with pkgs; [
-      anydesk
-      awscli2
+      # anydesk
+      # awscli2
       bat
       bitwarden
       cifs-utils
