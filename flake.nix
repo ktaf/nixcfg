@@ -8,6 +8,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin.url = "github:lnl7/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = { nixpkgs, home-manager, nixos-hardware, ... }:
     let
@@ -48,6 +50,13 @@
                 users.${user} = import ./hosts/lat7310/home.nix;
               };
             }
+          ];
+        };
+        nixos-arvan = lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit user; };
+          modules = [
+            ./hosts/nixos-arvan/configuration.nix
           ];
         };
       };
