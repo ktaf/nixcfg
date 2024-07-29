@@ -9,20 +9,29 @@
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
-      # Deduplicate and optimize nix store
       auto-optimise-store = true;
-      warn-dirty = false; # remove git warnings
+      warn-dirty = false;
+      # Enable binary caches for faster downloads
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      ];
+      substituters = [
+        "https://cache.nixos.org"
+      ];
     };
     gc = {
       automatic = true;
-      dates = "daily";
+      dates = "weekly";
+      options = "--delete-older-than 8d";
     };
   };
-  #fonts
+
+  # Fonts (minimal set for server)
   fonts.packages = with pkgs; [
-    font-awesome
+    dejavu_fonts
   ];
-  # Bootloader.
+
+  # Bootloader
   boot = {
     loader = {
       grub = {
@@ -34,36 +43,61 @@
     kernelPackages = pkgs.linuxPackages_6_10; # pkgs.linuxPackages_latest
   };
 
-  # Set your time zone.
+  # Set your time zone and locale
   time.timeZone = "Asia/Tehran";
-  location.provider = "geoclue2";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-# List services that you want to enable:
+  # Services
   services = {
-    # Enable the OpenSSH daemon.
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      # Harden SSH configuration
+      settings = {
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+        X11Forwarding = false;
+      };
+    };
+    nextdns.enable = true;
+    # Enable fail2ban for additional security
+    fail2ban = {
+      enable = true;
+      maxretry = 5;
+      ignoreIP = [
+        "127.0.0.1/8"
+        "::1/128"
+        # Add your trusted IP ranges here
+      ];
+    };
   };
+
+  # Virtualization (Docker for containerization)
   virtualisation = {
-    docker.enable = true;
+    docker = {
+      enable = true;
+      # Enable rootless mode for better security
+      rootless = {
+        enable = true;
+        setSocketVariable = true;
+      };
+    };
   };
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+
+  # User configuration
   users.users.${user} = {
     isNormalUser = true;
     description = "Kourosh";
     extraGroups = [
-      "networkmanager"
       "wheel"
-      "wheel"
-      "disk"
       "docker"
       "systemd-journal"
-      "network"
+    ];
+    openssh.authorizedKeys.keys = [
+      # Add your SSH public key here
+      "ssh-rsa AAAAB...your_public_key_here"
     ];
     packages = with pkgs; [
       htop
@@ -71,26 +105,26 @@
       unzip
       git
       wget
+      vim
+      curl
+      dnsutils
       fzf
+      ripgrep
+      fd
     ];
   };
-  networking = {
-    networkmanager.enable = true;
 
+  # Networking
+  networking = {
     hostName = "arvanix";
 
-    # Custom DNS
-    resolvconf.enable = false;
-    nameservers = [ "8.8.8.8" "1.1.1.1" ];
+    nameservers = [ "45.90.28.154" "45.90.30.154" "2a07:a8c0::18:68b2" "2a07:a8c1::18:68b2" ];
     firewall = {
-      enable = false;
-      ##Open ports in the firewall.
-      # allowedTCPPorts = [ ... ];
-      ##For Chromecast from chrome
-      # allowedUDPPortRanges = [ { from = 32768; to = 60999; } ];
-      # allowedUDPPorts = [ 51820 ];
+      enable = true;
+      allowedTCPPorts = [ 22 80 443 ];  # SSH, HTTP, HTTPS
+      # allowedUDPPorts = [ 51820 ];  # Example: WireGuard VPN
     };
   };
-  system.stateVersion = "24.05"; # Did you read the comment?
 
+  system.stateVersion = "24.05";
 }
