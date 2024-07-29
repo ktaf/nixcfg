@@ -42,6 +42,3 @@ alias rebase='n=$(git branch -l master main|xargs echo) && git checkout $n && gi
 autoload -U compinit; compinit
 
 export PATH="${PATH}:${HOME}/.krew/bin"
-
-####
-eval "$(dnscontrol shell-completion zsh)"

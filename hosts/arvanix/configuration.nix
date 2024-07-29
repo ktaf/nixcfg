@@ -56,7 +56,7 @@
       enable = true;
       # Harden SSH configuration
       settings = {
-        PasswordAuthentication = false;
+        # PasswordAuthentication = false;
         PermitRootLogin = "no";
         X11Forwarding = false;
       };
@@ -95,10 +95,10 @@
       "docker"
       "systemd-journal"
     ];
-    openssh.authorizedKeys.keys = [
-      # Add your SSH public key here
-      "ssh-rsa AAAAB...your_public_key_here"
-    ];
+    # openssh.authorizedKeys.keys = [
+    #   # Add your SSH public key here
+    #   "ssh-rsa AAAAB...your_public_key_here"
+    # ];
     packages = with pkgs; [
       htop
       openssl
