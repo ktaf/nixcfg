@@ -50,11 +50,11 @@
             }
           ];
         };
-        nixos-arvan = lib.nixosSystem {
+        arvanix = lib.nixosSystem {
           inherit system;
           specialArgs = { inherit user; };
           modules = [
-            ./hosts/nixos-arvan/configuration.nix
+            ./hosts/arvanix/configuration.nix
           ];
         };
       };
