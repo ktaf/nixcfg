@@ -2,6 +2,7 @@
   # Include the results of the hardware scan.
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
+    ./network.nix
     ../../_modules/shell.nix
     # ../../_modules/vm.nix
   ];
@@ -112,18 +113,6 @@
       ripgrep
       fd
     ];
-  };
-
-  # Networking
-  networking = {
-    hostName = "arvanix";
-
-    nameservers = [ "45.90.28.154" "45.90.30.154" "2a07:a8c0::18:68b2" "2a07:a8c1::18:68b2" ];
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [ 22 80 443 ];  # SSH, HTTP, HTTPS
-      # allowedUDPPorts = [ 51820 ];  # Example: WireGuard VPN
-    };
   };
 
   system.stateVersion = "24.05";
