@@ -2,13 +2,13 @@
   # Include the results of the hardware scan.
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
-    ../../modules/shell.nix
-    ../../modules/users.nix
-    ../../modules/gaming.nix
-    ../../modules/sway.nix
-    ../../modules/yubikey.nix
-    ../../modules/vm.nix
-    # ../../modules/nvidia.nix
+    ../../_modules/shell.nix
+    ../../_modules/users.nix
+    ../../_modules/gaming.nix
+    ../../_modules/sway.nix
+    ../../_modules/yubikey.nix
+    ../../_modules/vm.nix
+    # ../../_modules/nvidia.nix
   ];
 
   nix = {
