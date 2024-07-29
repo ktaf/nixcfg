@@ -29,7 +29,7 @@
       grub = {
         enable = true;
         device = "/dev/vda";
-        configurationLimit = 5;
+        configurationLimit = 3;
       };
     };
     kernelPackages = pkgs.linuxPackages_6_8; # pkgs.linuxPackages_latest
