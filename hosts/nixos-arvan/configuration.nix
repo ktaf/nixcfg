@@ -1,11 +1,8 @@
-{ config, pkgs, inputs, ... }: {
+{ config, pkgs, inputs, user, ... }: {
   # Include the results of the hardware scan.
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
     ../../modules/shell.nix
-    # ../../modules/users.nix
-    # ../../modules/sway.nix
-    # ../../modules/yubikey.nix
     # ../../modules/vm.nix
   ];
 
@@ -32,7 +29,7 @@
         configurationLimit = 3;
       };
     };
-    kernelPackages = pkgs.linuxPackages_6_8; # pkgs.linuxPackages_latest
+    kernelPackages = pkgs.linuxPackages_6_10; # pkgs.linuxPackages_latest
   };
 
   # Set your time zone.
@@ -51,6 +48,40 @@
     openssh.enable = true;
   };
 
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.${user} = {
+    isNormalUser = true;
+    description = "Kourosh";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "qemu-libvirtd"
+      "libvirtd"
+      "kvm"
+      "wheel"
+      "disk"
+      "docker"
+      "input"
+      "systemd-journal"
+      "network"
+      "davfs2"
+    ];
+    packages = with pkgs; [
+      linux-firmware
+      sshpass
+      htop
+      linuxHeaders
+      go
+      openssl
+      unzip
+      python3Full
+      python311Packages.pip
+      gnumake
+      gcc
+      glib
+      cmake
+    ];
+  };
   networking = {
     networkmanager.enable = true;
 
