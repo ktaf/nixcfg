@@ -112,6 +112,7 @@
       fzf
       ripgrep
       fd
+      openvscode-server
     ];
   };
 
