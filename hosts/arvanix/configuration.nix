@@ -62,17 +62,16 @@
         X11Forwarding = false;
       };
     };
-    nextdns.enable = true;
     # Enable fail2ban for additional security
-    fail2ban = {
-      enable = true;
-      maxretry = 5;
-      ignoreIP = [
-        "127.0.0.1/8"
-        "::1/128"
-        # Add your trusted IP ranges here
-      ];
-    };
+    # fail2ban = {
+    #   enable = false;
+    #   maxretry = 5;
+    #   ignoreIP = [
+    #     "127.0.0.1/8"
+    #     "::1/128"
+    #     # Add your trusted IP ranges here
+    #   ];
+    # };
   };
 
   # Virtualization (Docker for containerization)
@@ -113,6 +112,7 @@
       ripgrep
       fd
       openvscode-server
+      eza
     ];
   };
 

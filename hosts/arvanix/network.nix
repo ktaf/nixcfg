@@ -3,7 +3,7 @@
 {
   networking = {
     hostName = "arvanix";
-    nameservers = [ "45.90.28.154" "45.90.30.154" "2a07:a8c0::18:68b2" "2a07:a8c1::18:68b2" ];
+    nameservers = [ "45.90.28.154" "45.90.30.154" ];
     enableIPv6 = true;
 
     # Enable IP forwarding
