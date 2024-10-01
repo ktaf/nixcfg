@@ -16,6 +16,30 @@
       lib = nixpkgs.lib;
     in {
       nixosConfigurations = {
+        x1g12 = lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit user; };
+          modules = [
+            ./hosts/x1g12/configuration.nix
+            nixos-hardware.nixosModules.lenovo-thinkpad-x1-12th-gen
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = { inherit user; };
+                users.${user} = import ./hosts/x1g12/home.nix;
+              };
+            }
+          ];
+        };
+        arvanix = lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit user; };
+          modules = [
+            ./hosts/arvanix/configuration.nix
+          ];
+        };
         xps9510 = lib.nixosSystem {
           inherit system;
           specialArgs = { inherit user; };
@@ -48,13 +72,6 @@
                 users.${user} = import ./hosts/lat7310/home.nix;
               };
             }
-          ];
-        };
-        arvanix = lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit user; };
-          modules = [
-            ./hosts/arvanix/configuration.nix
           ];
         };
       };

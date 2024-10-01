@@ -24,9 +24,9 @@
     ];
     packages = with pkgs; [
       auto-cpufreq
-      cinnamon.nemo-with-extensions
+      nemo-with-extensions
       nemo-qml-plugin-dbus
-      cinnamon.nemo-python
+      nemo-python
       waybar # topbar
       kanshi # laptop dncies
       rofi
@@ -37,9 +37,9 @@
       pavucontrol # Volume control
       font-awesome
       gnome-text-editor
-      gnome.file-roller
-      gnome.gnome-font-viewer
-      gnome.gnome-calculator
+      file-roller
+      gnome-font-viewer
+      gnome-calculator
       vlc # Video player
       amberol # Music player
       cava # Sound Visualized
