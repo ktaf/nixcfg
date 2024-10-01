@@ -68,7 +68,7 @@
       extraModules = [ pkgs.pulseaudio-modules-bt ];
     };
     bluetooth = { enable = true; };
-    opengl.extraPackages = with pkgs;
+    graphics.extraPackages = with pkgs;
       [
         # trying to fix `WLR_RENDERER=vulkan sway`
         vulkan-validation-layers

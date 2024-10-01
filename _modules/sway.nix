@@ -34,7 +34,7 @@ in {
     dbus-sway-environment
     egl-wayland
     glfw-wayland
-    gnome.gnome-themes-extra
+    gnome-themes-extra
     gtk4
     grim
     nordic
