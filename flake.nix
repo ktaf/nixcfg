@@ -8,12 +8,23 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixGL = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { nixpkgs, home-manager, nixos-hardware, ... }:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixGL, ... }:
     let
       user = "kourosh";
       system = "x86_64-linux";
       lib = nixpkgs.lib;
+      pkgs = import nixpkgs {
+        inherit system;
+        config = {
+          allowUnfree = true;
+          allowUnfreePredicate = _: true;
+        };
+      };
     in {
       nixosConfigurations = {
         x1g12 = lib.nixosSystem {
@@ -75,6 +86,13 @@
           ];
         };
       };
+    homeConfigurations."kourosh" = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      extraSpecialArgs = {
+        inherit self nixpkgs;
+      };
+      modules = [./hosts/x1g12/home.nix];
+    };
     };
 }
 

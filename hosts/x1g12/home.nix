@@ -1,21 +1,37 @@
-{ config, pkgs, user, ... }:
+{ config, pkgs, lib, inputs, user, ... }:
+let
+  nixGLIntel = inputs.nixGL.packages.${pkgs.system}.nixGLIntel;
+in {
+  imports = [
+    (builtins.fetchurl {
+      url = "https://raw.githubusercontent.com/Smona/home-manager/nixgl-compat/modules/misc/nixgl.nix";
+      sha256 = "e9f7da06111c7e669dbeef47f1878ed245392d4e7250237eaf791b734899be3c";
+    })
+  ];
+# {
+#   systemd.user = {
+#     targets.sway-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
+#   };
 
-{
-  systemd.user = {
-    targets.sway-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
+  nixGL.prefix = "${nixGLIntel}/bin/nixGLIntel";
+
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = _: true;
+    };
   };
-
-  nixpkgs = { config = { allowUnfree = true; }; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
   home = {
-    username = "${user}";
-    homeDirectory = "/home/${user}";
-    stateVersion = "24.05";
+    username = "kourosh";
+    homeDirectory = "/home/kourosh";
+    stateVersion = "24.11";
 
     packages = with pkgs; [
+      (config.lib.nixGL.wrap alacritty)
       anydesk
       awscli2
       bat
@@ -87,17 +103,32 @@
     };
   };
 
-  #Gtk 
-  gtk = {
+  # #Gtk 
+  # gtk = {
+  #   enable = true;
+  #   font.name = "Hack Nerd 10";
+  #   theme = {
+  #     name = "Nordic";
+  #     package = pkgs.nordic;
+  #   };
+  #   iconTheme = {
+  #     name = "Papirus-Dark";
+  #     package = pkgs.papirus-icon-theme;
+  #   };
+  # };
+  xdg.configFile."environment.d/envvars.conf".text = ''
+    PATH="$HOME/.nix-profile/bin:$PATH"
+  '';
+
+  wayland.windowManager.hyprland = {
     enable = true;
-    font.name = "Hack Nerd 10";
-    theme = {
-      name = "Nordic";
-      package = pkgs.nordic;
-    };
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
+    package = config.lib.nixGL.wrap pkgs.hyprland;
+    settings = {
+      general = {
+        gaps_in = 0;
+        gaps_out = 0;
+        border_size = 20;
+      };
     };
   };
 
