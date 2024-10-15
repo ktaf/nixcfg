@@ -1,11 +1,11 @@
-{ config, pkgs, lib, inputs, user, ... }:
+{ config, pkgs, lib, inputs, ... }:
 let
   nixGLIntel = inputs.nixGL.packages.${pkgs.system}.nixGLIntel;
 in {
   imports = [
     (builtins.fetchurl {
       url = "https://raw.githubusercontent.com/Smona/home-manager/nixgl-compat/modules/misc/nixgl.nix";
-      sha256 = "e9f7da06111c7e669dbeef47f1878ed245392d4e7250237eaf791b734899be3c";
+      sha256 = "01dkfr9wq3ib5hlyq9zq662mp0jl42fw3f6gd2qgdf8l8ia78j7i";
     })
   ];
 # {
@@ -28,7 +28,7 @@ in {
   home = {
     username = "kourosh";
     homeDirectory = "/home/kourosh";
-    stateVersion = "24.11";
+    stateVersion = "23.11";
 
     packages = with pkgs; [
       (config.lib.nixGL.wrap alacritty)
@@ -85,6 +85,7 @@ in {
       vsh
       vscode
       winbox
+      which
       whois
       wsdd
       zoom

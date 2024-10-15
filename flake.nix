@@ -9,11 +9,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixGL = {
-      url = "github:nix-community/nixGL";
+      url = "github:nix-community/nixGL/310f8e49a149e4c9ea52f1adf70cdc768ec53f8a";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixGL, ... }:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixGL, ... } @ inputs:
     let
       user = "kourosh";
       system = "x86_64-linux";
@@ -89,11 +89,11 @@
     homeConfigurations."kourosh" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       extraSpecialArgs = {
-        inherit self nixpkgs;
+        inherit self nixpkgs inputs;
       };
       modules = [./hosts/x1g12/home.nix];
     };
-    };
+   };
 }
 
 #nixos-24.05
