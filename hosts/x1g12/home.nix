@@ -1,37 +1,21 @@
-{ config, pkgs, lib, inputs, ... }:
-let
-  nixGLIntel = inputs.nixGL.packages.${pkgs.system}.nixGLIntel;
-in {
-  imports = [
-    (builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/Smona/home-manager/nixgl-compat/modules/misc/nixgl.nix";
-      sha256 = "01dkfr9wq3ib5hlyq9zq662mp0jl42fw3f6gd2qgdf8l8ia78j7i";
-    })
-  ];
-# {
-#   systemd.user = {
-#     targets.sway-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
-#   };
+{ config, pkgs, user, ... }:
 
-  nixGL.prefix = "${nixGLIntel}/bin/nixGLIntel";
-
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-    };
+{
+  systemd.user = {
+    targets.sway-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
   };
+
+  nixpkgs = { config = { allowUnfree = true; }; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
   home = {
-    username = "kourosh";
-    homeDirectory = "/home/kourosh";
-    stateVersion = "23.11";
+    username = "${user}";
+    homeDirectory = "/home/${user}";
+    stateVersion = "24.05";
 
     packages = with pkgs; [
-      (config.lib.nixGL.wrap alacritty)
       anydesk
       awscli2
       bat
@@ -49,7 +33,7 @@ in {
       fluxcd
       fwupd
       fzf
-      gnome-keyring
+      gnome.gnome-keyring
       grive2
       jq
       kind
@@ -85,7 +69,6 @@ in {
       vsh
       vscode
       winbox
-      which
       whois
       wsdd
       zoom
@@ -104,32 +87,17 @@ in {
     };
   };
 
-  # #Gtk 
-  # gtk = {
-  #   enable = true;
-  #   font.name = "Hack Nerd 10";
-  #   theme = {
-  #     name = "Nordic";
-  #     package = pkgs.nordic;
-  #   };
-  #   iconTheme = {
-  #     name = "Papirus-Dark";
-  #     package = pkgs.papirus-icon-theme;
-  #   };
-  # };
-  xdg.configFile."environment.d/envvars.conf".text = ''
-    PATH="$HOME/.nix-profile/bin:$PATH"
-  '';
-
-  wayland.windowManager.hyprland = {
+  #Gtk 
+  gtk = {
     enable = true;
-    package = config.lib.nixGL.wrap pkgs.hyprland;
-    settings = {
-      general = {
-        gaps_in = 0;
-        gaps_out = 0;
-        border_size = 20;
-      };
+    font.name = "Hack Nerd 10";
+    theme = {
+      name = "Nordic";
+      package = pkgs.nordic;
+    };
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
     };
   };
 

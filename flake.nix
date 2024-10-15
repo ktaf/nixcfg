@@ -12,20 +12,32 @@
       url = "github:nix-community/nixGL/310f8e49a149e4c9ea52f1adf70cdc768ec53f8a";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixGL, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixGL, nix-index-database, ... } @ inputs:
     let
       user = "kourosh";
       system = "x86_64-linux";
       lib = nixpkgs.lib;
-      pkgs = import nixpkgs {
+    in {
+      homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
         inherit system;
         config = {
           allowUnfree = true;
           allowUnfreePredicate = _: true;
         };
+      extraSpecialArgs = {
+        inherit self nixpkgs inputs;
+      };};
+      modules = [./hosts/x1g12-HM/home.nix
+        nix-index-database.hmModules.nix-index
+        ./_modules/shell.nix
+      ];
       };
-    in {
       nixosConfigurations = {
         x1g12 = lib.nixosSystem {
           inherit system;
@@ -86,13 +98,6 @@
           ];
         };
       };
-    homeConfigurations."kourosh" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = {
-        inherit self nixpkgs inputs;
-      };
-      modules = [./hosts/x1g12/home.nix];
-    };
    };
 }
 
