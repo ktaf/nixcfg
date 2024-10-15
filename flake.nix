@@ -36,7 +36,9 @@
       };
       modules = [./hosts/x1g12-HM/home.nix
         nix-index-database.hmModules.nix-index
-        ./_modules/hyprland.nix
+        ./_modules_hm/hyprland.nix
+        ./_modules_hm/waybar.nix
+        ./_modules_hm/zsh.nix
       ];
       };
       nixosConfigurations = {

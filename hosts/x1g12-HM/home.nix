@@ -35,7 +35,7 @@ in {
     stateVersion = "24.11";
 
     packages = with pkgs; [
-      (config.lib.nixGL.wrap alacritty)
+      (config.lib.nixGL.wrap kitty)
       awscli2
       bat
       curl
@@ -48,7 +48,7 @@ in {
       fluxcd
       fwupd
       fzf
-      gnome-keyring
+      google-chrome
       grive2
       jq
       kind
@@ -59,6 +59,7 @@ in {
       libdigidocpp
       libudfread
       libinput
+      libdrm
       neofetch
       nix-zsh-completions
       nmap
@@ -117,17 +118,5 @@ in {
   xdg.configFile."environment.d/envvars.conf".text = ''
     PATH="$HOME/.nix-profile/bin:$PATH"
   '';
-
-  # wayland.windowManager.hyprland = {
-  #   enable = true;
-  #   package = config.lib.nixGL.wrap pkgs.hyprland;
-  #   settings = {
-  #     general = {
-  #       gaps_in = 0;
-  #       gaps_out = 0;
-  #       border_size = 20;
-  #     };
-  #   };
-  # };
 
 }
