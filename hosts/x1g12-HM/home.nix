@@ -1,5 +1,6 @@
 { config, pkgs, lib, inputs, user, ... }:
 let
+  user = "kourosh";
   nixGLIntel = inputs.nixGL.packages.${pkgs.system}.nixGLIntel;
 in {
   imports = [
@@ -24,6 +25,9 @@ in {
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  # Ease usage on non-NixOS installations
+  targets.genericLinux.enable = true;
 
   home = {
     username = "${user}";
@@ -114,16 +118,16 @@ in {
     PATH="$HOME/.nix-profile/bin:$PATH"
   '';
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    package = config.lib.nixGL.wrap pkgs.hyprland;
-    settings = {
-      general = {
-        gaps_in = 0;
-        gaps_out = 0;
-        border_size = 20;
-      };
-    };
-  };
+  # wayland.windowManager.hyprland = {
+  #   enable = true;
+  #   package = config.lib.nixGL.wrap pkgs.hyprland;
+  #   settings = {
+  #     general = {
+  #       gaps_in = 0;
+  #       gaps_out = 0;
+  #       border_size = 20;
+  #     };
+  #   };
+  # };
 
 }

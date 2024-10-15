@@ -21,21 +21,22 @@
     let
       user = "kourosh";
       system = "x86_64-linux";
-      lib = nixpkgs.lib;
-    in {
-      homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
+      pkgs = import nixpkgs {
         inherit system;
         config = {
           allowUnfree = true;
           allowUnfreePredicate = _: true;
-        };
-      extraSpecialArgs = {
-        inherit self nixpkgs inputs;
-      };};
+        };};
+      lib = nixpkgs.lib;
+    in {
+      homeConfigurations."${user}" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {
+          inherit self nixpkgs inputs;
+      };
       modules = [./hosts/x1g12-HM/home.nix
         nix-index-database.hmModules.nix-index
-        ./_modules/shell.nix
+        ./_modules/hyprland.nix
       ];
       };
       nixosConfigurations = {
