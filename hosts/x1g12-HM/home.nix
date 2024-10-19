@@ -34,11 +34,18 @@ in {
     homeDirectory = "/home/${user}";
     stateVersion = "24.11";
 
+    sessionVariables = {
+      GSK_RENDERER = "cairo";
+    };
+
     packages = with pkgs; [
-      (config.lib.nixGL.wrap kitty)
+      # (config.lib.nixGL.wrap kitty)
       awscli2
       bat
+      bluez
+      blueman
       curl
+      dbus
       dig
       docker-compose
       elinks
@@ -50,6 +57,7 @@ in {
       fzf
       google-chrome
       grive2
+      htop
       jq
       kind
       krew
@@ -90,6 +98,11 @@ in {
     ];
   };
 
+
+services = {
+  blueman-applet.enable = true;
+};
+
   programs.git = {
     enable = true;
     userName = "ktaf";
@@ -102,19 +115,6 @@ in {
     };
   };
 
-  # #Gtk 
-  # gtk = {
-  #   enable = true;
-  #   font.name = "Hack Nerd 10";
-  #   theme = {
-  #     name = "Nordic";
-  #     package = pkgs.nordic;
-  #   };
-  #   iconTheme = {
-  #     name = "Papirus-Dark";
-  #     package = pkgs.papirus-icon-theme;
-  #   };
-  # };
   xdg.configFile."environment.d/envvars.conf".text = ''
     PATH="$HOME/.nix-profile/bin:$PATH"
   '';
