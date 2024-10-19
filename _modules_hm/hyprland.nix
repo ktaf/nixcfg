@@ -4,7 +4,6 @@
   ...
 }: {
   home.packages = with pkgs; [
-    autotiling
     egl-wayland
     glfw-wayland
     gnome-themes-extra
@@ -21,23 +20,43 @@
     wayland-utils
     wlogout
     xcur2png
+
+    unicode-emoji
+    rofimoji
+    font-awesome
+    nerdfonts
+    ibm-plex
+    hack-font
+    fira-code
+    fira-code-nerdfont
+    fira-code-symbols
+    jetbrains-mono
+
     xdg-utils
+    xdg-desktop-portal-wlr
+    xdg-desktop-portal
+    xdg-desktop-portal-gtk
   ];
   
   wayland.windowManager.hyprland = {
     enable = true;
     package = config.lib.nixGL.wrap pkgs.hyprland;
 
-    systemd.enable = true;
+    systemd = {
+      enable = true;
+      variables = ["--all"];
+    };
     xwayland.enable = true;
 
-    # extraConfig = ''
-    #   exec-once = waybar
-    #   '';
+    extraConfig = ''
+      exec-once = waybar &
+      exec-once = blueman-applet
+      '';
 
     settings = {
     #   exec-once = [
-    #     "${(config.lib.nixGL.wrap pkgs.hyprpanel)}/bin/hyprpanel"
+    #     # "${(config.lib.nixGL.wrap pkgs.hyprpanel)}/bin/hyprpanel"
+    #     "exec-once = waybar &"
     #   ];
 
       monitor = [
@@ -46,9 +65,8 @@
       ];
 
       general = {
-        gaps_in = 5;
-        gaps_out = 5;
-        border_size = 10;
+        gaps_in = 2;
+        gaps_out = 2;
         layout = "dwindle";
         resize_on_border = true;
       };
@@ -61,9 +79,9 @@
 
       input = {
         kb_layout = "us,ir";
-        # kb_variant = ",swerty";
+        kb_variant = "qwerty";
         kb_model = "";
-        kb_options = "grp:win_space_toggle";
+        kb_options = "grp:alt_shift_toggle";
         kb_rules = "";
         follow_mouse = 1;
         touchpad = {
@@ -93,7 +111,7 @@
       bind = let
         modifier = "Super";
         terminal = "kitty";
-        menu = "fuzzel";
+        menu = "rofi -show";
         file_explorer = "nautilus";
         lock_screen = "hyprlock";
         screenshot_dir = "$HOME/Pictures/Screenshots";
@@ -104,7 +122,7 @@
         # Top level bindings
         "${modifier}, Tab, cyclenext"
         "${modifier}, Return, exec, ${terminal}"
-        "${modifier}, D, exec, ${menu}"
+        "${modifier}, R, exec, ${menu}"
         "${modifier}, E, exec, ${file_explorer}"
         "${modifier}, L, exec, ${lock_screen}"
         "${modifier}, F, exec, fullscreen"
@@ -170,13 +188,13 @@
 
       decoration = {
         drop_shadow = "yes";
-        shadow_range = 8;
+        shadow_range = 2;
         shadow_render_power = 2;
         "col.shadow" = "rgba(00000044)";
         dim_inactive = false;
         blur = {
           enabled = true;
-          size = 8;
+          size = 2;
           passes = 3;
           new_optimizations = "on";
           noise = 0.01;
