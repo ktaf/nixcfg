@@ -1,5 +1,5 @@
 {
-  "height":33,
+  "height":30,
   "margin": "0 0 0 0",
   "layer":"bottom",
   "position":"top",
@@ -9,7 +9,7 @@
   "gtk-layer-shell":true,
   "modules-left":[
     "custom/launcher",
-    "hyprland/workspaces",
+    "sway/workspaces",
     "sway/mode",
     "temperature",
     "memory",
@@ -25,11 +25,11 @@
     "battery",
     // "custom/vpn",
     "keyboard-state",
-    "hyprland/language",
+    "sway/language",
     "tray",
     "custom/power-menu"
   ],
-  "hyprland/workspaces":{
+  "sway/workspaces":{
     "format":"{icon}",
     "format-icons":{
       "1":"一",
@@ -59,14 +59,14 @@
     "interval":10,
     "format":" {usage}%",
     "max-length":10,
-    "on-click":"kitty sh -c 'htop -s PERCENT_CPU'"
+    "on-click":"alacritty -e sh -c 'htop -s PERCENT_CPU'"
   },
   "memory":{
     "interval":30,
     "format":" {}%",
     "format-alt":" {used:0.1f}GB",
     "max-length":10,
-    "on-click":"kitty sh -c 'htop -s PERCENT_MEM'"
+    "on-click":"alacritty -e sh -c 'htop -s PERCENT_MEM'"
   },
   "mpris":{
     "format":"{player_icon} {title}",
@@ -134,16 +134,11 @@
     },
     "on-click":"pavucontrol"
   },
-  // "hyprland/language":{
-  //   "format":"{flag}",
-  //   "min-length":3,
-  //   "tooltip":true,
-  //   "tooltip-format":"{long}"
-  // },
-  "hyprland/language": {
-    "format": " {}",
-    "format-en": "EN",
-    "format-ir": "FA"
+  "sway/language":{
+    "format":"{flag}",
+    "min-length":3,
+    "tooltip":true,
+    "tooltip-format":"{long}"
   },
   "custom/launcher":{
     "format":"󱄅",
