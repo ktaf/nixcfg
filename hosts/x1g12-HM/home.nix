@@ -29,6 +29,14 @@ in {
   # Ease usage on non-NixOS installations
   targets.genericLinux.enable = true;
 
+  services = {
+    blueman-applet.enable = true;
+    mpris-proxy.enable = true;
+  };
+
+  systemd.user.sessionVariables = {
+    EDITOR = "code";
+  };
   home = {
     username = "${user}";
     homeDirectory = "/home/${user}";
@@ -36,6 +44,9 @@ in {
 
     sessionVariables = {
       GSK_RENDERER = "cairo";
+      XCURSOR_SIZE = 24;
+      SDL_VIDEODRIVER = "wayland";
+
     };
 
     packages = with pkgs; [
@@ -53,7 +64,6 @@ in {
       zoxide # better cd command
       ffmpeg
       fluxcd
-      fwupd
       fzf
       google-chrome
       grive2
@@ -77,6 +87,8 @@ in {
       openh264
       openra
       pciutils
+      pulseaudio
+      pavucontrol
       qbittorrent
       qdigidoc
       remmina
@@ -97,11 +109,6 @@ in {
       zoom
     ];
   };
-
-
-services = {
-  blueman-applet.enable = true;
-};
 
   programs.git = {
     enable = true;
