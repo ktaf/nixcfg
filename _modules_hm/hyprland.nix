@@ -48,10 +48,10 @@
     };
     xwayland.enable = true;
 
-    extraConfig = ''
-      exec-once = waybar &
-      exec-once = blueman-applet
-      '';
+    # extraConfig = ''
+    #   # exec-once = waybar
+    #   # exec-once = blueman-applet
+    #   '';
 
     settings = {
     #   exec-once = [
@@ -72,9 +72,9 @@
       };
 
       dwindle = {
-        pseudotile = "yes";
-        preserve_split = "yes";
-        # no_gaps_when_only = "yes";
+        pseudotile = true;
+        preserve_split = true;
+        no_gaps_when_only = 1;
       };
 
       input = {
