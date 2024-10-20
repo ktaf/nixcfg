@@ -17,7 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixGL, nix-index-database, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, nix-index-database, ... } @ inputs:
     let
       user = "kourosh";
       system = "x86_64-linux";

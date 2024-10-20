@@ -1,4 +1,4 @@
-{ pkgs, ... }:{
+{ ... }:{
 
   # Enable ZSH and oh-my-zsh
   programs.zsh = {

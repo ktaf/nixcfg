@@ -44,9 +44,14 @@
       "10":"十"
     }
   },
-  "sway/mode":{
-    "format":"<span style=\"italic\">{}</span>"
-  },
+ "bluetooth":{
+    "format": " {status}",
+    "format-disabled": "󰂲",
+    "format-connected": " {num_connections}",
+    "tooltip-format": "{device_alias}",
+    "tooltip-format-connected": " {device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}"
+ },
   "tray":{
     "icon-size":16,
     "spacing":8
@@ -134,12 +139,6 @@
     },
     "on-click":"pavucontrol"
   },
-  // "hyprland/language":{
-  //   "format":"{flag}",
-  //   "min-length":3,
-  //   "tooltip":true,
-  //   "tooltip-format":"{long}"
-  // },
   "hyprland/language": {
     "format": " {}",
     "format-en": "EN",

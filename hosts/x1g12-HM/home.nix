@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, user, ... }:
+{ config, pkgs, inputs, ... }:
 let
   user = "kourosh";
   nixGLIntel = inputs.nixGL.packages.${pkgs.system}.nixGLIntel;
