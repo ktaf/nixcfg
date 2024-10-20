@@ -42,6 +42,7 @@
         ./_modules_hm/waybar.nix
         ./_modules_hm/rofi.nix
         ./_modules_hm/zsh.nix
+        ./_modules_hm/kanshi.nix
       ];
       };
       nixosConfigurations = {
