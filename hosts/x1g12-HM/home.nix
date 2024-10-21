@@ -46,6 +46,24 @@ in {
       GSK_RENDERER = "cairo";
       XCURSOR_SIZE = 24;
       SDL_VIDEODRIVER = "wayland";
+      # Set default applications
+      SHELL = "$HOME/.nix-profile/bin/zsh";
+      TERMINAL = "kitty";
+      VISUAL = "code";
+      EDITOR = "code";
+      BROWSER = "google-chrome-stable";
+      PAGER = "less";
+      # Set XDG directories
+      XDG_CONFIG_HOME = "$HOME/.config";
+      XDG_DATA_HOME = "$HOME/.local/share";
+      XDG_BIN_HOME = "$HOME/.local/bin";
+      XDG_LIB_HOME = "$HOME/.local/lib";
+      XDG_CACHE_HOME = "$HOME/.cache";
+      # Respect XDG directories
+      DOCKER_CONFIG = "$HOME/.config/docker";
+      LESSHISTFILE = "-"; # Disable less history
+      # # SSH Agent
+      # SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/ssh-agent";
 
     };
 

@@ -3,40 +3,6 @@
   config,
   ...
 }: {
-  home.packages = with pkgs; [
-    egl-wayland
-    glfw-wayland
-    gnome-themes-extra
-    gtk4
-    grim
-    nordic
-    papirus-icon-theme
-    slurp
-    wdisplays
-    wlr-randr
-    wayland
-    wayland-protocols
-    wayland-scanner
-    wayland-utils
-    wlogout
-    xcur2png
-
-    unicode-emoji
-    rofimoji
-    font-awesome
-    nerdfonts
-    ibm-plex
-    hack-font
-    fira-code
-    fira-code-nerdfont
-    fira-code-symbols
-    jetbrains-mono
-
-    xdg-utils
-    xdg-desktop-portal-wlr
-    xdg-desktop-portal
-    xdg-desktop-portal-gtk
-  ];
   
   wayland.windowManager.hyprland = {
     enable = true;
@@ -113,7 +79,7 @@
         terminal = "kitty";
         menu = "rofi -show";
         file_explorer = "nautilus";
-        lock_screen = "hyprlock";
+        lock_screen = "swaylock";
         screenshot_dir = "$HOME/Pictures/Screenshots";
       in [
         # Exit
