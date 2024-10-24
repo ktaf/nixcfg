@@ -1,9 +1,11 @@
-{ ... }:{
+{ ... }: {
 
   programs.waybar = {
     enable = true;
-    systemd.target = "hyprland-session.target";
-    systemd.enable = true;
+    systemd = {
+      enable = true;
+      target = "hyprland-session.target";
+    };
     style = builtins.readFile ../../.config/waybar/style.css;
   };
 }

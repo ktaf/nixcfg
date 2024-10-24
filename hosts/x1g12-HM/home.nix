@@ -1,20 +1,23 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, nixGL, ... }:
 let
   user = "kourosh";
-  nixGLIntel = inputs.nixGL.packages.${pkgs.system}.nixGLIntel;
-in {
+in
+{
+  # TODO: remove when https://github.com/nix-community/home-manager/pull/5355 gets merged:
   imports = [
     (builtins.fetchurl {
       url = "https://raw.githubusercontent.com/Smona/home-manager/nixgl-compat/modules/misc/nixgl.nix";
-      sha256 = "01dkfr9wq3ib5hlyq9zq662mp0jl42fw3f6gd2qgdf8l8ia78j7i";
+      sha256 = "1krclaga358k3swz2n5wbni1b2r7mcxdzr6d7im6b66w3sbpvnb3";
     })
   ];
-# {
-#   systemd.user = {
-#     targets.sway-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
-#   };
+  # {
+  #   systemd.user = {
+  #     targets.sway-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
+  #   };
 
-  nixGL.prefix = "${nixGLIntel}/bin/nixGLIntel";
+  nixGL = {
+    packages = nixGL.packages;
+  };
 
   nixpkgs = {
     config = {
@@ -30,8 +33,9 @@ in {
   targets.genericLinux.enable = true;
 
   services = {
+    systembus-notify.enable = true;
     blueman-applet.enable = true;
-    mpris-proxy.enable = true;
+
   };
 
   systemd.user.sessionVariables = {
@@ -43,6 +47,7 @@ in {
     stateVersion = "24.11";
 
     sessionVariables = {
+      GDK_BACKEND = "wayland";
       GSK_RENDERER = "cairo";
       XCURSOR_SIZE = 24;
       SDL_VIDEODRIVER = "wayland";
@@ -74,6 +79,9 @@ in {
       bluez
       blueman
       curl
+      cloudflare-warp
+      gnomeExtensions.cloudflare-warp-toggle
+      gnomeExtensions.cloudflare-warp-indicator
       dbus
       dig
       docker-compose
