@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixGL = {
-      url = "github:nix-community/nixGL/310f8e49a149e4c9ea52f1adf70cdc768ec53f8a";
+      url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-index-database = {
@@ -17,7 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, nix-index-database, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixGL, nix-index-database, ... } @ inputs:
     let
       user = "kourosh";
       system = "x86_64-linux";
@@ -26,19 +26,22 @@
         config = {
           allowUnfree = true;
           allowUnfreePredicate = _: true;
-        };};
+        };
+      };
       lib = nixpkgs.lib;
-    in {
+    in
+    {
       homeConfigurations."${user}" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-          inherit self nixpkgs inputs;
-      };
-      modules = [./hosts/x1g12-HM/home.nix
-        nix-index-database.hmModules.nix-index
-        ./_modules_hm/gui
-        ./_modules_hm/terminal
-      ];
+          inherit self nixpkgs inputs nixGL;
+        };
+        modules = [
+          nix-index-database.hmModules.nix-index
+          ./hosts/x1g12-HM/home.nix
+          ./_modules_hm/gui
+          ./_modules_hm/terminal
+        ];
       };
       nixosConfigurations = {
         x1g12 = lib.nixosSystem {
@@ -100,7 +103,8 @@
           ];
         };
       };
-   };
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+    };
 }
 
 #nixos-24.05

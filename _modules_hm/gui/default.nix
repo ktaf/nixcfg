@@ -1,15 +1,16 @@
 { pkgs, ... }:
 {
 
-    imports = [
-        ./hyprland.nix
-        # ./hyprlock.nix
-        ./gtk.nix
-        ./kanshi.nix
-        ./rofi.nix
-        ./waybar.nix
-        ./swaylock.nix
-    ];
+  imports = [
+    ./hyprland.nix
+    # ./hyprlock.nix
+    ./gtk.nix
+    ./kanshi.nix
+    ./rofi.nix
+    ./waybar.nix
+    ./swaync.nix
+    # ./swaylock.nix
+  ];
 
   home.packages = with pkgs; [
     gnome-themes-extra
@@ -30,7 +31,11 @@
     wlogout
     xcur2png
 
+    brightnessctl
+
     xdg-utils
+    xdg-dbus-proxy
+    xdg-desktop-portal-hyprland
     xdg-desktop-portal-wlr
     xdg-desktop-portal
     xdg-desktop-portal-gtk
