@@ -1,4 +1,4 @@
-{ ... }:{
+{ ... }: {
 
   # Enable ZSH and oh-my-zsh
   programs.zsh = {
@@ -20,6 +20,7 @@
       rebase =
         "'git checkout main && git pull && git checkout - && git rebase main'";
       nixhm = "home-manager switch --flake .#kourosh";
+      wayload = "rm ~/.config/waybar/config && cp ~/nixcfg/.config/waybar/config ~/.config/waybar/config && systemctl --user restart waybar";
       clean = "sudo nix-collect-garbage -d";
       cleanold = "sudo nix-collect-garbage --delete-old";
     };

@@ -27,7 +27,8 @@ let
   # using the XDG_DATA_DIR environment variable
   # run at the end of sway config
 
-in {
+in
+{
   environment.systemPackages = with pkgs; [
     alacritty # gpu accelerated terminal
     autotiling

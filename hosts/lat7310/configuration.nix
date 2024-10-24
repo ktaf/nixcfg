@@ -68,10 +68,10 @@
       enable = false;
       extraModules = [ pkgs.pulseaudio-modules-bt ];
     };
-    bluetooth = { 
-      enable = true; 
+    bluetooth = {
+      enable = true;
       # disabledPlugins = [csip micp vcp mcp bass bap];
-      };
+    };
     opengl.extraPackages = with pkgs;
       [
         # trying to fix `WLR_RENDERER=vulkan sway`
