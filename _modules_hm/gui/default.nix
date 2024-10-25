@@ -32,6 +32,9 @@
     xcur2png
 
     brightnessctl
+    pavucontrol
+    cliphist
+    wl-clipboard
 
     xdg-utils
     xdg-dbus-proxy
