@@ -11,8 +11,15 @@
       package = pkgs.papirus-icon-theme;
     };
     font = {
-      name = "Hack Nerd 10";
+      name = "Hack Nerd 12";
       package = pkgs.hack-font;
     };
+  };
+
+  # QT
+  qt = {
+    enable = true;
+    style.name = "adwaita-dark";
+    platformTheme.name = "qtct";
   };
 }
