@@ -35,6 +35,7 @@ in
   services = {
     systembus-notify.enable = true;
     blueman-applet.enable = true;
+    network-manager-applet.enable = true;
 
   };
 
@@ -79,11 +80,12 @@ in
       bluez
       blueman
       curl
-      cloudflare-warp
-      gnomeExtensions.cloudflare-warp-toggle
-      gnomeExtensions.cloudflare-warp-indicator
+      # cloudflare-warp
+      # gnomeExtensions.cloudflare-warp-toggle
+      # gnomeExtensions.cloudflare-warp-indicator
       dbus
       dig
+      docker
       docker-compose
       elinks
       eza # better ls command
@@ -104,6 +106,7 @@ in
       libudfread
       libinput
       libdrm
+      localstack
       neofetch
       nix-zsh-completions
       nmap
@@ -114,10 +117,10 @@ in
       openra
       pciutils
       pulseaudio
-      pavucontrol
       qbittorrent
       qdigidoc
       remmina
+      ripe-atlas-tools
       ripgrep
       s3cmd
       # samba4Full
@@ -133,13 +136,16 @@ in
       whois
       wsdd
       zoom
+
+      okta-aws-cli
+      _1password-gui
     ];
   };
 
   programs.git = {
     enable = true;
     userName = "ktaf";
-    userEmail = "kouroshtaf@gmail.com";
+    userEmail = "kourosh.tafreshi@bolt.eu";
     extraConfig = {
       init.defaultBranch = "main";
       core.editor = "code";
