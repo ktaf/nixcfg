@@ -5,7 +5,8 @@
     package = (config.lib.nixGL.wrap pkgs.alacritty);
     settings = {
       window = {
-        opacity = 0.8;
+        decorations = "None";
+        opacity = 0.6;
         padding = {
           x = 3;
           y = 3;
@@ -22,6 +23,12 @@
         };
         italic = {
           family = "JetBrainsMono Nerd Font";
+        };
+      };
+      colors = {
+        transparent_background_colors = true;
+        primary = {
+          background = "#112211";
         };
       };
       mouse = {

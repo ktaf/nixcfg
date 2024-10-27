@@ -111,7 +111,6 @@ in
       ripe-atlas-tools
       ripgrep
       s3cmd
-      # samba4Full
       slack
       terraform
       tdesktop
@@ -124,7 +123,7 @@ in
       whois
       wsdd
       zoom
-
+      polkit_gnome
       okta-aws-cli
       _1password-gui
     ];

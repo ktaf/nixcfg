@@ -16,6 +16,7 @@
       k = "kubectl";
       kx = "kubectx";
       tf = "terraform";
+      tg = "terragrunt";
       ssh = "TERM=xterm-256color ssh";
       rebase =
         "'git checkout main && git pull && git checkout - && git rebase main'";

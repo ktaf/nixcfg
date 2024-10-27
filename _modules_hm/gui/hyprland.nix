@@ -102,7 +102,7 @@
       bind =
         let
           modifier = "Super";
-          terminal = "kitty";
+          terminal = "alacritty";
           menu = "rofi -show";
           file_explorer = "nemo";
           lock_screen = "systemctl suspend && swaylock";
