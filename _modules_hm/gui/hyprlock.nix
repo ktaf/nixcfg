@@ -3,35 +3,39 @@
 {
   programs.hyprlock = {
     enable = true;
+
     settings = {
       general = {
-        disable_loading_bar = true;
-        grace = 2;
         hide_cursor = true;
-        no_fade_in = false;
+        grace = 2;
       };
-      background = [
-        {
-          path = "screenshot";
-          blur_passes = 3;
-          blur_size = 8;
-        }
-      ];
-      input-field = [
-        {
-          size = "200, 50";
-          position = "0, -80";
-          monitor = "";
-          dots_center = true;
-          fade_on_empty = false;
-          font_color = "rgb(202, 211, 245)";
-          inner_color = "rgb(91, 96, 120)";
-          outer_color = "rgb(24, 25, 38)";
-          outline_thickness = 5;
-          placeholder_text = "<span foreground='##cad3f5'>Password...</span>";
-          shadow_passes = 2;
-        }
-      ];
+
+      background = {
+        color = "rgba(25, 20, 20, 1.0)";
+        path = "screenshot";
+        blur_passes = 2;
+        brightness = 0.5;
+      };
+
+      label = {
+        text = "パスワードをご入力ください";
+        color = "rgba(222, 222, 222, 1.0)";
+        font_size = 50;
+        font_family = "Noto Sans CJK JP";
+        position = "0, 70";
+        halign = "center";
+        valign = "center";
+      };
+
+      input-field = {
+        size = "50, 50";
+        dots_size = 0.33;
+        dots_spacing = 0.15;
+        outer_color = "rgba(25, 20, 20, 0)";
+        inner_color = "rgba(25, 20, 20, 0)";
+        font_color = "rgba(222, 222, 222, 1.0)";
+        placeholder_text = "パスワード";
+      };
     };
   };
 }

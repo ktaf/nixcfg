@@ -2,7 +2,9 @@
 
   services.swaync = {
     enable = true;
-    # settings = {};
+    settings = {
+      notification-window-width = 400;
+    };
   };
 }
 

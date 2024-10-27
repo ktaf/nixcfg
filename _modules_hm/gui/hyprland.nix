@@ -17,7 +17,8 @@
     extraConfig = ''
       # Essential startup applications
       # exec-once = swww init # Wallpaper daemon
-      # exec-once = warp-taskbar # Network Manager applet
+      exec-once = hyprpaper # Wallpaper daemon
+      exec-once = warp-taskbar # Network Manager applet
       exec-once = nm-applet --indicator # Network Manager applet
       exec-once = wl-paste --type text --watch cliphist store # Clipboard history
       exec-once = wl-paste --type image --watch cliphist store # Image clipboard history
@@ -27,6 +28,7 @@
       monitor = [
         "eDP-1, preferred, 3440x240, 1"
         "desc:Dell Inc. DELL S3422DWG FSF4KK3, 3440x1440@120, 0x0, 1"
+        "desc: Dell Inc. DELL S3423DWC C74VNH3,3440x1440@120, 0x0, 1"
         ",preferred,auto,1" # Fallback for any other monitors
       ];
 
@@ -102,10 +104,9 @@
           modifier = "Super";
           terminal = "kitty";
           menu = "rofi -show";
-          file_explorer = "/usr/bin/nautilus";
-          lock_screen = "swaylock -f -c 000000";
+          file_explorer = "nemo";
+          lock_screen = "systemctl suspend && swaylock";
           screenshot_dir = "$HOME/Pictures/Screenshots/$(date +%Y-%m-%d)";
-          volume_step = "5";
         in
         [
           # System controls
@@ -206,10 +207,11 @@
 
       decoration = {
         drop_shadow = true;
-        shadow_range = 8;
-        shadow_render_power = 2;
+        shadow_range = 1;
+        shadow_render_power = 4;
         "col.shadow" = "rgba(00000044)";
-        shadow_offset = "2 2";
+        shadow_offset = "1 1";
+        shadow_scale = 0.1;
         dim_inactive = true;
         dim_strength = 0.1;
         blur = {
@@ -249,7 +251,7 @@
       windowrulev2 = [
         # System apps
         "float,class:^(pavucontrol)$"
-        "float,class:^(blueman-manager)$"
+        "float,class:^(Bluetooth Devices)$"
         "float,class:^(nm-connection-editor)$"
         "float,class:^(galculator)$"
         "float,title:^(Picture-in-Picture)$"
@@ -257,6 +259,8 @@
         "float,title:^(Media viewer)$"
         "float,title:^(Volume Control)$"
         "float,title:^(Picture in picture)$"
+        "float,title:^(Open Files))$"
+        # "float,title:^(Visual Studio Code)$"
 
         # SwayNC specific rules
         "float,class:^(swaync-control-center)$"

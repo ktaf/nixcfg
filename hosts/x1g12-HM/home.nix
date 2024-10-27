@@ -42,7 +42,7 @@ in
       SDL_VIDEODRIVER = "wayland";
       # Set default applications
       SHELL = "$HOME/.nix-profile/bin/zsh";
-      TERMINAL = "kitty";
+      TERMINAL = "alacritty";
       VISUAL = "code";
       EDITOR = "code";
       BROWSER = "google-chrome-stable";
@@ -62,15 +62,13 @@ in
     };
 
     packages = with pkgs; [
-      # (config.lib.nixGL.wrap kitty)
       awscli2
       bat
       bluez
       blueman
+      cmake
+      cpio
       curl
-      # cloudflare-warp
-      # gnomeExtensions.cloudflare-warp-toggle
-      # gnomeExtensions.cloudflare-warp-indicator
       dbus
       dig
       docker
@@ -94,7 +92,9 @@ in
       libudfread
       libinput
       libdrm
+      libxkbcommon
       localstack
+      nemo
       neofetch
       nix-zsh-completions
       nmap
