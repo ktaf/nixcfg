@@ -1,34 +1,32 @@
 * {
-  /* `otf-font-awesome` is required to be installed for icons */
-  font-family: Material Design Icons, JetBrainsMono Nerd Font, Iosevka Nerd Font;
+  /* Base styles */
+  font-family: "Material Design Icons", "JetBrainsMono Nerd Font", "Iosevka Nerd Font";
   font-size: 14px;
   border: none;
   border-radius: 0;
   min-height: 0;
+  transition: all 200ms ease;
 }
 
 window#waybar {
-  border: 0px solid rgba(0, 0, 0, 0);
   background-color: rgba(26, 27, 38, 0.5);
   color: #ffffff;
-  transition-property: background-color;
-  transition-duration: 0.5s;
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 window#waybar.hidden {
-  opacity: 0.1;
+  opacity: 0.2;
+  transition: opacity 0.5s ease-in-out;
 }
 
-#window {
-  color: #64727d;
-}
-
+/* Base module styling */
 #clock,
 #language,
 #temperature,
 #mpris,
 #cpu,
 #memory,
+#disk,
 #tray,
 #workspaces,
 #idle_inhibitor,
@@ -36,88 +34,111 @@ window#waybar.hidden {
 #custom-power-menu,
 #custom-launcher {
   color: #e5e5e5;
-  border-radius: 5px;
-  padding: 1px 5px;
   background-color: #252733;
   border-radius: 8px;
-  margin-left: 2px;
-  margin-right: 2px;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  padding: 1px 8px;
+  margin: 2px;
 }
 
+/* System metrics */
 #temperature {
   color: #7a95c9;
-  /* color: #ec2e37; */
+}
+
+#temperature.critical {
+  color: #ec2e37;
+  animation: blink 1s infinite;
 }
 
 #cpu {
   color: #fb958b;
-  margin-top: 2px;
-  margin-bottom: 2px;
+}
+
+#cpu.warning {
+  color: #ecd3a0;
+}
+
+#cpu.critical {
+  color: #ec2e37;
+  animation: blink 1s infinite;
 }
 
 #memory {
   color: #a1c999;
 }
 
+#memory.warning {
+  color: #ecd3a0;
+}
+
+#memory.critical {
+  color: #ec2e37;
+  animation: blink 1s infinite;
+}
+
+#disk {
+  color: #b48ead;
+}
+
+#disk.warning {
+  color: #ecd3a0;
+}
+
+#disk.critical {
+  color: #ec2e37;
+  animation: blink 1s infinite;
+}
+
+/* Workspaces */
 #workspaces button {
   color: #7a95c9;
   box-shadow: inset 0 -3px transparent;
-  padding-right: 3px;
-  padding-left: 3px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  transition: all 0.5s cubic-bezier(0.55, -0.68, 0.48, 1.68);
+  padding: 0 3px;
+  margin: 2px 1px;
+  transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.68);
+}
+
+#workspaces button:hover {
+  background-color: rgba(122, 149, 201, 0.2);
+  box-shadow: inset 0 -2px #7a95c9;
 }
 
 #workspaces button.active {
   color: #ecd3a0;
-  padding-left: 1px;
-  padding-right: 1px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  transition: all 0.5s cubic-bezier(0.55, -0.68, 0.48, 1.68);
+  padding: 0 6px;
+  box-shadow: inset 0 -2px #ecd3a0;
 }
 
-
-/* If workspaces is the leftmost module, omit left margin */
-
-.modules-left > widget:first-child > #workspaces {
-  margin-left: 0;
+#workspaces button.urgent {
+  color: #ec2e37;
+  animation: blink 1s infinite;
 }
 
-
-/* If workspaces is the rightmost module, omit right margin */
-
-.modules-right > widget:last-child > #workspaces {
-  margin-right: 0;
-}
-
+/* Launcher */
 #custom-launcher {
   margin-left: 4px;
-  padding-right: 10px;
-  padding-left: 6px;
+  padding: 0 10px 0 6px;
   font-size: 22px;
   color: #7a96c9;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  border: 1px solid rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
 }
 
+#custom-launcher:hover {
+  background-color: rgba(122, 150, 201, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* System controls */
 #bluetooth,
 #backlight,
 #battery,
 #pulseaudio,
 #network {
   background-color: #252733;
-  padding-left: 6px;
-  padding-right: 6px;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  padding: 3px 8px;
+  margin: 2px 0;
+  transition: background-color 0.3s ease;
 }
 
 #pulseaudio {
@@ -130,27 +151,23 @@ window#waybar.hidden {
 
 #backlight {
   color: #ecd3a0;
-  padding-right: 6px;
-  padding-left: 8px;
 }
 
 #network {
   color: #5E81AC;
-  border-radius: 8px 0px 0px 8px;
-  padding-left: 8px;
-  padding-right: 8px;
+  border-radius: 8px 0 0 8px;
+  padding: 3px 10px;
 }
 
 #network.disconnected {
   color: #fb958b;
+  animation: blink 2s infinite;
 }
 
 #bluetooth {
-  padding-left: 0.2em;
   color: #5E81AC;
-  border-radius: 8px 0px 0px 8px;
-  padding-left: 14px;
-  padding-right: 14px;
+  border-radius: 8px 0 0 8px;
+  padding: 3px 5px;
   font-size: 20px;
 }
 
@@ -160,76 +177,58 @@ window#waybar.hidden {
 
 #battery {
   color: #8fbcbb;
-  border-radius: 0px 8px 8px 0px;
-  padding-right: 2px;
-  font-size: 20px;
-}
-
-#battery.critical,
-#battery.warning,
-#battery.full,
-#battery.plugged {
-  color: #8fbcbb;
-  padding-left: 6px;
-  padding-right: 6px;
+  border-radius: 4px 4px 4px 4px;
+  padding: 3px 8px;
   font-size: 20px;
 }
 
 #battery.charging {
-  font-size: 20px;
-  padding-right: 6px;
-  padding-left: 4px;
+  color: #a1c999;
 }
 
-@keyframes blink {
-  to {
-      background-color: rgba(30, 34, 42, 0.5);
-      color: #abb2bf;
-  }
-}
-
-#battery.warning {
+#battery.warning:not(.charging) {
   color: #ecd3a0;
+  animation: blink 2s infinite;
 }
 
 #battery.critical:not(.charging) {
   color: #fb958b;
+  animation: blink 1s infinite;
 }
 
+/* Clock and system info */
 #clock {
   color: #b7bac0;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  font-weight: bold;
 }
 
 #custom-power-menu {
   color: #00ff0d;
   margin-right: 4px;
-  border-radius: 8px;
-  margin-top: 2px;
-  margin-bottom: 2px;
 }
 
+#custom-power-menu:hover {
+  background-color: rgba(0, 255, 13, 0.2);
+}
+
+/* Tooltips */
 tooltip {
-  font-family: Iosevka Nerd Font;
+  font-family: "Iosevka Nerd Font";
   border-radius: 10px;
   padding: 8px;
   background-color: #1f232b;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 tooltip label {
-  font-family: Iosevka Nerd Font;
+  font-family: "Iosevka Nerd Font";
   padding: 5px;
 }
 
-label:focus {
-  background-color: #1f232b;
-}
-
+/* System tray */
 #tray {
-  margin-right: 2px;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin: 2px;
+  padding: 2px 6px;
 }
 
 #tray > .passive {
@@ -241,18 +240,30 @@ label:focus {
   background-color: #eb4d4b;
 }
 
-#idle_inhibitor {
-  background-color: #242933;
-}
-
-#idle_inhibitor.activated {
-  background-color: #ecf0f1;
-  color: #2d3436;
-}
-
+/* Media controls */
 #mpris,
 #custom-spotify {
   color: #abb2bf;
-  margin-top: 2px;
-  margin-bottom: 2px;
+}
+
+/* Animations */
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Better focus handling */
+*:hover {
+  transition: background-color 0.2s ease;
+}
+
+label:focus {
+  background-color: #1f232b;
 }
