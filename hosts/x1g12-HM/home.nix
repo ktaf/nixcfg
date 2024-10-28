@@ -38,8 +38,10 @@ in
     sessionVariables = {
       GDK_BACKEND = "wayland";
       GSK_RENDERER = "cairo";
+      XCURSOR_THEME = "deafult";
       XCURSOR_SIZE = 24;
       SDL_VIDEODRIVER = "wayland";
+      WLR_NO_HARDWARE_CURSORS = "1";
       # Set default applications
       SHELL = "$HOME/.nix-profile/bin/zsh";
       TERMINAL = "alacritty";
@@ -71,8 +73,6 @@ in
       curl
       dbus
       dig
-      docker
-      docker-compose
       elinks
       eza # better ls command
       zoxide # better cd command
@@ -124,8 +124,12 @@ in
       wsdd
       zoom
       polkit_gnome
+
       okta-aws-cli
       _1password-gui
+      # networkmanager-openvpn
+      # networkmanager-openconnect
+      openvpn
     ];
   };
 
