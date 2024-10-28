@@ -2,16 +2,12 @@
 {
 
   imports = [
-    ./hyprland.nix
-    ./hyprpaper.nix
-    ./hypridle.nix
-    # ./hyprlock.nix
+    ./hypr
     ./gtk.nix
     ./kanshi.nix
     ./rofi.nix
     ./waybar.nix
     ./swaync.nix
-    # ./swaylock.nix
   ];
 
   home.packages = with pkgs; [
