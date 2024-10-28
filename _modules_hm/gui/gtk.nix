@@ -19,10 +19,7 @@
   # QT
   qt = {
     enable = true;
-    style = {
-      name = "adwaita-dark";
-      package = pkgs.adwaita-qt;
-    };
+    style.name = "adwaita-dark";
     platformTheme.name = "qtct";
   };
 }
