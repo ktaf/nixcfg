@@ -18,8 +18,9 @@
       # Essential startup applications
       # exec-once = swww init # Wallpaper daemon
       exec-once = hyprpaper # Wallpaper daemon
-      exec-once = warp-taskbar # Network Manager applet
       exec-once = nm-applet --indicator # Network Manager applet
+      # exec-once = warp-taskbar # Network Manager applet
+      exec-once = hypridle # Idle daemon
       exec-once = wl-paste --type text --watch cliphist store # Clipboard history
       exec-once = wl-paste --type image --watch cliphist store # Image clipboard history
     '';
