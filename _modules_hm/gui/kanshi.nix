@@ -2,7 +2,7 @@
 
   services.kanshi = {
     enable = true;
-    systemdTarget = "hyprland-session.target";
+    systemdTarget = "sway-session.target";
     settings = [
       {
         profile = {

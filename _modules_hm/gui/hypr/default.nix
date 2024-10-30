@@ -11,5 +11,7 @@
     hyprlang
     hyprutils
     hyprwayland-scanner
+    xdg-desktop-portal-hyprland
+
   ];
 }

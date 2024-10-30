@@ -1,0 +1,6 @@
+### cp /usr/share/wayland-sessions/sway.desktop
+[Desktop Entry]
+Name=Sway
+Comment=An intelligent dynamic tiling Wayland compositor
+Exec=/home/kourosh/.nix-profile/bin/sway
+Type=Application
