@@ -21,6 +21,7 @@ window#waybar.hidden {
 
 /* Base module styling */
 #clock,
+#backlight,
 #language,
 #temperature,
 #mpris,
@@ -37,21 +38,25 @@ window#waybar.hidden {
   background-color: #252733;
   border-radius: 8px;
   padding: 1px 8px;
-  margin: 2px;
+  margin: 1px;  /* Reduced from 2px */
 }
 
 /* System metrics */
 #temperature {
   color: #7a95c9;
+  text-shadow: 0 0 5px #7a95c9, 0 0 10px #7a95c9;
 }
 
 #temperature.critical {
   color: #ec2e37;
+  text-shadow: 0 0 5px #ec2e37, 0 0 10px #ec2e37;
   animation: blink 1s infinite;
 }
 
+/* CPU with glow */
 #cpu {
   color: #fb958b;
+  text-shadow: 0 0 5px #fb958b, 0 0 10px #fb958b;
 }
 
 #cpu.warning {
@@ -63,8 +68,10 @@ window#waybar.hidden {
   animation: blink 1s infinite;
 }
 
+/* Memory with glow */
 #memory {
   color: #a1c999;
+  text-shadow: 0 0 5px #a1c999, 0 0 10px #a1c999;
 }
 
 #memory.warning {
@@ -76,8 +83,10 @@ window#waybar.hidden {
   animation: blink 1s infinite;
 }
 
+/* Disk with glow */
 #disk {
   color: #b48ead;
+  text-shadow: 0 0 5px #b48ead, 0 0 10px #b48ead;
 }
 
 #disk.warning {
@@ -94,7 +103,7 @@ window#waybar.hidden {
   color: #7a95c9;
   box-shadow: inset 0 -3px transparent;
   padding: 0 3px;
-  margin: 2px 1px;
+  margin: 1px;  /* Reduced from 2px */
   transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.68);
 }
 
@@ -114,14 +123,15 @@ window#waybar.hidden {
   animation: blink 1s infinite;
 }
 
-/* Launcher */
+/* Launcher with glow */
 #custom-launcher {
-  margin-left: 4px;
+  margin-left: 2px;  /* Reduced from 4px */
   padding: 0 10px 0 6px;
   font-size: 22px;
   color: #7a96c9;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 5px #7a96c9, 0 0 10px #7a96c9;
 }
 
 #custom-launcher:hover {
@@ -131,13 +141,13 @@ window#waybar.hidden {
 
 /* System controls */
 #bluetooth,
-#backlight,
+
 #battery,
 #pulseaudio,
 #network {
   background-color: #252733;
   padding: 3px 8px;
-  margin: 2px 0;
+  margin: 1px 0;  /* Reduced from 2px */
   transition: background-color 0.3s ease;
 }
 
@@ -202,9 +212,11 @@ window#waybar.hidden {
   font-weight: bold;
 }
 
+/* Power menu with breathing glow */
 #custom-power-menu {
   color: #00ff0d;
-  margin-right: 4px;
+  margin-right: 2px;
+  animation: breathing-glow 4s ease-in-out infinite;
 }
 
 #custom-power-menu:hover {
@@ -227,7 +239,7 @@ tooltip label {
 
 /* System tray */
 #tray {
-  margin: 2px;
+  margin: 1px;  /* Reduced from 2px */
   padding: 2px 6px;
 }
 
@@ -256,6 +268,18 @@ tooltip label {
   }
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes breathing-glow {
+  0% {
+    text-shadow: 0 0 2px #00ff0d, 0 0 5px #00ff0d;
+  }
+  50% {
+    text-shadow: 0 0 10px #00ff0d, 0 0 20px #00ff0d;
+  }
+  100% {
+    text-shadow: 0 0 2px #00ff0d, 0 0 5px #00ff0d;
   }
 }
 
