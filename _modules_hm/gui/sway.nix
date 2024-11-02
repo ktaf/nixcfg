@@ -39,7 +39,7 @@
           '';
         }
         # Auto monitor configuration
-        { command = "pkill kanshi; ${pkgs.kanshi}/bin/kanshi"; always = true; }
+        { command = "pkill kanshi; kanshi"; always = true; }
       ];
       modifier = "Mod4"; #SUPER KEY
       terminal = "${pkgs.alacritty}/bin/alacritty";
@@ -55,9 +55,9 @@
 
       workspaceOutputAssign = [
         { workspace = "1"; output = "eDP-1"; }
-        { workspace = "2"; output = "DP-2 DP-6 eDP-1"; }
-        { workspace = "3"; output = "DP-2 DP-6 eDP-1"; }
-        { workspace = "4"; output = "DP-2 DP-6 eDP-1"; }
+        { workspace = "2"; output = "DP-1 DP-6 eDP-1"; }
+        { workspace = "3"; output = "DP-1 DP-6 eDP-1"; }
+        { workspace = "4"; output = "DP-1 DP-6 eDP-1"; }
       ];
 
       assigns = {
@@ -76,12 +76,14 @@
       keybindings =
         let
           modifier = config.wayland.windowManager.sway.config.modifier;
+          lock_screen = "swaylock -f";
+          screenshot_dir = "$HOME/Pictures/Screenshots/$(date +%Y-%m-%d)";
         in
         lib.mkOptionDefault {
           "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
           "${modifier}+q" = "kill";
           "${modifier}+r" = "exec ${pkgs.rofi}/bin/rofi -show";
-          "${modifier}+l" = "exec swaylock -f";
+          "${modifier}+l" = "exec ${lock_screen}";
           "${modifier}+Shift+c" = "reload";
           "${modifier}+Shift+e" = "swaymsg exit";
 
@@ -120,9 +122,16 @@
           "${modifier}+Shift+9" = "move container to workspace number 9";
           "${modifier}+Shift+0" = "move container to workspace number 10";
 
+          # SwayNC controls
+          "${modifier}+N" = "exec swaync-client -t -sw"; # Toggle notification center
+
+          # Clipboard manager
+          "${modifier}+Shift+V" = "exec cliphist list | rofi -dmenu | cliphist decode | wl-copy";
+
           # Screenshots
-          # "Print" = "exec ${pkgs.grim}/bin/grim save active /home/$USER/screenshots/Screenshot-$(date -Iseconds | cut -d'+' -f1).png";
-          # "${modifier}+Print" = "exec ${pkgs.grimshot}/bin/grimshot save area /home/$USER/screenshots/Screenshot-$(date -Iseconds | cut -d'+' -f1).png";
+          "Print" = "exec mkdir -p ${screenshot_dir} && grim ${screenshot_dir}/$(date +'%H-%M-%S').png";
+          "Shift+Print" = "exec mkdir -p ${screenshot_dir} && grim -g \"$(slurp)\" ${screenshot_dir}/$(date +'%H-%M-%S').png";
+          "${modifier}+Print" = "exec mkdir -p ${screenshot_dir} && grim -g \"$(slurp)\" - | wl-copy";
           # "${modifier}+Shift+Print" = "exec ${pkgs.wf-recorder}/bin/wf-recorder -a -o eDP-1 -f /home/$USER/screenshots/Screenstream-$(date -Iseconds | cut -d'+' -f1).mp4";
 
           # Media keys
@@ -194,7 +203,7 @@
       };
 
       bars = [{
-        command = "${pkgs.waybar}/bin/waybar";
+        command = "waybar";
       }];
     };
 
