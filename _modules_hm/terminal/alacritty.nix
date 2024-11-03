@@ -27,8 +27,9 @@
       };
       colors = {
         transparent_background_colors = true;
+        draw_bold_text_with_bright_colors = true;
         primary = {
-          background = "#112211";
+          background = "#000000";
         };
       };
       mouse = {
