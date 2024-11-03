@@ -41,6 +41,7 @@
           ./hosts/x1g12-HM/home.nix
           ./_modules_hm/gui
           ./_modules_hm/terminal
+          ./_modules_hm/syncthing.nix
         ];
       };
       nixosConfigurations = {
