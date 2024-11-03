@@ -3,6 +3,25 @@
 , lib
 , ...
 }: {
+  # Add systemd service for swww daemon
+  systemd.user.services.swww = {
+    Unit = {
+      Description = "Wallpaper daemon for wayland";
+      PartOf = [ "sway-session.target" ];
+      After = [ "sway-session.target" ];
+    };
+    Service = {
+      ExecStartPre = "${pkgs.swww}/bin/swww-daemon";
+      ExecStart = "${pkgs.swww}/bin/swww-daemon";
+      ExecReload = "${pkgs.swww}/bin/swww kill";
+      Restart = "on-failure";
+      RestartSec = 3;
+    };
+    Install = {
+      WantedBy = [ "sway-session.target" ];
+    };
+  };
+
   wayland.windowManager.sway = {
     enable = true;
     package = config.lib.nixGL.wrap pkgs.sway;
@@ -24,9 +43,23 @@
 
         # Autotiling
         { command = "${pkgs.autotiling}/bin/autotiling"; always = true; }
+
+        # Auto monitor configuration
+        { command = "systemctl --user restart kanshi.service"; always = true; }
+
+        # Initialize swww and set initial wallpaper
+        {
+          command = ''
+            ${pkgs.swww}/bin/swww-daemon && \
+            ${pkgs.swww}/bin/swww img ~/nixcfg/extras/wallpapers/mario-home.gif
+          '';
+        }
+
         # Applications
+        { command = "google-chrome-stable --profile-directory=Default"; }
+        { command = "google-chrome-stable --profile-directory='Profile 1'"; }
         { command = "slack"; }
-        { command = "telegram-desktop"; }
+
         # Screen locking
         {
           command = ''
@@ -38,8 +71,6 @@
               before-sleep 'swaylock -f'
           '';
         }
-        # Auto monitor configuration
-        { command = "pkill kanshi; kanshi"; always = true; }
       ];
       modifier = "Mod4"; #SUPER KEY
       terminal = "${pkgs.alacritty}/bin/alacritty";
@@ -53,15 +84,9 @@
 
       defaultWorkspace = "workspace number 1";
 
-      workspaceOutputAssign = [
-        { workspace = "1"; output = "eDP-1"; }
-        { workspace = "2"; output = "DP-1 DP-6 eDP-1"; }
-        { workspace = "3"; output = "DP-1 DP-6 eDP-1"; }
-        { workspace = "4"; output = "DP-1 DP-6 eDP-1"; }
-      ];
-
       assigns = {
-        "3" = [{ class = "^Slack$"; }];
+        "2" = [{ class = "^Kourosh$"; }];
+        "3" = [{ class = "^Slack$"; } { class = "^Work$"; }];
         "4" = [{ app_id = "^org.telegram.desktop$"; }];
       };
 
@@ -226,5 +251,37 @@
     extraOptions = [
       "--unsupported-gpu"
     ];
+  };
+  # Optional: Create a shell script for easy wallpaper switching
+  home.file.".local/bin/wallpaper-switch" = {
+    executable = true;
+    text = ''
+      #!/bin/sh
+      CURSOR_POS=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .rect | "\(.x + .width / 2),\(.y + .height / 2)"')
+      
+      ${pkgs.swww}/bin/swww img "$1" \
+        --transition-type random \
+        --transition-fps 60 \
+        --transition-duration 2 \
+        --transition-pos "$CURSOR_POS"
+    '';
+  };
+
+  # Optional: Create a script for random wallpaper switching
+  home.file.".local/bin/wallpaper-random" = {
+    executable = true;
+    text = ''
+      #!/bin/sh
+      WALLPAPERS_DIR="$HOME/nixcfg/extras/wallpapers"
+      CURSOR_POS=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .rect | "\(.x + .width / 2),\(.y + .height / 2)"')
+      
+      RANDOM_WALL=$(find "$WALLPAPERS_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \) | shuf -n 1)
+      
+      ${pkgs.swww}/bin/swww img "$RANDOM_WALL" \
+        --transition-type random \
+        --transition-fps 60 \
+        --transition-duration 2 \
+        --transition-pos "$CURSOR_POS"
+    '';
   };
 }
