@@ -12,7 +12,6 @@
   ];
 
   home.packages = with pkgs; [
-    gnome-themes-extra
     gtk4
     grim
     nordic
@@ -32,6 +31,7 @@
 
     ## SWAY
     autotiling
+    swww
     # swaybg
     # swaycons
     # swayidle
