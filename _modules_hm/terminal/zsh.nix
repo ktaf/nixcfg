@@ -21,9 +21,10 @@
       rebase =
         "'git checkout main && git pull && git checkout - && git rebase main'";
       nixhm = "home-manager switch --flake .#kourosh";
+      deadnix = "nix run github:astro/deadnix -- -eq .";
       wayload = "rm ~/.config/waybar/config && cp ~/nixcfg/.config/waybar/config ~/.config/waybar/config && systemctl --user restart waybar";
-      clean = "sudo nix-collect-garbage -d";
-      cleanold = "sudo nix-collect-garbage --delete-old";
+      clean = "nix-collect-garbage -d";
+      cleanold = "nix-collect-garbage --delete-old";
     };
   };
 }

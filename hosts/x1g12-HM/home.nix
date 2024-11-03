@@ -129,7 +129,7 @@ in
       _1password-gui
       # networkmanager-openvpn
       # networkmanager-openconnect
-      openvpn
+      # openvpn
     ];
   };
 
