@@ -91,14 +91,13 @@ in
       libinput
       libdrm
       libxkbcommon
-      localstack
+      # localstack
       nemo
       neofetch
       nix-zsh-completions
       nmap
       obsidian
       ollama
-      opencryptoki
       openh264
       openra
       pciutils
@@ -110,7 +109,7 @@ in
       ripgrep
       s3cmd
       slack
-      terraform
+      tenv # terraform      # terragrunt
       tdesktop
       tfautomv
       trousers
@@ -125,9 +124,10 @@ in
 
       okta-aws-cli
       _1password-gui
-      # networkmanager-openvpn
-      # networkmanager-openconnect
-      # openvpn
+      # python3Full
+      # python311Packages.pip
+      python312Packages.invoke
+      pre-commit
     ];
   };
 
@@ -140,6 +140,7 @@ in
       core.editor = "code";
       protocol.keybase.allow = "always";
       pull.rebase = "false";
+      push.autoSetupRemote = true;
     };
   };
 

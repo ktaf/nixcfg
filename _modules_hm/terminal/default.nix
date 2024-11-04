@@ -32,13 +32,18 @@
     })
 
     gnupg
-    pcsctools
-    yubikey-personalization
-    yubikey-personalization-gui
-    yubikey-manager
-    yubikey-manager-qt
-    yubico-piv-tool
-    yubioath-flutter
+    gnupg-pkcs11-scd
+    pcsc-tools
+    eid-mw
+    scmccid
+    opencryptoki
+
+    # yubikey-personalization
+    # yubikey-personalization-gui
+    # yubikey-manager
+    # yubikey-manager-qt
+    # yubico-piv-tool
+    # yubioath-flutter
 
   ];
   # Allow fontconfig to discover fonts and configurations installed through home.packages

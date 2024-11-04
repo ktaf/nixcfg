@@ -48,7 +48,7 @@
     playerctl
     cliphist
     wl-clipboard
-    wf-recorder
+    # wf-recorder
 
     meson
     cairo
