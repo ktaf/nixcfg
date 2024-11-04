@@ -18,8 +18,7 @@
       tf = "terraform";
       tg = "terragrunt";
       ssh = "TERM=xterm-256color ssh";
-      rebase =
-        "'git checkout main && git pull && git checkout - && git rebase main'";
+      rebase = "git checkout main && git pull && git checkout - && git rebase main";
       nixhm = "home-manager switch --flake .#kourosh";
       deadnix = "nix run github:astro/deadnix -- -eq .";
       wayload = "rm ~/.config/waybar/config && cp ~/nixcfg/.config/waybar/config ~/.config/waybar/config && systemctl --user restart waybar";
