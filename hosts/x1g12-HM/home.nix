@@ -23,8 +23,6 @@ in
   services = {
     systembus-notify.enable = true;
     blueman-applet.enable = true;
-    network-manager-applet.enable = true;
-
   };
 
   systemd.user.sessionVariables = {

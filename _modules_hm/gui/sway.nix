@@ -38,7 +38,7 @@
 
         # SystemD service is enabled in home.nix
         # # System tray applets
-        # { command = "nm-applet --indicator"; }
+        { command = "nm-applet --indicator"; }
         # { command = "${pkgs.blueman}/bin/blueman-applet"; }
 
         # Autotiling
