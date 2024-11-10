@@ -55,6 +55,14 @@
           '';
         }
 
+        # Clipboard history & Image clipboard history
+        {
+          command = ''
+            wl-paste --type text --watch cliphist store && \
+            wl-paste --type image --watch cliphist store
+          '';
+        }
+
         # Applications
         { command = "google-chrome-stable --profile-directory=Default"; }
         { command = "google-chrome-stable --profile-directory='Profile 1'"; }
