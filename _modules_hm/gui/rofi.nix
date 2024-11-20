@@ -1,8 +1,10 @@
 { ... }: {
 
+  home.file."/home/kourosh/.config/rofi/config.rasi".source = ../../.config/rofi/config.rasi;
+  home.file."/home/kourosh/.config/rofi/colors.rasi".source = ../../.config/rofi/colors.rasi;
   programs.rofi = {
     enable = true;
-    # configPath = " ../.config/rofi/config.rasi";
+    font = "JetBrains Mono Nerd Font 11.6";
     theme = builtins.readFile ../../.config/rofi/themes/catppuccin-mocha.rasi;
   };
 }

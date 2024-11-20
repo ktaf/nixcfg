@@ -11,7 +11,7 @@
 configuration {
 	modi:                       "drun,run,filebrowser,window";
     show-icons:                 true;
-    icon-theme:               "Papirus";
+    icon-theme:                 "Papirus";
     display-drun:               " ";
     display-run:                " ";
     display-filebrowser:        " ";
@@ -22,7 +22,6 @@ configuration {
 
 /*****----- Global Properties -----*****/
 @import                          "./colors.rasi"
-@import                          "./fonts.rasi"
 
 * {
     border-colour:               var(selected);
