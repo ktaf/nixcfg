@@ -11,11 +11,13 @@
       After = [ "sway-session.target" ];
     };
     Service = {
-      ExecStartPre = "${pkgs.swww}/bin/swww-daemon";
+      # ExecStartPre = "${pkgs.swww}/bin/swww-daemon";
+      Type = "simple";
       ExecStart = "${pkgs.swww}/bin/swww-daemon";
       ExecReload = "${pkgs.swww}/bin/swww kill";
       Restart = "on-failure";
       RestartSec = 3;
+      RemainAfterExit = true;
     };
     Install = {
       WantedBy = [ "sway-session.target" ];
@@ -237,28 +239,20 @@
 
       bars = [{
         command = "waybar";
+        trayOutput = "*";
       }];
     };
 
     extraConfig = ''
       bindswitch --reload --locked lid:on output $laptop disable
       bindswitch --reload --locked lid:off output $laptop enable
+      smart_borders on
       focus_follows_mouse always
     '';
 
     extraSessionCommands = ''
-      export SDL_VIDEODRIVER=wayland
-      export QT_QPA_PLATFORM=wayland
-      export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-      export _JAVA_AWT_WM_NONREPARENTING=1
-      export MOZ_ENABLE_WAYLAND=1
-      export XDG_CURRENT_DESKTOP=sway
-      export XDG_SESSION_DESKTOP=sway
-    '';
 
-    extraOptions = [
-      "--unsupported-gpu"
-    ];
+    '';
   };
   # Optional: Create a shell script for easy wallpaper switching
   home.file.".local/bin/wallpaper-switch" = {
