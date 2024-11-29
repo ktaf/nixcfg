@@ -10,12 +10,12 @@
           outputs = [
             {
               criteria = "eDP-1";
-              mode = "1920x1200@60.026Hz";
+              mode = "1920x1200@60Hz";
               position = "3440,240";
             }
             {
               criteria = "Dell Inc. DELL S3422DWG FSF4KK3";
-              mode = "3440x1440@99.982Hz";
+              mode = "3440x1440@99.98Hz";
               position = "0,0";
             }
             # exec if grep -q open /proc/acpi/button/lid/LID0/state; then swaymsg output eDP-1 enable; else swaymsg output eDP-1 disable; fi
@@ -28,7 +28,7 @@
           outputs = [
             {
               criteria = "eDP-1";
-              mode = "1920x1200@60.026Hz";
+              mode = "1920x1200@60Hz";
               position = "3440,240";
             }
             {
@@ -46,7 +46,7 @@
           outputs = [
             {
               criteria = "eDP-1";
-              mode = "1920x1200@60.026Hz";
+              mode = "1920x1200@60Hz";
               position = "0,0";
             }
           ];
