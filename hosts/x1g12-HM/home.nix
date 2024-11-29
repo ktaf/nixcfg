@@ -31,15 +31,27 @@ in
   home = {
     username = "${user}";
     homeDirectory = "/home/${user}";
-    stateVersion = "24.11";
+    stateVersion = "25.05";
 
     sessionVariables = {
+      # Wayland specific
+      QT_QPA_PLATFORM = "wayland";
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+      _JAVA_AWT_WM_NONREPARENTING = 1;
+      MOZ_ENABLE_WAYLAND = 1;
       GDK_BACKEND = "wayland";
       GSK_RENDERER = "cairo";
       XCURSOR_THEME = "deafult";
       XCURSOR_SIZE = 24;
       SDL_VIDEODRIVER = "wayland";
       WLR_NO_HARDWARE_CURSORS = "1";
+
+      # Additional compatibility variables
+      CLUTTER_BACKEND = "wayland";
+      WINIT_UNIX_BACKEND = "wayland";
+      WLR_DRM_NO_ATOMIC = "1";
+      INTEL_DEBUG = "noccs";
+
       # Set default applications
       SHELL = "$HOME/.nix-profile/bin/zsh";
       TERMINAL = "alacritty";
@@ -59,6 +71,15 @@ in
       # # SSH Agent
       # SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/ssh-agent";
 
+      # GTK specific
+      GTK_USE_PORTAL = 1;
+
+      # Qt specific
+      QT_AUTO_SCREEN_SCALE_FACTOR = 1;
+      QT_WAYLAND_FORCE_DPI = "physical";
+
+      # PipeWire related (for screen sharing)
+      PIPEWIRE_RUNTIME_DIR = "/run/user/$(id -u)";
     };
 
     packages = with pkgs; [
@@ -90,6 +111,7 @@ in
       libudfread
       libinput
       libdrm
+      virt-manager
       libxkbcommon
       # localstack
       nemo
@@ -98,6 +120,7 @@ in
       nmap
       obsidian
       ollama
+      open-webui
       openh264
       openra
       pciutils
@@ -110,8 +133,11 @@ in
       s3cmd
       slack
       tenv # terraform      # terragrunt
+      terraform-docs
       tdesktop
       tfautomv
+      traceroute
+      tcptraceroute
       trousers
       vsh
       vscode
@@ -119,15 +145,26 @@ in
       which
       whois
       wsdd
-      zoom
       polkit_gnome
+
+      minimodem
+      xfontsel
+
+      novnc
+      wayvnc
+      directvnc
 
       okta-aws-cli
       _1password-gui
-      # python3Full
-      # python311Packages.pip
+      python3Full
+      python312Packages.pip
       python312Packages.invoke
       pre-commit
+      google-cloud-sdk-gce
+
+      dbeaver-bin
+
+      (config.lib.nixGL.wrap pkgs.zoom-us)
     ];
   };
 
