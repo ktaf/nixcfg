@@ -11,6 +11,12 @@ in
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
+      permittedInsecurePackages = [
+        "dotnet-runtime-wrapped-6.0.36"
+        "dotnet-runtime-6.0.36"
+        "dotnet-sdk-wrapped-6.0.428"
+        "dotnet-sdk-6.0.428"
+      ];
     };
   };
 
@@ -146,6 +152,11 @@ in
       whois
       wsdd
       polkit_gnome
+      usbview
+      v4l-utils
+      libv4l
+      python312Packages.usb-monitor
+      usbrip
 
       minimodem
       xfontsel
@@ -161,8 +172,11 @@ in
       python312Packages.invoke
       pre-commit
       google-cloud-sdk-gce
+      ssm-session-manager-plugin
 
       dbeaver-bin
+
+      hugo
 
       (config.lib.nixGL.wrap pkgs.zoom-us)
     ];
