@@ -11,25 +11,34 @@
     font-awesome
     unicode-emoji
     rofimoji
-    nerdfonts
     ibm-plex
+    iosevka
     hack-font
     fira-code
-    fira-code-nerdfont
     fira-code-symbols
     jetbrains-mono
-    (nerdfonts.override {
-      fonts = [
-        "Hack"
-        "FiraCode"
-        "FiraMono"
-        "CascadiaCode"
-        "Cousine"
-        "DroidSansMono"
-        "JetBrainsMono"
-        "SourceCodePro"
-      ];
-    })
+    cascadia-code
+    nerd-fonts.hack
+    nerd-fonts.fira-code
+    nerd-fonts.fira-mono
+    nerd-fonts.cousine
+    nerd-fonts.droid-sans-mono
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.caskaydia-mono
+    nerd-fonts.caskaydia-cove
+    nerd-fonts.symbols-only
+    nerd-fonts.sauce-code-pro
+    nerd-fonts.fantasque-sans-mono
+    nerd-fonts.iosevka
+    nerd-fonts.iosevka-term
+    nerd-fonts.zed-mono
+    nerd-fonts.iosevka-term-slab
+    nerd-fonts.monoid
+    nerd-fonts.mplus
+    nerd-fonts.hasklug
+    nerd-fonts.inconsolata
+    nerd-fonts.mononoki
+    nerd-fonts.hurmit
 
     gnupg
     gnupg-pkcs11-scd

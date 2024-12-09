@@ -1,6 +1,6 @@
 * {
   /* Base styles */
-  font-family: "Material Design Icons", "JetBrainsMono Nerd Font", "Iosevka Nerd Font";
+  font-family: "Material Design Icons", "JetBrainsMono", "Iosevka";
   font-size: 14px;
   border: none;
   border-radius: 0;
@@ -225,7 +225,7 @@ window#waybar.hidden {
 
 /* Tooltips */
 tooltip {
-  font-family: "Iosevka Nerd Font";
+  font-family: "Iosevka";
   border-radius: 10px;
   padding: 8px;
   background-color: #1f232b;
@@ -233,7 +233,7 @@ tooltip {
 }
 
 tooltip label {
-  font-family: "Iosevka Nerd Font";
+  font-family: "Iosevka";
   padding: 5px;
 }
 
