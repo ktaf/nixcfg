@@ -29,6 +29,7 @@ in
   services = {
     systembus-notify.enable = true;
     blueman-applet.enable = true;
+    trayscale.enable = true;
   };
 
   systemd.user.sessionVariables = {
@@ -89,7 +90,7 @@ in
     };
 
     packages = with pkgs; [
-      awscli2
+      # awscli2
       bat
       bluez
       blueman
@@ -126,7 +127,7 @@ in
       nmap
       obsidian
       ollama
-      open-webui
+      # open-webui
       openh264
       openra
       pciutils
@@ -134,7 +135,7 @@ in
       qbittorrent
       qdigidoc
       remmina
-      ripe-atlas-tools
+      # ripe-atlas-tools
       ripgrep
       s3cmd
       slack
@@ -163,7 +164,7 @@ in
 
       novnc
       wayvnc
-      directvnc
+      # directvnc
 
       okta-aws-cli
       _1password-gui
@@ -177,6 +178,10 @@ in
       dbeaver-bin
 
       hugo
+
+      vuls
+      # xsane
+      epsonscan2
 
       (config.lib.nixGL.wrap pkgs.zoom-us)
     ];
