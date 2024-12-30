@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, ghostty, config, ... }:
 {
 
   imports = [
@@ -8,6 +8,7 @@
   ];
 
   home.packages = with pkgs; [
+    (config.lib.nixGL.wrap pkgs.ghostty)
     font-awesome
     unicode-emoji
     rofimoji
