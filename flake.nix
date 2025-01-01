@@ -17,11 +17,8 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-    };
   };
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixGL, nix-index-database, ghostty, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixGL, nix-index-database, ... } @ inputs:
     let
       user = "kourosh";
       system = "x86_64-linux";
@@ -38,7 +35,7 @@
       homeConfigurations."${user}" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-          inherit self nixpkgs inputs nixGL ghostty;
+          inherit self nixpkgs inputs nixGL;
         };
         modules = [
           nix-index-database.hmModules.nix-index
@@ -87,22 +84,6 @@
                 useUserPackages = true;
                 extraSpecialArgs = { inherit user; };
                 users.${user} = import ./hosts/xps9510/home.nix;
-              };
-            }
-          ];
-        };
-        lat7310 = lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit user; };
-          modules = [
-            ./hosts/lat7310/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = { inherit user; };
-                users.${user} = import ./hosts/lat7310/home.nix;
               };
             }
           ];

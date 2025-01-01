@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }: {
   # Include the results of the hardware scan.
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
