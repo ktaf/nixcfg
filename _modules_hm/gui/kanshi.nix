@@ -1,5 +1,4 @@
 { ... }: {
-
   services.kanshi = {
     enable = true;
     systemdTarget = "sway-session.target";
@@ -18,7 +17,9 @@
               mode = "3440x1440@99.98Hz";
               position = "0,0";
             }
-            # exec if grep -q open /proc/acpi/button/lid/LID0/state; then swaymsg output eDP-1 enable; else swaymsg output eDP-1 disable; fi
+          ];
+          exec = [
+            "[ $(cat /proc/acpi/button/lid/LID0/state | cut -f2 -d':' | tr -d '[:space:]') = closed ] && swaymsg output eDP-1 disable || swaymsg output eDP-1 enable"
           ];
         };
       }
@@ -36,7 +37,9 @@
               mode = "3440x1440@99.98Hz";
               position = "0,0";
             }
-            # exec if grep -q open /proc/acpi/button/lid/LID0/state; then swaymsg output eDP-1 enable; else swaymsg output eDP-1 disable; fi
+          ];
+          exec = [
+            "[ $(cat /proc/acpi/button/lid/LID0/state | cut -f2 -d':' | tr -d '[:space:]') = closed ] && swaymsg output eDP-1 disable || swaymsg output eDP-1 enable"
           ];
         };
       }

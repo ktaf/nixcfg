@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
 
   imports = [
@@ -25,13 +25,14 @@
     wayland-utils
     egl-wayland
     glfw-wayland
-    mesa
+    # mesa
+    libdrm
     wlogout
     xcur2png
 
     ## SWAY
     autotiling
-    swww
+    (config.lib.nixGL.wrap pkgs.swww)
     # swaybg
     # swaycons
     # swayidle

@@ -28,6 +28,7 @@
           allowUnfree = true;
           allowUnfreePredicate = _: true;
         };
+        overlays = [ nixGL.overlay ];
       };
       lib = nixpkgs.lib;
     in

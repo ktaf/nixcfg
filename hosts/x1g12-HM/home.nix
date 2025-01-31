@@ -5,6 +5,8 @@ in
 {
   nixGL = {
     packages = nixGL.packages;
+    defaultWrapper = "mesa";
+    installScripts = [ "mesa" ];
   };
 
   nixpkgs = {
@@ -16,6 +18,7 @@ in
         "dotnet-runtime-6.0.36"
         "dotnet-sdk-wrapped-6.0.428"
         "dotnet-sdk-6.0.428"
+        "python-2.7.18.8"
       ];
     };
   };
@@ -44,20 +47,13 @@ in
       # Wayland specific
       QT_QPA_PLATFORM = "wayland";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-      _JAVA_AWT_WM_NONREPARENTING = 1;
-      MOZ_ENABLE_WAYLAND = 1;
+      _JAVA_AWT_WM_NONREPARENTING = "1";
+      MOZ_ENABLE_WAYLAND = "1";
       GDK_BACKEND = "wayland";
-      GSK_RENDERER = "cairo";
-      XCURSOR_THEME = "deafult";
-      XCURSOR_SIZE = 24;
+      GSK_RENDERER = "gl"; # Changed from cairo to gl for better performance
+      XCURSOR_THEME = "default";
+      XCURSOR_SIZE = "24";
       SDL_VIDEODRIVER = "wayland";
-      WLR_NO_HARDWARE_CURSORS = "1";
-
-      # Additional compatibility variables
-      CLUTTER_BACKEND = "wayland";
-      WINIT_UNIX_BACKEND = "wayland";
-      WLR_DRM_NO_ATOMIC = "1";
-      INTEL_DEBUG = "noccs";
 
       # Set default applications
       SHELL = "$HOME/.nix-profile/bin/zsh";
@@ -78,18 +74,16 @@ in
       # # SSH Agent
       # SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/ssh-agent";
 
-      # GTK specific
-      GTK_USE_PORTAL = 1;
-
-      # Qt specific
-      QT_AUTO_SCREEN_SCALE_FACTOR = 1;
-      QT_WAYLAND_FORCE_DPI = "physical";
+      # # Qt specific
+      # QT_AUTO_SCREEN_SCALE_FACTOR = 1;
+      # QT_WAYLAND_FORCE_DPI = "physical";
 
       # PipeWire related (for screen sharing)
       PIPEWIRE_RUNTIME_DIR = "/run/user/$(id -u)";
     };
 
     packages = with pkgs; [
+      avahi
       awscli2
       bat
       bluez
@@ -99,6 +93,7 @@ in
       curl
       dbus
       dig
+      docker-compose
       elinks
       eza # better ls command
       zoxide # better cd command
@@ -117,7 +112,6 @@ in
       libdigidocpp
       libudfread
       libinput
-      libdrm
       virt-manager
       libxkbcommon
       # localstack
@@ -168,7 +162,9 @@ in
 
       okta-aws-cli
       _1password-gui
+      # poetry
       python3Full
+      python.pkgs.pip
       python312Packages.pip
       python312Packages.invoke
       pre-commit
@@ -179,9 +175,13 @@ in
 
       hugo
 
+      vkmark
+      # vpl-gpu-rt 
+      # mkl # Installed via apt Intel® oneAPI Base Toolkit
+
       vuls
       # xsane
-      epsonscan2
+      # epsonscan2
 
       (config.lib.nixGL.wrap pkgs.zoom-us)
     ];

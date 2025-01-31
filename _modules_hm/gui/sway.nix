@@ -1,26 +1,24 @@
-{ pkgs
-, config
-, lib
-, ...
-}: {
+{ pkgs, config, lib, ... }:
+{
   # Add systemd service for swww daemon
   systemd.user.services.swww = {
     Unit = {
       Description = "Wallpaper daemon for wayland";
-      PartOf = [ "sway-session.target" ];
-      After = [ "sway-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+      Requires = [ "sway-session.target" ];
     };
     Service = {
-      # ExecStartPre = "${pkgs.swww}/bin/swww-daemon";
       Type = "simple";
+      Environment = "SWWW_TRANSITION_FPS=30"; # Lower FPS for better stability
       ExecStart = "${pkgs.swww}/bin/swww-daemon";
       ExecReload = "${pkgs.swww}/bin/swww kill";
-      Restart = "on-failure";
+      Restart = "always";
       RestartSec = 3;
-      RemainAfterExit = true;
+      TimeoutStartSec = 10;
     };
     Install = {
-      WantedBy = [ "sway-session.target" ];
+      WantedBy = [ "graphical-session.target" ];
     };
   };
 
@@ -66,8 +64,8 @@
         }
 
         # Applications
-        { command = "google-chrome-stable --profile-directory=Default"; }
-        { command = "google-chrome-stable --profile-directory='Profile 1'"; }
+        { command = "google-chrome-stable --profile-directory=Default --disable-features=RegistrationDeprecation"; }
+        { command = "google-chrome-stable --profile-directory='Profile 1' --disable-features=RegistrationDeprecation"; }
         { command = "slack"; }
 
         # Screen locking
@@ -187,6 +185,14 @@
         border = 2;
         commands = [
           {
+            command = "max_render_time 1";
+            criteria = { class = "^.*"; };
+          }
+          {
+            command = "max_render_time 1";
+            criteria = { app_id = "^.*"; };
+          }
+          {
             command = "floating enable, sticky toggle";
             criteria = { title = "Picture-in-picture"; };
           }
@@ -251,7 +257,14 @@
     '';
 
     extraSessionCommands = ''
-
+      # Graphics
+      export WLR_DRM_NO_ATOMIC=1
+      export WLR_NO_HARDWARE_CURSORS=1
+      export __GLX_VENDOR_LIBRARY_NAME=mesa
+      
+      # Performance
+      export VBLANK_MODE=0
+      export __GL_SYNC_TO_VBLANK=0
     '';
   };
   # Optional: Create a shell script for easy wallpaper switching
