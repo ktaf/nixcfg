@@ -5,6 +5,5 @@
   programs.rofi = {
     enable = true;
     font = "JetBrains Mono Nerd Font 11.6";
-    theme = builtins.readFile ../../.config/rofi/themes/catppuccin-mocha.rasi;
   };
 }
