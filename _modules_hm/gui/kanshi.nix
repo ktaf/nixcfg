@@ -18,9 +18,9 @@
               position = "0,0";
             }
           ];
-          exec = [
-            "[ $(cat /proc/acpi/button/lid/LID0/state | cut -f2 -d':' | tr -d '[:space:]') = closed ] && swaymsg output eDP-1 disable || swaymsg output eDP-1 enable"
-          ];
+          # exec = [
+          #   "[ $(cat /proc/acpi/button/lid/LID0/state | cut -f2 -d':' | tr -d '[:space:]') = closed ] && swaymsg output eDP-1 disable || swaymsg output eDP-1 enable"
+          # ];
         };
       }
       {
@@ -38,9 +38,9 @@
               position = "0,0";
             }
           ];
-          exec = [
-            "[ $(cat /proc/acpi/button/lid/LID0/state | cut -f2 -d':' | tr -d '[:space:]') = closed ] && swaymsg output eDP-1 disable || swaymsg output eDP-1 enable"
-          ];
+          # exec = [
+          #   "[ $(cat /proc/acpi/button/lid/LID0/state | cut -f2 -d':' | tr -d '[:space:]') = closed ] && swaymsg output eDP-1 disable || swaymsg output eDP-1 enable"
+          # ];
         };
       }
       {
