@@ -10,7 +10,7 @@
     style = builtins.readFile ../../.config/waybar/style.css;
     settings = {
       mainBar = {
-        height = 30;
+        height = 32;
         margin = "0 0 0 0";
         layer = "bottom";
         position = "top";
@@ -86,7 +86,7 @@
         };
 
         clock = {
-          timezone = "local";
+          timezone = "Europe/Tallinn";
           "tooltip-format" = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
           format = "{:%a, %d %b  %H:%M}";
           "format-alt" = "{:%Y-%m-%d %H:%M:%S}";
