@@ -100,9 +100,10 @@ in
       ffmpeg
       fluxcd
       fzf
-      google-chrome
+      (config.lib.nixGL.wrap pkgs.google-chrome)
       grive2
       htop
+      intel-gmmlib
       jq
       kind
       krew
@@ -115,8 +116,10 @@ in
       virt-manager
       libxkbcommon
       # localstack
+      mission-center
       nemo
       neofetch
+      nixgl.nixGLIntel
       nix-zsh-completions
       nmap
       obsidian
@@ -132,7 +135,7 @@ in
       # ripe-atlas-tools
       ripgrep
       s3cmd
-      slack
+      (config.lib.nixGL.wrap pkgs.slack)
       tenv # terraform      # terragrunt
       terraform-docs
       tdesktop
@@ -141,7 +144,7 @@ in
       tcptraceroute
       trousers
       vsh
-      vscode
+      (config.lib.nixGL.wrap pkgs.vscode)
       winbox
       which
       whois
@@ -182,7 +185,7 @@ in
       vuls
       # xsane
       # epsonscan2
-
+      zerotierone
       (config.lib.nixGL.wrap pkgs.zoom-us)
     ];
   };
