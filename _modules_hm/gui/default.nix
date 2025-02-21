@@ -16,6 +16,8 @@
     grim
     nordic
     papirus-icon-theme
+    adwaita-icon-theme # Fallback icons
+    hicolor-icon-theme # Base icon theme
     slurp
     wdisplays
     wlr-randr
@@ -69,4 +71,8 @@
     qt6ct
     yad
   ];
+  home.sessionVariables = {
+    GTK_THEME = "Adwaita-dark";
+    ICON_THEME = "Papirus-Dark";
+  };
 }

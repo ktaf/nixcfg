@@ -14,8 +14,15 @@
       name = "Hack Nerd 12";
       package = pkgs.hack-font;
     };
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+      gtk-icon-theme-name = "Papirus-Dark";
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+      gtk-icon-theme-name = "Papirus-Dark";
+    };
   };
-
   # QT
   qt = {
     enable = true;
