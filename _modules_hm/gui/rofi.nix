@@ -4,6 +4,6 @@
   home.file."/home/kourosh/.config/rofi/colors.rasi".source = ../../.config/rofi/colors.rasi;
   programs.rofi = {
     enable = true;
-    font = "JetBrains Mono Nerd Font 11.6";
+    font = "JetBrainsMono Nerd Font 11.6";
   };
 }

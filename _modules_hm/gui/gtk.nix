@@ -11,7 +11,7 @@
       package = pkgs.papirus-icon-theme;
     };
     font = {
-      name = "Hack Nerd 12";
+      name = "Hack Nerd Font 12";
       package = pkgs.hack-font;
     };
     gtk3.extraConfig = {
