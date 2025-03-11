@@ -48,12 +48,19 @@ in
       QT_QPA_PLATFORM = "wayland";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       _JAVA_AWT_WM_NONREPARENTING = "1";
+      # Hardware rendering
       MOZ_ENABLE_WAYLAND = "1";
+      MOZ_ACCELERATED = "1";
+      MOZ_WEBRENDER = "1";
+
       GDK_BACKEND = "wayland";
       GSK_RENDERER = "gl"; # Changed from cairo to gl for better performance
       XCURSOR_THEME = "default";
       XCURSOR_SIZE = "24";
       SDL_VIDEODRIVER = "wayland";
+      CLUTTER_BACKEND = "wayland";
+
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
 
       # Set default applications
       SHELL = "$HOME/.nix-profile/bin/zsh";
