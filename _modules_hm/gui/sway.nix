@@ -29,12 +29,25 @@
 
     systemd = {
       enable = true;
+      variables = [ "--all" ];
     };
 
     config = {
       startup = [
         # Environment setup for screensharing IMORTANT!
-        { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway"; }
+        { command = "dbus-update-activation-environment --systemd --all"; } #command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway";
+
+        # GTK fixes
+        {
+          command = ''
+            gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' \
+            gsettings set org.gnome.desktop.interface icon-theme 'Adwaita' \
+            gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita' \
+            gsettings set org.gnome.desktop.interface font-name 'Ubuntu 11'
+          '';
+        }
+
+        { command = "gnome-keyring-daemon --start --components=secrets"; }
 
         # SystemD service is enabled in home.nix
         # # System tray applets
@@ -74,7 +87,7 @@
             ${pkgs.swayidle}/bin/swayidle -w \
               timeout 300 'swaylock -f' \
               timeout 600 'swaymsg "output * dpms off"' \
-                resume 'swaymsg "output * dpms on"' \
+              resume 'swaymsg "output * dpms on"' \
               before-sleep '${pkgs.playerctl}/bin/playerctl pause' \
               before-sleep 'swaylock -f'
           '';
@@ -194,7 +207,11 @@
           }
           {
             command = "floating enable, sticky toggle";
-            criteria = { title = "Picture-in-picture"; };
+            criteria = { title = "Picture in picture"; };
+          }
+          {
+            command = "floating enable, sticky toggle";
+            criteria = { title = "Meet"; };
           }
           {
             command = "floating enable, resize set width 680 height 400, move position center";
@@ -261,10 +278,16 @@
       export WLR_DRM_NO_ATOMIC=1
       export WLR_NO_HARDWARE_CURSORS=1
       export __GLX_VENDOR_LIBRARY_NAME=mesa
+      export GBM_BACKEND=intel
+      export EGL_PLATFORM=wayland
       
       # Performance
       export VBLANK_MODE=0
       export __GL_SYNC_TO_VBLANK=0
+
+      export XDG_CURRENT_DESKTOP=sway
+      export XDG_SESSION_TYPE=wayland
+      export XDG_SESSION_DESKTOP=sway
     '';
   };
   # Optional: Create a shell script for easy wallpaper switching

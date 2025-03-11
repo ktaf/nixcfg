@@ -29,6 +29,8 @@
     glfw-wayland
     # mesa
     libdrm
+    libgbm
+    libglvnd
     wlogout
     xcur2png
 
@@ -43,7 +45,6 @@
 
     pango
     file
-    libglvnd
     libwebp
 
     brightnessctl
