@@ -27,7 +27,8 @@
     wayland-utils
     egl-wayland
     glfw-wayland
-    # mesa
+    mesa
+    mesa-gl-headers
     libdrm
     libgbm
     libglvnd

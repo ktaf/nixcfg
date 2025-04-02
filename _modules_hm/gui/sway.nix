@@ -3,17 +3,15 @@
   # Add systemd service for swww daemon
   systemd.user.services.swww = {
     Unit = {
-      Description = "Wallpaper daemon for wayland";
-      PartOf = [ "graphical-session.target" ];
+      Description = "Wallpaper daemon for Wayland";
       After = [ "graphical-session.target" ];
       Requires = [ "sway-session.target" ];
     };
     Service = {
       Type = "simple";
       Environment = "SWWW_TRANSITION_FPS=30"; # Lower FPS for better stability
-      ExecStart = "${pkgs.swww}/bin/swww-daemon";
-      ExecReload = "${pkgs.swww}/bin/swww kill";
-      Restart = "always";
+      ExecStart = "${pkgs.swww}/bin/swww daemon";
+      Restart = "on-failure";
       RestartSec = 3;
       TimeoutStartSec = 10;
     };
@@ -36,16 +34,6 @@
       startup = [
         # Environment setup for screensharing IMORTANT!
         { command = "dbus-update-activation-environment --systemd --all"; } #command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway";
-
-        # GTK fixes
-        {
-          command = ''
-            gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' \
-            gsettings set org.gnome.desktop.interface icon-theme 'Adwaita' \
-            gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita' \
-            gsettings set org.gnome.desktop.interface font-name 'Ubuntu 11'
-          '';
-        }
 
         { command = "gnome-keyring-daemon --start --components=secrets"; }
 
@@ -204,6 +192,10 @@
           {
             command = "max_render_time 1";
             criteria = { app_id = "^.*"; };
+          }
+          {
+            command = "floating enable, sticky toggle";
+            criteria = { title = "TelegramDesktop"; };
           }
           {
             command = "floating enable, sticky toggle";
