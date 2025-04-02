@@ -9,18 +9,15 @@ in
     installScripts = [ "mesa" ];
   };
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-      permittedInsecurePackages = [
-        "dotnet-runtime-wrapped-6.0.36"
-        "dotnet-runtime-6.0.36"
-        "dotnet-sdk-wrapped-6.0.428"
-        "dotnet-sdk-6.0.428"
-        "python-2.7.18.8"
-      ];
-    };
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [
+      "dotnet-runtime-wrapped-6.0.36"
+      "dotnet-runtime-6.0.36"
+      "dotnet-sdk-wrapped-6.0.428"
+      "dotnet-sdk-6.0.428"
+      "python-2.7.18.8"
+    ];
   };
 
   # Let Home Manager install and manage itself.
@@ -35,81 +32,77 @@ in
     trayscale.enable = true;
   };
 
-  systemd.user.sessionVariables = {
-    EDITOR = "code";
-  };
   home = {
-    username = "${user}";
+    username = user;
     homeDirectory = "/home/${user}";
     stateVersion = "25.05";
 
     sessionVariables = {
-      # Wayland specific
+      # Wayland configuration
       QT_QPA_PLATFORM = "wayland";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-      _JAVA_AWT_WM_NONREPARENTING = "1";
-      # Hardware rendering
+      GDK_BACKEND = "wayland";
+      CLUTTER_BACKEND = "wayland";
+      SDL_VIDEODRIVER = "wayland";
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
+
+      # Graphics and performance
       MOZ_ENABLE_WAYLAND = "1";
       MOZ_ACCELERATED = "1";
       MOZ_WEBRENDER = "1";
 
-      GDK_BACKEND = "wayland";
       GSK_RENDERER = "gl"; # Changed from cairo to gl for better performance
       XCURSOR_THEME = "default";
       XCURSOR_SIZE = "24";
-      SDL_VIDEODRIVER = "wayland";
-      CLUTTER_BACKEND = "wayland";
 
-      ELECTRON_OZONE_PLATFORM_HINT = "auto";
+      # XDG Base Directories
+      XDG_CONFIG_HOME = "$HOME/.config";
+      XDG_DATA_HOME = "$HOME/.local/share";
+      XDG_BIN_HOME = "$HOME/.local/bin";
+      XDG_LIB_HOME = "$HOME/.local/lib";
+      XDG_CACHE_HOME = "$HOME/.cache";
 
-      # Set default applications
+      # Default applications
       SHELL = "$HOME/.nix-profile/bin/zsh";
       TERMINAL = "alacritty";
       VISUAL = "code";
       EDITOR = "code";
       BROWSER = "google-chrome-stable";
       PAGER = "less";
-      # Set XDG directories
-      XDG_CONFIG_HOME = "$HOME/.config";
-      XDG_DATA_HOME = "$HOME/.local/share";
-      XDG_BIN_HOME = "$HOME/.local/bin";
-      XDG_LIB_HOME = "$HOME/.local/lib";
-      XDG_CACHE_HOME = "$HOME/.cache";
-      # Respect XDG directories
+
+      # Miscellaneous
       DOCKER_CONFIG = "$HOME/.config/docker";
-      LESSHISTFILE = "-"; # Disable less history
-      # # SSH Agent
-      # SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/ssh-agent";
-
-      # # Qt specific
-      # QT_AUTO_SCREEN_SCALE_FACTOR = 1;
-      # QT_WAYLAND_FORCE_DPI = "physical";
-
-      # PipeWire related (for screen sharing)
+      LESSHISTFILE = "-";
+      _JAVA_AWT_WM_NONREPARENTING = "1";
       PIPEWIRE_RUNTIME_DIR = "/run/user/$(id -u)";
     };
 
     packages = with pkgs; [
+      _1password-gui
+      alpaca
       avahi
       awscli2
       bat
-      bluez
       blueman
+      bluez
       cmake
       cpio
       curl
       dbus
+      dbeaver-bin
       dig
       docker-compose
       elinks
-      eza # better ls command
-      zoxide # better cd command
+      eza
       ffmpeg
+      firecracker
       fluxcd
       fzf
-      (config.lib.nixGL.wrap pkgs.google-chrome)
+      (config.lib.nixGL.wrap google-chrome)
       grive2
       htop
+      hugo
+      inframap
       intel-gmmlib
       jq
       kind
@@ -118,82 +111,63 @@ in
       kubectx
       kubernetes-helm
       libdigidocpp
-      libudfread
       libinput
-      virt-manager
+      libudfread
+      libv4l
       libxkbcommon
-      # localstack
+      localstack
+      minimodem
       mission-center
       nemo
       neofetch
-      nixgl.nixGLIntel
       nix-zsh-completions
+      nixgl.nixGLIntel
       nmap
+      novnc
       obsidian
+      okta-aws-cli
       ollama
-      # open-webui
       openh264
       openra
       pciutils
+      polkit_gnome
+      pre-commit
       pulseaudio
+      python.pkgs.pip
+      python312Packages.invoke
+      python312Packages.pip
+      python312Packages.tkinter
+      python312Packages.usb-monitor
+      python3Full
       qbittorrent
       qdigidoc
       remmina
-      # ripe-atlas-tools
       ripgrep
       s3cmd
-      (config.lib.nixGL.wrap pkgs.slack)
-      tenv # terraform      # terragrunt
-      terraform-docs
+      ssm-session-manager-plugin
       tdesktop
+      tcptraceroute
+      tenv
+      terraform-docs
       tfautomv
       traceroute
-      tcptraceroute
       trousers
+      usbview
+      usbrip
+      v4l-utils
+      virt-manager
+      vkmark
       vsh
-      (config.lib.nixGL.wrap pkgs.vscode)
-      winbox
+      wayvnc
       which
       whois
+      winbox
       wsdd
-      polkit_gnome
-      usbview
-      v4l-utils
-      libv4l
-      python312Packages.usb-monitor
-      usbrip
-
-      minimodem
       xfontsel
-
-      novnc
-      wayvnc
-      # directvnc
-
-      okta-aws-cli
-      _1password-gui
-      # poetry
-      python3Full
-      python.pkgs.pip
-      python312Packages.pip
-      python312Packages.invoke
-      pre-commit
-      google-cloud-sdk-gce
-      ssm-session-manager-plugin
-
-      dbeaver-bin
-
-      hugo
-
-      vkmark
-      # vpl-gpu-rt 
-      # mkl # Installed via apt Intel® oneAPI Base Toolkit
-
-      vuls
-      # xsane
-      # epsonscan2
-      zerotierone
-      (config.lib.nixGL.wrap pkgs.zoom-us)
+      zoxide
+      (config.lib.nixGL.wrap slack)
+      (config.lib.nixGL.wrap vscode)
+      (config.lib.nixGL.wrap zoom-us)
     ];
   };
 
@@ -213,5 +187,4 @@ in
   xdg.configFile."environment.d/envvars.conf".text = ''
     PATH="$HOME/.nix-profile/bin:$PATH"
   '';
-
 }
