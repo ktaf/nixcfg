@@ -35,8 +35,6 @@ USE_POWERLINE="true"
 # KUBE Editor
 export KUBE_EDITOR="code -w"
 
-export PATH=$PATH:$HOME/minio-binaries/
-
 alias rebase='n=$(git branch -l master main|xargs echo) && git checkout $n && git pull && git checkout - && git rebase $n'
 
 autoload -U compinit; compinit

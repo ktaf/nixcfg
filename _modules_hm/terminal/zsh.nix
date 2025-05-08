@@ -4,7 +4,7 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    initExtra = builtins.readFile ../../extras/zshrc;
+    initContent = builtins.readFile ../../extras/zshrc;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh = { enable = true; };
