@@ -239,7 +239,11 @@
           }
           {
             command = "floating enable, sticky toggle";
-            criteria = { title = "^.Sign in*"; };
+            criteria = { title = "^Sign in*"; };
+          }
+          {
+            command = "floating enable, sticky toggle";
+            criteria = { title = "^Logige sisse*"; };
           }
           {
             command = "inhibit_idle fullscreen";
@@ -259,15 +263,14 @@
     };
 
     extraConfig = ''
-      bindswitch --reload --locked lid:on output $laptop disable
-      bindswitch --reload --locked lid:off output $laptop enable
+      bindswitch --reload --locked lid:on output eDP-1 disable
+      bindswitch --reload --locked lid:off output eDP-1 enable
       smart_borders on
       focus_follows_mouse always
     '';
 
     extraSessionCommands = ''
       # Graphics
-      export WLR_DRM_NO_ATOMIC=1
       export WLR_NO_HARDWARE_CURSORS=1
       export __GLX_VENDOR_LIBRARY_NAME=mesa
       export GBM_BACKEND=intel
