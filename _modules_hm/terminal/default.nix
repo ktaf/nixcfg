@@ -18,6 +18,7 @@
     fira-code-symbols
     jetbrains-mono
     cascadia-code
+    comfortaa
     nerd-fonts.hack
     nerd-fonts.fira-code
     nerd-fonts.fira-mono
@@ -34,7 +35,6 @@
     nerd-fonts.zed-mono
     nerd-fonts.iosevka-term-slab
     nerd-fonts.monoid
-    nerd-fonts.mplus
     nerd-fonts.hasklug
     nerd-fonts.inconsolata
     nerd-fonts.mononoki

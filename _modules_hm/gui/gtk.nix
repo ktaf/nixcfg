@@ -26,7 +26,7 @@
   # QT
   qt = {
     enable = true;
-    style.name = "adwaita-dark";
+    style.name = "Adwaita-dark";
     platformTheme.name = "qtct";
   };
 }
