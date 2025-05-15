@@ -1,6 +1,9 @@
-### cp /usr/share/wayland-sessions/sway.desktop
 [Desktop Entry]
 Name=Sway
-Comment=An intelligent dynamic tiling Wayland compositor
+Comment=An intelligent dynamic tiling Wayland compositor for Wayland
 Exec=/home/kourosh/.nix-profile/bin/sway
 Type=Application
+DesktopNames=sway
+# register with GDM (so “lock screen,” fallback, etc. work)
+X-GDM-SessionRegisters=true
+X-GDM-CanRunHeadless=true

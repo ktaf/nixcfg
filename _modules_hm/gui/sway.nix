@@ -1,25 +1,5 @@
 { pkgs, config, lib, ... }:
 {
-  # Add systemd service for swww daemon
-  systemd.user.services.swww = {
-    Unit = {
-      Description = "Wallpaper daemon for Wayland";
-      After = [ "graphical-session.target" ];
-      Requires = [ "sway-session.target" ];
-    };
-    Service = {
-      Type = "simple";
-      Environment = "SWWW_TRANSITION_FPS=30"; # Lower FPS for better stability
-      ExecStart = "${pkgs.swww}/bin/swww daemon";
-      Restart = "on-failure";
-      RestartSec = 3;
-      TimeoutStartSec = 10;
-    };
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-  };
-
   wayland.windowManager.sway = {
     enable = true;
     package = config.lib.nixGL.wrap pkgs.sway;
@@ -33,7 +13,7 @@
     config = {
       startup = [
         # Environment setup for screensharing IMORTANT!
-        { command = "dbus-update-activation-environment --systemd --all"; } #command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway";
+        { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway"; }
 
         { command = "gnome-keyring-daemon --start --components=secrets"; }
 
@@ -47,14 +27,6 @@
 
         # Auto monitor configuration
         { command = "systemctl --user restart kanshi.service"; always = true; }
-
-        # Initialize swww and set initial wallpaper
-        {
-          command = ''
-            ${pkgs.swww}/bin/swww-daemon && \
-            ${pkgs.swww}/bin/swww img ~/nixcfg/extras/wallpapers/mario-home.gif
-          '';
-        }
 
         # Clipboard history & Image clipboard history
         {
@@ -271,6 +243,7 @@
 
     extraSessionCommands = ''
       # Graphics
+      export WLR_DRM_NO_ATOMIC=1
       export WLR_NO_HARDWARE_CURSORS=1
       export __GLX_VENDOR_LIBRARY_NAME=mesa
       export GBM_BACKEND=intel
