@@ -5,7 +5,6 @@ in
 {
   nixGL = {
     packages = nixGL.packages;
-    defaultWrapper = "mesa";
     installScripts = [ "mesa" ];
   };
 
@@ -39,9 +38,9 @@ in
 
     sessionVariables = {
       # Wayland configuration
-      QT_QPA_PLATFORM = "wayland";
+      QT_QPA_PLATFORM = "wayland;xcb";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-      GDK_BACKEND = "wayland";
+      GDK_BACKEND = "wayland,x11,*";
       CLUTTER_BACKEND = "wayland";
       SDL_VIDEODRIVER = "wayland";
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
@@ -52,7 +51,7 @@ in
       MOZ_WEBRENDER = "1";
 
       GSK_RENDERER = "gl"; # Changed from cairo to gl for better performance
-      XCURSOR_THEME = "default";
+      XCURSOR_THEME = "Adwaita";
       XCURSOR_SIZE = "24";
 
       # XDG Base Directories
