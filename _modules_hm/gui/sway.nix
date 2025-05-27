@@ -1,5 +1,24 @@
 { pkgs, config, lib, ... }:
 {
+  # Add systemd service for swww daemon
+  systemd.user.services.swww = {
+    Unit = {
+      Description = "Wallpaper daemon for Wayland";
+      After = [ "graphical-session.target" ];
+      Requires = [ "sway-session.target" ];
+    };
+    Service = {
+      Type = "simple";
+      Environment = "SWWW_TRANSITION_FPS=30"; # Lower FPS for better stability
+      ExecStart = "${pkgs.swww}/bin/swww-daemon";
+      Restart = "on-failure";
+      RestartSec = 3;
+      TimeoutStartSec = 10;
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
   wayland.windowManager.sway = {
     enable = true;
     package = config.lib.nixGL.wrap pkgs.sway;
@@ -27,6 +46,8 @@
 
         # Auto monitor configuration
         { command = "systemctl --user restart kanshi.service"; always = true; }
+
+        { command = "swww-daemon && swww img ~/nixcfg/extras/wallpapers/mario-home.gif"; }
 
         # Clipboard history & Image clipboard history
         {

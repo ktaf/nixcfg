@@ -9,7 +9,6 @@
     ./waybar.nix
     ./swaync.nix
     ./sway.nix
-    ./swww.nix
   ];
 
   home.packages = with pkgs; [
