@@ -39,6 +39,8 @@
     nerd-fonts.inconsolata
     nerd-fonts.mononoki
     nerd-fonts.hurmit
+    material-icons
+    material-design-icons
 
     gnupg
     gnupg-pkcs11-scd
