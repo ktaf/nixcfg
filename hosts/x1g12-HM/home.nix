@@ -186,4 +186,7 @@ in
   xdg.configFile."environment.d/envvars.conf".text = ''
     PATH="$HOME/.nix-profile/bin:$PATH"
   '';
+  xdg.configFile."swaylock/config".text = ''
+    image=/home/kourosh/lockscreen.png
+  '';
 }

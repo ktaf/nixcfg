@@ -32,6 +32,7 @@
     libdrm
     libgbm
     libglvnd
+    lcms
     wlogout
     xcur2png
 
