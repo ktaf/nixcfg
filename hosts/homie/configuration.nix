@@ -44,12 +44,6 @@
   time.timeZone = "Europe/Tallinn";
   i18n.defaultLocale = "en_GB.UTF-8";
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${user} = {
     isNormalUser = true;
@@ -86,5 +80,5 @@
     };
   };
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }
