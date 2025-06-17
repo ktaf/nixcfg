@@ -46,6 +46,29 @@
         ];
       };
       nixosConfigurations = {
+        homie = lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit user; };
+          modules = [
+            ./hosts/homie/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = { inherit user; };
+                users.${user} = import ./hosts/homie/home.nix;
+              };
+            }
+          ];
+        };
+        arvanix = lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit user; };
+          modules = [
+            ./hosts/arvanix/configuration.nix
+          ];
+        };
         x1g12 = lib.nixosSystem {
           inherit system;
           specialArgs = { inherit user; };
@@ -63,34 +86,8 @@
             }
           ];
         };
-        arvanix = lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit user; };
-          modules = [
-            ./hosts/arvanix/configuration.nix
-          ];
-        };
-        xps9510 = lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit user; };
-          modules = [
-            ./hosts/xps9510/configuration.nix
-            nixos-hardware.nixosModules.dell-xps-15-9510
-            nixos-hardware.nixosModules.dell-xps-15-9510-nvidia
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = { inherit user; };
-                users.${user} = import ./hosts/xps9510/home.nix;
-              };
-            }
-          ];
-        };
       };
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
     };
 }
-
-#nixos-24.11
+#nixos-25.05
