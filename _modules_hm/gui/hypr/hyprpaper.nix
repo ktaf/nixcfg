@@ -7,11 +7,11 @@
       splash = false;
       splash_offset = 2.0;
 
-      preload = [ "/home/kourosh/nixcfg/extras/wallpapers/wallpaper.png" "/home/kourosh/nixcfg/extras/wallpapers/background.jpg" ];
+      preload = [ "${config.home.homeDirectory}/nixcfg/extras/wallpapers/wallpaper.png" "${config.home.homeDirectory}/nixcfg/extras/wallpapers/background.jpg" ];
 
       wallpaper = [
-        ", /home/kourosh/nixcfg/extras/wallpapers/wallpaper.png"
-        ", /home/kourosh/nixcfg/extras/wallpapers/background.jpg"
+        ", ${config.home.homeDirectory}/nixcfg/extras/wallpapers/wallpaper.png"
+        ", ${config.home.homeDirectory}/nixcfg/extras/wallpapers/background.jpg"
       ];
     };
   };

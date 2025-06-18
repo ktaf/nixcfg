@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Sway
 Comment=An intelligent dynamic tiling Wayland compositor for Wayland
-Exec=/home/kourosh/.nix-profile/bin/sway
+Exec=$HOME/.nix-profile/bin/sway
 Type=Application
 DesktopNames=sway
 # register with GDM (so “lock screen,” fallback, etc. work)

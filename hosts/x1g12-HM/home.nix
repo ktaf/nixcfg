@@ -187,6 +187,6 @@ in
     PATH="$HOME/.nix-profile/bin:$PATH"
   '';
   xdg.configFile."swaylock/config".text = ''
-    image=/home/kourosh/lockscreen.png
+    image=${config.home.homeDirectory}/lockscreen.png
   '';
 }

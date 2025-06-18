@@ -32,8 +32,8 @@
       ssh = "TERM=xterm-256color ssh";
       rebase =
         "'git checkout master && git pull && git checkout - && git rebase master'";
-      switch = "sudo nixos-rebuild switch --flake .#xps9510";
-      switchu = "sudo nixos-rebuild switch --upgrade --flake .#xps9510";
+      switch = "sudo nixos-rebuild switch --flake .#$(hostname)";
+      switchu = "sudo nixos-rebuild switch --upgrade --flake .#$(hostname)";
       clean = "sudo nix-collect-garbage -d";
       cleanold = "sudo nix-collect-garbage --delete-old";
       cleanboot = "sudo /run/current-system/bin/switch-to-configuration boot";
