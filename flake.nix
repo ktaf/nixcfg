@@ -30,6 +30,28 @@
         overlays = [ nixGL.overlay ];
       };
       lib = nixpkgs.lib;
+      makeNixosSystem = hostModule: { extraModules ? [ ] }:
+        let
+          dir = builtins.dirOf hostModule;
+          hasHome = builtins.pathExists (dir + "/home.nix");
+          hmModules =
+            if hasHome then [
+              home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  extraSpecialArgs = { inherit user; };
+                  users.${user} = import (dir + "/home.nix");
+                };
+              }
+            ] else [ ];
+        in
+        lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit user; };
+          modules = [ hostModule ] ++ hmModules ++ extraModules;
+        };
     in
     {
       homeConfigurations."${user}" = home-manager.lib.homeManagerConfiguration {
@@ -46,44 +68,11 @@
         ];
       };
       nixosConfigurations = {
-        homie = lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit user; };
-          modules = [
-            ./hosts/homie/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = { inherit user; };
-                users.${user} = import ./hosts/homie/home.nix;
-              };
-            }
-          ];
-        };
-        arvanix = lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit user; };
-          modules = [
-            ./hosts/arvanix/configuration.nix
-          ];
-        };
-        x1g12 = lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit user; };
-          modules = [
-            ./hosts/x1g12/configuration.nix
+        homie = makeNixosSystem ./hosts/homie/configuration.nix { };
+        arvanix = makeNixosSystem ./hosts/arvanix/configuration.nix { };
+        x1g12 = makeNixosSystem ./hosts/x1g12/configuration.nix {
+          extraModules = [
             nixos-hardware.nixosModules.lenovo-thinkpad-x1-12th-gen
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = { inherit user; };
-                users.${user} = import ./hosts/x1g12/home.nix;
-              };
-            }
           ];
         };
       };
