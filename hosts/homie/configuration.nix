@@ -83,6 +83,8 @@
       enable = true;
       package = pkgs.fwupd;
     };
+    # Immich
+    immich.enable = true;
   };
 
   system.stateVersion = "25.11";
