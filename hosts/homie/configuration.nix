@@ -37,7 +37,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_6_12;
+    kernelPackages = pkgs.linuxPackages_6_15;
   };
 
   # Set your time zone.
@@ -50,6 +50,8 @@
     description = "Kourosh";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
+      bat
+      eza
       htop
       openssl
       unzip
@@ -57,6 +59,9 @@
       wget
       vim
       curl
+      powertop
+      pciutils
+      ethtool
     ];
   };
 
