@@ -63,6 +63,7 @@ in
 
       # Default applications
       SHELL = "$HOME/.nix-profile/bin/zsh";
+      TERM = "xterm-256color";
       TERMINAL = "alacritty";
       VISUAL = "code";
       EDITOR = "code";
@@ -97,7 +98,7 @@ in
       firecracker
       fluxcd
       fzf
-      (config.lib.nixGL.wrap google-chrome)
+      google-chrome
       grive2
       htop
       hugo
@@ -164,9 +165,9 @@ in
       wsdd
       xfontsel
       zoxide
-      (config.lib.nixGL.wrap slack)
-      (config.lib.nixGL.wrap vscode)
-      (config.lib.nixGL.wrap zoom-us)
+      slack
+      vscode
+      zoom-us
     ];
   };
 
