@@ -44,7 +44,7 @@
   time.timeZone = "Europe/Tallinn";
   i18n.defaultLocale = "en_GB.UTF-8";
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.${user} = {
     isNormalUser = true;
     description = "Kourosh";
@@ -84,7 +84,36 @@
       package = pkgs.fwupd;
     };
     # Immich
-    immich.enable = true;
+    immich = {
+      enable = true;
+      port = 2283;
+      accelerationDevices = null; # Enable hardware acceleration for all devices
+    };
+    nginx = {
+      enable = true;
+      virtualHosts."immich.homie.lan" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://[::1]:2283";
+          proxyWebsockets = true;
+          recommendedProxySettings = true;
+          extraConfig = ''
+            client_max_body_size 50000M;
+            proxy_read_timeout   600s;
+            proxy_send_timeout   600s;
+            send_timeout         600s;
+          '';
+        };
+      };
+    };
+  };
+
+  users.users.immich.extraGroups = [ "video" "render" ];
+
+  fileSystems."/var/lib/immich" = {
+    device = "/data/immich";
+    options = [ "bind" "nofail" ];
   };
 
   system.stateVersion = "25.11";
