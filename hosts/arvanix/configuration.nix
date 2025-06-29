@@ -41,7 +41,7 @@
         configurationLimit = 3;
       };
     };
-    kernelPackages = pkgs.linuxPackages_6_10; # pkgs.linuxPackages_latest
+    kernelPackages = pkgs.linuxPackages_6_15; # pkgs.linuxPackages_latest
   };
 
   # Set your time zone and locale
@@ -109,12 +109,10 @@
       curl
       dnsutils
       fzf
-      ripgrep
       fd
-      openvscode-server
       eza
     ];
   };
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.05";
 }
