@@ -18,7 +18,7 @@
         remote = "90.190.123.24"; # Replace with your Mikrotik's domain
         local = "185.226.118.126"; # Replace with your NixOS server's domain
         ttl = 255;
-        dev = "enp3s0"; # Specify a device name
+        dev = "sit0";  # Specify a device name
       };
     };
   };
