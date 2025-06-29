@@ -62,6 +62,10 @@
         X11Forwarding = false;
       };
     };
+    zerotierone = {
+      enable = true;
+      joinNetworks = ["8286ac0e471570c2"];
+       };
     # Enable fail2ban for additional security
     # fail2ban = {
     #   enable = false;
