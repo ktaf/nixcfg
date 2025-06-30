@@ -144,6 +144,7 @@ in
       remmina
       ripgrep
       s3cmd
+      sshfs
       ssm-session-manager-plugin
       tdesktop
       tcptraceroute
