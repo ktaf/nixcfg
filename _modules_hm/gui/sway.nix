@@ -232,7 +232,10 @@
           }
           {
             command = "floating enable, sticky toggle";
-            criteria = { title = "^Sign in*"; };
+            criteria = {
+              title = "^Sign in*";
+              window_type = "dialog";
+            };
           }
           {
             command = "floating enable, sticky toggle";
