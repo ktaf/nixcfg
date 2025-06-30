@@ -86,35 +86,50 @@
     # Immich
     immich = {
       enable = true;
+      package = pkgs.immich;
+      host = "192.168.2.32";
       port = 2283;
+      machine-learning.enable = true;
       accelerationDevices = null; # Enable hardware acceleration for all devices
+
+      database.enable = true;
+
     };
-    nginx = {
+    zerotierone = {
       enable = true;
-      virtualHosts."immich.homie.lan" = {
-        enableACME = true;
-        forceSSL = true;
-        locations."/" = {
-          proxyPass = "http://[::1]:2283";
-          proxyWebsockets = true;
-          recommendedProxySettings = true;
-          extraConfig = ''
-            client_max_body_size 50000M;
-            proxy_read_timeout   600s;
-            proxy_send_timeout   600s;
-            send_timeout         600s;
-          '';
-        };
-      };
-    };
+      joinNetworks = ["8286ac0e471570c2"];
+       };
+    # immich-public-proxy = {
+    #   enable = true;
+    #   openFirewall = true;
+
+    # };
+    # nginx = {
+    #   enable = true;
+    #   virtualHosts."immich.homie.lan" = {
+    #     # enableACME = true;
+    #     # forceSSL = true;
+    #     locations."/" = {
+    #       proxyPass = "http://[::1]:2283";
+    #       proxyWebsockets = true;
+    #       recommendedProxySettings = true;
+    #       extraConfig = ''
+    #         client_max_body_size 50000M;
+    #         proxy_read_timeout   600s;
+    #         proxy_send_timeout   600s;
+    #         send_timeout         600s;
+    #       '';
+    #     };
+    #   };
+    # };
   };
 
-  users.users.immich.extraGroups = [ "video" "render" ];
+  # users.users.immich.extraGroups = [ "video" "render" ];
 
-  fileSystems."/var/lib/immich" = {
-    device = "/data/immich";
-    options = [ "bind" "nofail" ];
-  };
+  # fileSystems."/var/lib/immich" = {
+  #   device = "/data/immich";
+  #   options = [ "bind" "nofail" ];
+  # };
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "25.05";
 }
