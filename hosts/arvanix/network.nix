@@ -3,7 +3,7 @@
 {
   networking = {
     hostName = "arvanix";
-    nameservers = [ "45.90.28.154" "45.90.30.154" ];
+    nameservers = [ "185.51.200.2" "178.22.122.100" ];
     enableIPv6 = true;
 
     # Enable IP forwarding
@@ -18,7 +18,7 @@
         remote = "90.190.123.24"; # Replace with your Mikrotik's domain
         local = "185.226.118.126"; # Replace with your NixOS server's domain
         ttl = 255;
-        dev = "sit0";  # Specify a device name
+        dev = "sit0"; # Specify a device name
       };
     };
   };
