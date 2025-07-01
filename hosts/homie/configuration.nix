@@ -59,9 +59,10 @@
       wget
       vim
       curl
-      powertop
       pciutils
       ethtool
+      smartmontools
+      linuxKernel.packages.linux_6_15.turbostat
     ];
   };
 
