@@ -98,8 +98,8 @@
     };
     zerotierone = {
       enable = true;
-      joinNetworks = ["8286ac0e471570c2"];
-       };
+      joinNetworks = [ "8286ac0e471570c2" ];
+    };
     # immich-public-proxy = {
     #   enable = true;
     #   openFirewall = true;
