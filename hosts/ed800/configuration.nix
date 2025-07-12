@@ -64,10 +64,8 @@
       smartmontools
       linuxKernel.packages.linux_6_15.turbostat
       powertop
-      cpupower
       msr-tools
       lm_sensors
-      nvidia-smi
     ];
   };
 
@@ -128,6 +126,8 @@
     #     };
     #   };
     # };
+    thermald.enable = true;
+    xserver.enable = false;
   };
 
   # users.users.immich.extraGroups = [ "video" "render" ];
@@ -137,12 +137,10 @@
   #   options = [ "bind" "nofail" ];
   # };
 
-  powerManagement.enable = true;
-  powerManagement.cpuFreqGovernor = "powersave";
-  services.thermald.enable = true;
-
-  services.xserver.enable = false;
-
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "powersave";
+  };
 
   system.stateVersion = "25.05";
 }
