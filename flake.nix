@@ -75,6 +75,7 @@
             nixos-hardware.nixosModules.lenovo-thinkpad-x1-12th-gen
           ];
         };
+        ed800 = makeNixosSystem ./hosts/ed800/configuration.nix { };
       };
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
     };
