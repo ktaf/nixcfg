@@ -63,6 +63,11 @@
       ethtool
       smartmontools
       linuxKernel.packages.linux_6_15.turbostat
+      powertop
+      cpupower
+      msr-tools
+      lm_sensors
+      nvidia-smi
     ];
   };
 
@@ -88,7 +93,7 @@
     immich = {
       enable = true;
       package = pkgs.immich;
-      host = "192.168.2.32";
+      host = "192.168.2.22";
       port = 2283;
       machine-learning.enable = true;
       accelerationDevices = null; # Enable hardware acceleration for all devices
@@ -96,10 +101,10 @@
       database.enable = true;
 
     };
-    zerotierone = {
-      enable = true;
-      joinNetworks = [ "8286ac0e471570c2" ];
-    };
+    # zerotierone = {
+    #   enable = true;
+    #   joinNetworks = [ "8286ac0e471570c2" ];
+    # };
     # immich-public-proxy = {
     #   enable = true;
     #   openFirewall = true;
@@ -131,6 +136,13 @@
   #   device = "/data/immich";
   #   options = [ "bind" "nofail" ];
   # };
+
+  powerManagement.enable = true;
+  powerManagement.cpuFreqGovernor = "powersave";
+  services.thermald.enable = true;
+
+  services.xserver.enable = false;
+
 
   system.stateVersion = "25.05";
 }
