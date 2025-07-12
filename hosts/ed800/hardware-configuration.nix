@@ -17,7 +17,6 @@
     "processor.max_cstate=10"
     "rcu_nocbs=0-11"
     "nohz=on"
-    "idle=nomwait"
   ];
   boot.extraModulePackages = [ ];
 
