@@ -116,6 +116,7 @@ in
       libv4l
       libxkbcommon
       localstack
+      looking-glass-client
       minimodem
       mission-center
       nemo
