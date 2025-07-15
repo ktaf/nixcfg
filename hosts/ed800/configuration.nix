@@ -3,6 +3,8 @@
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
     ./network.nix
+    ./nvidia.nix
+    ./vms.nix
     ../../_modules/shell.nix
   ];
 
