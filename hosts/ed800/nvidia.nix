@@ -1,4 +1,4 @@
-{ ... }:
+{ config, pkgs, ... }:
 
 {
   # Kernel options for IOMMU and NVIDIA
@@ -21,11 +21,6 @@
     open = true; # Use open kernel module
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-  };
-
-  # Coolbits: allow underclocking/overclocking, fan control (can be adjusted dynamically if needed)
-  hardware.nvidia.settings = {
-    "0/GPUPowerMizerMode" = "1"; # Prefer lowest power by default
   };
 
   environment.variables = {
