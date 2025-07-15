@@ -16,7 +16,7 @@
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = true; # Enables runtime power management
-    powerManagement.finegrained = true;
+    powerManagement.finegrained = false;
     nvidiaSettings = false;
     open = true; # Use open kernel module
     package = config.boot.kernelPackages.nvidiaPackages.stable;

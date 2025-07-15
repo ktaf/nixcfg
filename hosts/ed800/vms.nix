@@ -3,6 +3,10 @@
 {
   virtualisation = {
     libvirtd.enable = true;
+    libvirtd.qemu.verbatimConfig = ''
+      user = "root"
+      cgroup_controllers = [ "cpu" "memory" "cpuset" ]
+    '';
   };
 
   boot.kernelModules = [ "vfio" "vfio_pci" "vfio_iommu_type1" ];
@@ -19,13 +23,12 @@
     "nvidia"
   ];
 
-  users.users.youruser.extraGroups = [ "libvirtd" "kvm" ];
   users.users.${user}.extraGroups = [ "libvirtd" "qemu-libvirtd" "kvm" ];
 
   environment.systemPackages = with pkgs; [
     qemu_kvm
     swtpm
     OVMF
-    virt-manager # optional
+    looking-glass-client
   ];
 }
