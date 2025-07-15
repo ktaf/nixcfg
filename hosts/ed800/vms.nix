@@ -3,10 +3,10 @@
 {
   virtualisation = {
     libvirtd.enable = true;
-    libvirtd.qemu.verbatimConfig = ''
-      user = "root"
-      cgroup_controllers = [ "cpu" "memory" "cpuset" ]
-    '';
+    libvirtd.qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+    };
   };
 
   boot.kernelModules = [ "vfio" "vfio_pci" "vfio_iommu_type1" ];
@@ -29,6 +29,7 @@
     qemu_kvm
     swtpm
     OVMF
+    virt-manager
     looking-glass-client
   ];
 }
