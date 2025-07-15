@@ -34,7 +34,7 @@
         let
           dir = builtins.dirOf hostModule;
           hasHome = builtins.pathExists (dir + "/home.nix");
-          hmModules =
+          homeModules =
             if hasHome then [
               home-manager.nixosModules.home-manager
               {
@@ -50,7 +50,7 @@
         lib.nixosSystem {
           inherit system;
           specialArgs = { inherit user; };
-          modules = [ hostModule ] ++ hmModules ++ extraModules;
+          modules = [ hostModule ] ++ homeModules ++ extraModules;
         };
     in
     {
@@ -60,7 +60,7 @@
           inherit self nixpkgs inputs nixGL;
         };
         modules = [
-          nix-index-database.hmModules.nix-index
+          nix-index-database.homeModules.nix-index
           ./hosts/x1g12-HM/home.nix
           ./_modules_hm/gui
           ./_modules_hm/terminal
