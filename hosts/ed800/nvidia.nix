@@ -1,17 +1,14 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 
 {
-  # Kernel options for IOMMU and NVIDIA
-  boot.kernelParams = [
-    "intel_iommu=on"
-    "iommu=pt"
-    "nvidia.NVreg_UsePageAttributeTable=1"
-    "nvidia.NVreg_EnablePCIeGen3=1"
-    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-  ];
 
   # NVIDIA drivers with Open Kernel Module (recommended for passthrough stability)
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services = {
+    xserver = {
+      enable = false;
+      videoDrivers = [ "nvidia" ];
+    };
+  };
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -20,8 +17,15 @@
     nvidiaSettings = false;
     open = true; # Use open kernel module
     package = config.boot.kernelPackages.nvidiaPackages.stable;
-
   };
+  # hardware.nvidia = {
+  #   modesetting.enable = false;
+  #   powerManagement.enable = true;
+  #   powerManagement.finegrained = true;
+  #   nvidiaSettings = false;
+  #   open = false;
+  #   package = config.boot.kernelPackages.nvidiaPackages.stable;
+  # };
 
   environment.variables = {
     # Optional: disable GUI output on GPU

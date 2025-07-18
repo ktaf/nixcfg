@@ -68,6 +68,7 @@
       powertop
       msr-tools
       lm_sensors
+      neofetch
     ];
   };
 
@@ -129,7 +130,7 @@
     #   };
     # };
     thermald.enable = true;
-    xserver.enable = false;
+
   };
 
   # users.users.immich.extraGroups = [ "video" "render" ];
