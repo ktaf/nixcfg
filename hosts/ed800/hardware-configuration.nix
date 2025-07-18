@@ -22,14 +22,14 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/6f2e2bb7-9c71-44c9-9373-daeda3d2cd6a";
+      device = "/dev/disk/by-uuid/c7cf7128-d007-4a41-a04f-0ede058685f8";
       fsType = "btrfs";
       options = [ "subvol=@" ];
     };
 
   fileSystems."/boot" =
     {
-      device = "/dev/disk/by-uuid/E5A5-ECE9";
+      device = "/dev/disk/by-uuid/671E-AC0E";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
