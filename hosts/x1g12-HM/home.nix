@@ -148,11 +148,9 @@ in
       sshfs
       ssm-session-manager-plugin
       tdesktop
-      tcptraceroute
       tenv
       terraform-docs
       tfautomv
-      traceroute
       trousers
       usbview
       usbrip
