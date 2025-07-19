@@ -57,7 +57,7 @@
     spice-gtk
     spice-protocol
     qemu_kvm
-    win-virtio
+    virtio-win
     win-spice
     looking-glass-client
   ];
