@@ -119,6 +119,7 @@ in
       looking-glass-client
       minimodem
       mission-center
+      moonlight-qt
       nemo
       neofetch
       nix-zsh-completions
