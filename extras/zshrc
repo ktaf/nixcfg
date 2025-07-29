@@ -13,6 +13,20 @@ function git_branch() {
     fi
 }
 
+# Function to display hostname conditionally
+function show_hostname() {
+    local hostname=$(hostname)
+    local hidden_hostnames=("ktaf-x1" "Kourosh")
+    
+    for hidden in "${hidden_hostnames[@]}"; do
+        if [[ "${hostname}" == "${hidden}" ]]; then
+            return
+        fi
+    done
+    
+    echo "%F{14}${hostname}%f "
+}
+
 # Load vcs_info for Git status
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
@@ -21,8 +35,8 @@ zstyle ':vcs_info:*' check-for-changes true
 # Update the precmd function to call vcs_info, colorize_git_branch, and truncate_git_branch
 precmd() { vcs_info; }
 
-# Define the prompt
-PROMPT='%F{13}󱄅%f %F{12}%~%f$(git_branch) ➜ '
+# Define the prompt with conditional hostname
+PROMPT='$(show_hostname)%F{13}󱄅%f %F{12}%~%f$(git_branch) ➜ '
 
 
 ##########################################
