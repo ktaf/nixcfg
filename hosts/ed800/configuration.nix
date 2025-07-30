@@ -64,6 +64,9 @@
       linuxKernel.packages.linux_6_15.turbostat
       powertop
       msr-tools
+      hdparm
+      hd-idle
+      hddtemp
     ];
   };
 
