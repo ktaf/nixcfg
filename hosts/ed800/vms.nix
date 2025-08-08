@@ -27,8 +27,9 @@
       "vfio_iommu_type1"
       "vfio_virqfd"
     ];
+    # options vfio-pci ids=10de:1c82,10de:0fb9  #GTX 1050
     extraModprobeConfig = ''
-      options vfio-pci ids=10de:1c82,10de:0fb9
+      options vfio-pci ids=10de:1c07
     '';
   };
 
