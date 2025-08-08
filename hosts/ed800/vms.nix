@@ -5,7 +5,7 @@
     enable = true;
     qemu = {
       package = pkgs.qemu_kvm;
-      runAsRoot = true;
+      runAsRoot = false;
       swtpm.enable = true;
       ovmf.enable = true;
       ovmf.packages = [ pkgs.OVMFFull.fd ];
@@ -47,6 +47,8 @@
     win-spice
     looking-glass-client
   ];
+
+  services.qemuGuest.enable = true;
 
   environment.variables.LIBVIRT_DEFAULT_URI = "qemu:///system";
 }
