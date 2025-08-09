@@ -39,11 +39,6 @@
     ## SWAY
     autotiling
     (config.lib.nixGL.wrap pkgs.swww)
-    # swaybg
-    # swaycons
-    # swayidle
-    # swaylock-effects
-    # swaysome
 
     pango
     file
@@ -54,7 +49,6 @@
     playerctl
     cliphist
     wl-clipboard
-    # wf-recorder
 
     meson
     cairo

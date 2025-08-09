@@ -265,22 +265,9 @@
       focus_follows_mouse always
     '';
 
-    extraSessionCommands = ''
-      # Graphics
-      export WLR_DRM_NO_ATOMIC=1
-      export WLR_NO_HARDWARE_CURSORS=1
-      export __GLX_VENDOR_LIBRARY_NAME=mesa
-      export GBM_BACKEND=intel
-      export EGL_PLATFORM=wayland
-      
-      # Performance
-      export VBLANK_MODE=0
-      export __GL_SYNC_TO_VBLANK=0
+    # extraSessionCommands = ''
 
-      export XDG_CURRENT_DESKTOP=sway
-      export XDG_SESSION_TYPE=wayland
-      export XDG_SESSION_DESKTOP=sway
-    '';
+    # '';
   };
   # Optional: Create a shell script for easy wallpaper switching
   home.file.".local/bin/wallpaper-switch" = {
