@@ -40,7 +40,7 @@ in
       # Wayland configuration
       QT_QPA_PLATFORM = "wayland;xcb";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-      GDK_BACKEND = "wayland,x11,*";
+      GDK_BACKEND = "wayland";
       CLUTTER_BACKEND = "wayland";
       SDL_VIDEODRIVER = "wayland";
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
@@ -50,16 +50,20 @@ in
       MOZ_ACCELERATED = "1";
       MOZ_WEBRENDER = "1";
 
+      WLR_DRM_NO_ATOMIC = "1 sway";
+      WLR_NO_HARDWARE_CURSORS = "1";
+      WLR_RENDERER = "vulkan";
+      __GLX_VENDOR_LIBRARY_NAME = "mesa";
+
       GSK_RENDERER = "gl"; # Changed from cairo to gl for better performance
       XCURSOR_THEME = "Adwaita";
-      XCURSOR_SIZE = "24";
 
       # XDG Base Directories
-      XDG_CONFIG_HOME = "$HOME/.config";
-      XDG_DATA_HOME = "$HOME/.local/share";
-      XDG_BIN_HOME = "$HOME/.local/bin";
-      XDG_LIB_HOME = "$HOME/.local/lib";
-      XDG_CACHE_HOME = "$HOME/.cache";
+      XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
+      XDG_DATA_HOME = "${config.home.homeDirectory}/.local/share";
+      XDG_BIN_HOME = "${config.home.homeDirectory}/.local/bin";
+      XDG_LIB_HOME = "${config.home.homeDirectory}/.local/lib";
+      XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
 
       # Default applications
       SHELL = "$HOME/.nix-profile/bin/zsh";
@@ -128,7 +132,6 @@ in
       novnc
       obsidian
       okta-aws-cli
-      ollama
       openh264
       openra
       pciutils
