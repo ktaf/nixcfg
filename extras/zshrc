@@ -46,13 +46,6 @@ USE_POWERLINE="true"
 # USER AREA
 #
 
-# KUBE Editor
-export KUBE_EDITOR="code -w"
-
 alias rebase='n=$(git branch -l master main|xargs echo) && git checkout $n && git pull && git checkout - && git rebase $n'
 
 autoload -U compinit; compinit
-
-export PATH="${PATH}:${HOME}/.krew/bin"
-
-export TENV_DETACHED_PROXY=false

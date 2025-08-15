@@ -79,6 +79,12 @@ in
       LESSHISTFILE = "-";
       _JAVA_AWT_WM_NONREPARENTING = "1";
       PIPEWIRE_RUNTIME_DIR = "/run/user/$(id -u)";
+
+      # Work
+      KUBE_EDITOR = "code -w";
+      TENV_DETACHED_PROXY = "false";
+      TG_LOG_FORMAT = "bare";
+      TERRAGRUNT_QUIET = "true";
     };
 
     packages = with pkgs; [
