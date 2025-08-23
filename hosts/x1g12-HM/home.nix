@@ -110,6 +110,7 @@ in
       fzf
       google-chrome
       grive2
+      gum
       htop
       hugo
       inframap
