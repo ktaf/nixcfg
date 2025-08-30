@@ -4,7 +4,7 @@
   imports = [
     ./alacritty.nix
     ./zsh.nix
-    ./yubikey.nix
+    # ./yubikey.nix
   ];
 
   home.packages = with pkgs; [

@@ -11,10 +11,6 @@ in
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [
-      "dotnet-runtime-wrapped-6.0.36"
-      "dotnet-runtime-6.0.36"
-      "dotnet-sdk-wrapped-6.0.428"
-      "dotnet-sdk-6.0.428"
       "python-2.7.18.8"
     ];
   };
@@ -85,6 +81,7 @@ in
       TENV_DETACHED_PROXY = "false";
       TG_LOG_FORMAT = "bare";
       TERRAGRUNT_QUIET = "true";
+      SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
     };
 
     packages = with pkgs; [
@@ -108,6 +105,7 @@ in
       firecracker
       fluxcd
       fzf
+      go
       google-chrome
       grive2
       gum
@@ -140,7 +138,6 @@ in
       obsidian
       okta-aws-cli
       openh264
-      openra
       pciutils
       polkit_gnome
       pre-commit
@@ -158,6 +155,7 @@ in
       s3cmd
       sshfs
       ssm-session-manager-plugin
+      subnetcalc
       tdesktop
       tenv
       terraform-docs
