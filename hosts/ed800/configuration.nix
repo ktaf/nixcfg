@@ -73,14 +73,6 @@
   nixpkgs.config.allowUnfree = true;
 
   services = {
-    openssh = {
-      enable = true;
-      settings = {
-        PermitRootLogin = "no";
-        X11Forwarding = false;
-      };
-    };
-
     fwupd.enable = true;
     thermald.enable = true;
 
