@@ -29,7 +29,7 @@
     ];
     # options vfio-pci ids=10de:1c82,10de:0fb9  #GTX 1050
     extraModprobeConfig = ''
-      options vfio-pci ids=10de:1c07 #P106-100
+      options vfio-pci ids=10de:1c03,10de:10f1 #GeForce GTX 1060 6GB
     '';
   };
 
