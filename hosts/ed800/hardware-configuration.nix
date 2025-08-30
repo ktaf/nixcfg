@@ -22,7 +22,7 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/0fa91e39-1d7e-41e4-85df-6b553a3189e2";
+      device = "/dev/disk/by-label/NixOS";
       fsType = "btrfs";
       options = [ "subvol=@" ];
     };
@@ -33,6 +33,12 @@
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
+
+  fileSystems."/data" = {
+    device = "/dev/disk/by-label/DATA";
+    fsType = "btrfs";
+    options = [ "subvol=@data" "compress=zstd" "noatime" ];
+  };
 
   swapDevices =
     [{ device = "/dev/disk/by-uuid/03920487-a981-49d6-a504-322d388e9078"; }];
