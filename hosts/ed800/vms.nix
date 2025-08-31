@@ -17,20 +17,11 @@
     kernelParams = [
       "intel_iommu=on"
       "iommu=pt"
-      "nvidia.NVreg_UsePageAttributeTable=1"
-      "nvidia.NVreg_EnablePCIeGen3=1"
-      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+      "vfio-pci.ids=10de:1c03,10de:10f1" # GTX 1060 + HDA
     ];
-    kernelModules = [
-      "vfio"
-      "vfio_pci"
-      "vfio_iommu_type1"
-      "vfio_virqfd"
-    ];
-    # options vfio-pci ids=10de:1c82,10de:0fb9  #GTX 1050
-    extraModprobeConfig = ''
-      options vfio-pci ids=10de:1c03,10de:10f1 #GeForce GTX 1060 6GB
-    '';
+    # Load VFIO in the initrd so nothing grabs the GPU first
+    initrd.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" ];
+    kernelModules = [ ];
   };
 
   # User permissions for virtualization
@@ -45,7 +36,6 @@
     virt-viewer
     virtio-win
     win-spice
-    looking-glass-client
   ];
 
   services.qemuGuest.enable = true;
