@@ -18,7 +18,7 @@
       "intel_iommu=on"
       "iommu=pt"
       "nvidia.NVreg_UsePageAttributeTable=1"
-      # "nvidia.NVreg_EnablePCIeGen3=1"
+      "nvidia.NVreg_EnablePCIeGen3=1"
       "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     ];
     kernelModules = [
