@@ -24,7 +24,7 @@
     {
       device = "/dev/disk/by-label/NixOS";
       fsType = "btrfs";
-      options = [ "subvol=@" ];
+      options = [ "subvol=@" "compress=zstd:1" "ssd" "space_cache=v2" "noatime" ];
     };
 
   fileSystems."/boot" =
@@ -37,14 +37,14 @@
   fileSystems."/data" = {
     device = "/dev/disk/by-label/DATA";
     fsType = "btrfs";
-    options = [ "subvol=@data" "compress=zstd" "noatime" ];
+    options = [ "subvol=@data" "compress=zstd:3" "ssd" "space_cache=v2" "noatime" "user" ];
   };
 
-  fileSystems."/backup" = {
-    device = "/dev/disk/by-label/BACKUP";
-    fsType = "btrfs";
-    options = [ "compress=zstd:3" "space_cache=v2" "autodefrag" "noauto" "noatime" ];
-  };
+  # fileSystems."/backup" = {
+  #   device = "/dev/disk/by-label/BACKUP";
+  #   fsType = "btrfs";
+  #   options = [ "subvol=@backup" "compress=zstd:3" "space_cache=v2" "autodefrag" "noauto" "noatime" ];
+  # };
 
   swapDevices =
     [{ device = "/dev/disk/by-uuid/03920487-a981-49d6-a504-322d388e9078"; }];
