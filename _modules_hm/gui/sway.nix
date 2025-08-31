@@ -41,8 +41,8 @@
         { command = "nm-applet --indicator"; }
         # { command = "${pkgs.blueman}/bin/blueman-applet"; }
 
-        # Autotiling
-        { command = "${pkgs.autotiling}/bin/autotiling"; always = true; }
+        # # Autotiling
+        # { command = "${pkgs.autotiling}/bin/autotiling"; always = true; }
 
         # Auto monitor configuration
         { command = "systemctl --user restart kanshi.service"; always = true; }

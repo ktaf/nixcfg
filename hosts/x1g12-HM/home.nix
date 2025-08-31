@@ -124,7 +124,7 @@ in
       libudfread
       libv4l
       libxkbcommon
-      localstack
+      # localstack
       looking-glass-client
       minimodem
       mission-center
