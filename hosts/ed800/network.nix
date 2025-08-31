@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, user, ... }:
 
 {
   networking = {
@@ -25,8 +25,15 @@
         X11Forwarding = false;
       };
     };
+    samba-wsdd = {
+      enable = true;
+      openFirewall = true;
+      workgroup = "WORKGROUP"; # optional override
+      hostname = "ED800"; # optional, defaults to hostName
+    };
     samba = {
       enable = true;
+      package = pkgs.samba4Full;
       openFirewall = true;
       nsswins = true;
       nmbd.enable = true;
@@ -34,25 +41,43 @@
         global = {
           workgroup = "WORKGROUP";
           "server string" = "ED800";
-          "map to guest" = "Bad User";
-          "guest account" = "nobody";
+          "map to guest" = "Never";
+          "server min protocol" = "SMB3";
           security = "user";
+          "netbios name" = "ED800";
+          "os level" = "65";
+          "socket options" = "TCP_NODELAY IPTOS_LOWDELAY SO_RCVBUF=262144 SO_SNDBUF=262144";
+          "use sendfile" = "yes";
+          "aio read size" = "16384";
+          "aio write size" = "16384";
+          "max xmit" = "131072";
+          "kernel oplocks" = "no";
+          "level2 oplocks" = "no";
         };
         public = {
           path = "/data/samba/public";
           browseable = "yes";
           "read only" = "no";
-          "guest ok" = "yes";
-          "force user" = "nobody";
-          "force group" = "nogroup";
-          "create mask" = "0666";
-          "directory mask" = "0777";
+          "guest ok" = "no";
+          "force user" = "win";
+          "force group" = "win";
+          "valid users" = "win";
+          "create mask" = "0664";
+          "directory mask" = "0775";
         };
       };
     };
   };
   # Ensure directory exists with correct ownership/permissions
   systemd.tmpfiles.rules = [
-    "d /data/samba/public 0777 nobody nogroup -"
+    "d /data/samba/public 0775 win win -"
   ];
+
+  users.groups.win = { };
+  users.users."win" = {
+    isSystemUser = true;
+    group = "win";
+    home = "/var/empty";
+    shell = "/run/current-system/sw/bin/nologin";
+  };
 }
