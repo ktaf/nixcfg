@@ -40,6 +40,12 @@
     options = [ "subvol=@data" "compress=zstd" "noatime" ];
   };
 
+  fileSystems."/backup" = {
+    device = "/dev/disk/by-label/BACKUP";
+    fsType = "btrfs";
+    options = [ "compress=zstd:3" "space_cache=v2" "autodefrag" "noauto" "noatime" ];
+  };
+
   swapDevices =
     [{ device = "/dev/disk/by-uuid/03920487-a981-49d6-a504-322d388e9078"; }];
 
