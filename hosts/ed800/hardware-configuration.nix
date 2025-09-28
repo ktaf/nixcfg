@@ -22,14 +22,14 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-label/NixOS";
+      device = "/dev/disk/by-uuid/fc78be52-e65c-48ea-b380-27f2e2a16141";
       fsType = "btrfs";
       options = [ "subvol=@" "compress=zstd:3" "ssd" "space_cache=v2" "noatime" ];
     };
 
   fileSystems."/boot" =
     {
-      device = "/dev/disk/by-uuid/92A6-5375";
+      device = "/dev/disk/by-uuid/7336-BC97";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
@@ -46,8 +46,7 @@
   #   options = [ "subvol=@backup" "compress=zstd:3" "space_cache=v2" "autodefrag" "noauto" "noatime" ];
   # };
 
-  swapDevices =
-    [ ];
+  swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
