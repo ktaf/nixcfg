@@ -147,7 +147,7 @@ in
       python312Packages.pip
       python312Packages.tkinter
       python312Packages.usb-monitor
-      python3Full
+      python312
       qbittorrent
       qdigidoc
       remmina

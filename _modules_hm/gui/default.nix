@@ -37,7 +37,7 @@
     xcur2png
 
     ## SWAY
-    # autotiling
+    autotiling
     (config.lib.nixGL.wrap pkgs.swww)
 
     pango
@@ -51,7 +51,6 @@
     wl-clipboard
 
     meson
-    cairo
 
     xdg-user-dirs
     xdg-utils

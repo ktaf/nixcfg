@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -17,7 +18,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, nixGL, nix-index-database, ... } @ inputs:
+  outputs = { self, nixpkgs, nixpkgs-master, home-manager, nixos-hardware, nixGL, nix-index-database, ... } @ inputs:
     let
       user = "kourosh";
       system = "x86_64-linux";
@@ -27,7 +28,21 @@
           allowUnfree = true;
           allowUnfreePredicate = _: true;
         };
-        overlays = [ nixGL.overlay ];
+        overlays = [
+          nixGL.overlay
+          # Only these attrs come from nixpkgs-master; everything else stays on unstable
+          (final: prev:
+            let
+              pkgsMaster = import nixpkgs-master {
+                inherit system;
+                config = prev.config;
+              };
+            in
+            {
+              terraform-docs = pkgsMaster.terraform-docs;
+            }
+          )
+        ];
       };
       lib = nixpkgs.lib;
       makeNixosSystem = hostModule: { extraModules ? [ ] }:
