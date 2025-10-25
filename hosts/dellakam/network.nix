@@ -68,16 +68,16 @@
     #   };
     # };
   };
-  # Ensure directory exists with correct ownership/permissions
-  systemd.tmpfiles.rules = [
-    "d /data/samba/public 0775 win win -"
-  ];
+  # # Ensure directory exists with correct ownership/permissions
+  # systemd.tmpfiles.rules = [
+  #   "d /data/samba/public 0775 win win -"
+  # ];
 
-  users.groups.win = { };
-  users.users."win" = {
-    isSystemUser = true;
-    group = "win";
-    home = "/var/empty";
-    shell = "/run/current-system/sw/bin/nologin";
-  };
+  # users.groups.win = { };
+  # users.users."win" = {
+  #   isSystemUser = true;
+  #   group = "win";
+  #   home = "/var/empty";
+  #   shell = "/run/current-system/sw/bin/nologin";
+  # };
 }

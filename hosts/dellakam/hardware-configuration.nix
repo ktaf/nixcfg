@@ -31,12 +31,6 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  fileSystems."/data" = {
-    device = "/dev/disk/by-label/DATA";
-    fsType = "btrfs";
-    options = [ "subvol=@data" "compress=zstd:3" "ssd" "space_cache=v2" "noatime" "user" ];
-  };
-
   swapDevices = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

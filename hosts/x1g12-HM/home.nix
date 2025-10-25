@@ -87,9 +87,8 @@ in
 
     packages = with pkgs; [
       _1password-gui
-      alpaca
       avahi
-      # awscli2
+      awscli2
       bat
       blueman
       bluez
