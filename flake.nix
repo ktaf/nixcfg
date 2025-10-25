@@ -92,6 +92,7 @@
           ];
         };
         ed800 = makeNixosSystem ./hosts/ed800/configuration.nix { };
+        dellakam = makeNixosSystem ./hosts/dellakam/configuration.nix { };
       };
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
     };
