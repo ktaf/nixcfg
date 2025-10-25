@@ -12,6 +12,7 @@ in
     allowUnfree = true;
     permittedInsecurePackages = [
       "python-2.7.18.8"
+      "python-2.7.18.12"
     ];
   };
 
@@ -88,31 +89,23 @@ in
       _1password-gui
       alpaca
       avahi
-      awscli2
+      # awscli2
       bat
       blueman
       bluez
-      cmake
       cpio
       curl
       dbus
-      dbeaver-bin
       dig
       docker-compose
-      elinks
       eza
       ffmpeg
       firecracker
-      fluxcd
       fzf
       go
       google-chrome
-      grive2
-      gum
       htop
-      hugo
       inframap
-      intel-gmmlib
       jq
       kind
       krew
@@ -132,7 +125,6 @@ in
       nemo
       neofetch
       nix-zsh-completions
-      nixgl.nixGLIntel
       nmap
       novnc
       obsidian
@@ -142,17 +134,14 @@ in
       polkit_gnome
       pre-commit
       pulseaudio
-      python.pkgs.pip
       python312Packages.invoke
+      python312Packages.invocations
       python312Packages.pip
       python312Packages.tkinter
       python312Packages.usb-monitor
       python312
-      qbittorrent
       qdigidoc
       remmina
-      ripgrep
-      s3cmd
       sshfs
       ssm-session-manager-plugin
       subnetcalc
@@ -165,18 +154,14 @@ in
       usbrip
       v4l-utils
       virt-manager
-      vkmark
       vsh
       wayvnc
       which
       whois
       winbox
-      wsdd
       xfontsel
-      zoxide
       slack
       vscode
-      zoom-us
     ];
   };
 

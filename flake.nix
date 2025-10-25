@@ -40,6 +40,7 @@
             in
             {
               terraform-docs = pkgsMaster.terraform-docs;
+              awscli2 = pkgsMaster.awscli2;
             }
           )
         ];
