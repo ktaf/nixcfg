@@ -133,18 +133,26 @@ in
       polkit_gnome
       pre-commit
       pulseaudio
-      python312Packages.invoke
-      python312Packages.invocations
-      python312Packages.pip
-      python312Packages.tkinter
-      python312Packages.usb-monitor
-      python312
+      # python312Packages.invoke
+      # python312Packages.python-hcl2
+      # python312Packages.pip
+      # python312Packages.tkinter
+      # python312Packages.usb-monitor
+      # python312
+      # Unified Python env: puts `inv` and `hcl2` (and friends) in the SAME interpreter
+      (python312.withPackages (pythonPkgs: [
+        pythonPkgs.invoke
+        pythonPkgs.python-hcl2
+        pythonPkgs.pip
+        pythonPkgs.tkinter
+        pythonPkgs.usb-monitor
+      ]))
       qdigidoc
       remmina
       sshfs
       ssm-session-manager-plugin
       subnetcalc
-      tdesktop
+      telegram-desktop
       tenv
       terraform-docs
       tfautomv
@@ -158,6 +166,7 @@ in
       which
       whois
       winbox
+      wireshark
       xfontsel
       slack
       vscode
@@ -166,9 +175,11 @@ in
 
   programs.git = {
     enable = true;
-    userName = "ktaf";
-    userEmail = "kourosh.tafreshi@bolt.eu";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "ktaf";
+        email = "kourosh.tafreshi@bolt.eu";
+      };
       init.defaultBranch = "main";
       core.editor = "code";
       protocol.keybase.allow = "always";

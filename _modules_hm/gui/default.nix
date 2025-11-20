@@ -26,7 +26,7 @@
     wayland-scanner
     wayland-utils
     egl-wayland
-    glfw-wayland
+    glfw
     mesa
     mesa-gl-headers
     libdrm
@@ -38,7 +38,7 @@
 
     ## SWAY
     # autotiling
-    (config.lib.nixGL.wrap pkgs.swww)
+    swww
 
     pango
     file
@@ -64,7 +64,7 @@
     nwg-look
     libsForQt5.qt5ct
 
-    qt6ct
+    qt6Packages.qt6ct
     yad
   ];
   home.sessionVariables = {
