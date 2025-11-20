@@ -61,6 +61,9 @@
       neofetch
       linuxKernel.packages.linux_6_17.turbostat
       powertop
+
+      netbird
+      iperf
     ];
   };
 
