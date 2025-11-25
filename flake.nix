@@ -26,7 +26,7 @@
         };
         overlays = [
           # Only these attrs come from nixpkgs-master; everything else stays on unstable
-          (final: prev:
+          (_final: prev:
             let
               pkgsMaster = import nixpkgs-master {
                 inherit system;
