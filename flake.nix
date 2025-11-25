@@ -9,16 +9,12 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixGL = {
-      url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, nixpkgs-master, home-manager, nixos-hardware, nixGL, nix-index-database, ... } @ inputs:
+  outputs = { self, nixpkgs, nixpkgs-master, home-manager, nixos-hardware, nix-index-database, ... } @ inputs:
     let
       user = "kourosh";
       system = "x86_64-linux";
@@ -29,7 +25,6 @@
           allowUnfreePredicate = _: true;
         };
         overlays = [
-          nixGL.overlay
           # Only these attrs come from nixpkgs-master; everything else stays on unstable
           (final: prev:
             let
@@ -40,7 +35,7 @@
             in
             {
               # terraform-docs = pkgsMaster.terraform-docs;
-              # awscli2 = pkgsMaster.awscli2;
+              awscli2 = pkgsMaster.awscli2;
             }
           )
         ];
@@ -73,7 +68,7 @@
       homeConfigurations."${user}" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-          inherit self nixpkgs inputs nixGL;
+          inherit self nixpkgs inputs;
         };
         modules = [
           nix-index-database.homeModules.nix-index

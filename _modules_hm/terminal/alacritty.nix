@@ -2,7 +2,6 @@
 
   programs.alacritty = {
     enable = true;
-    package = pkgs.alacritty;
     settings = {
       window = {
         decorations = "None";

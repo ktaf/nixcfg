@@ -21,7 +21,6 @@
   };
   wayland.windowManager.sway = {
     enable = true;
-    package = config.lib.nixGL.wrap pkgs.sway;
     xwayland = true;
 
     systemd = {

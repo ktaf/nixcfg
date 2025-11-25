@@ -1,13 +1,8 @@
-{ config, pkgs, nixGL, ... }:
+{ config, pkgs, ... }:
 let
   user = "kourosh";
 in
 {
-  nixGL = {
-    packages = nixGL.packages;
-    installScripts = [ "mesa" ];
-  };
-
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [
