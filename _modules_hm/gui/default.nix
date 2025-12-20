@@ -37,7 +37,7 @@
     xcur2png
 
     ## SWAY
-    # autotiling
+    autotiling
     swww
 
     pango

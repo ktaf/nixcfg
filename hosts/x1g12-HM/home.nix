@@ -165,6 +165,7 @@ in
       xfontsel
       slack
       vscode
+      zoom-us
     ];
   };
 

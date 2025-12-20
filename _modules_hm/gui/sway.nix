@@ -41,7 +41,7 @@
         # { command = "${pkgs.blueman}/bin/blueman-applet"; }
 
         # # Autotiling
-        # { command = "${pkgs.autotiling}/bin/autotiling"; always = true; }
+        { command = "${pkgs.autotiling}/bin/autotiling"; always = true; }
 
         # Auto monitor configuration
         { command = "systemctl --user restart kanshi.service"; always = true; }
@@ -58,7 +58,6 @@
 
         # Applications
         { command = "google-chrome-stable --profile-directory=Default --disable-features=RegistrationDeprecation"; }
-        { command = "google-chrome-stable --profile-directory='Profile 1' --disable-features=RegistrationDeprecation"; }
         { command = "slack"; }
 
         # Screen locking
