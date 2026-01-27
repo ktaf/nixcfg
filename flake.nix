@@ -86,7 +86,7 @@
             nixos-hardware.nixosModules.lenovo-thinkpad-x1-12th-gen
           ];
         };
-        ed800 = makeNixosSystem ./hosts/ed800/configuration.nix { };
+        bc-250 = makeNixosSystem ./hosts/bc-250/configuration.nix { };
         dellakam = makeNixosSystem ./hosts/dellakam/configuration.nix { };
         daashy = makeNixosSystem ./hosts/daashy/configuration.nix { };
       };

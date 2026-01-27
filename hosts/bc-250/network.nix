@@ -2,7 +2,7 @@
 
 {
   networking = {
-    hostName = "daashy";
+    hostName = "bc-250";
     nameservers = [ "8.8.8.8" "1.1.1.1" ];
     enableIPv6 = true;
 
@@ -14,7 +14,6 @@
       enable = false;
     };
   };
-
   services = {
     openssh = {
       enable = true;
@@ -24,5 +23,4 @@
       };
     };
   };
-
 }

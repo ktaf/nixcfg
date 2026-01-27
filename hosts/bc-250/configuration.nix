@@ -2,8 +2,6 @@
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
     ./network.nix
-    ./nvidia.nix
-    ./vms.nix
     ../../_modules/shell.nix
   ];
 
@@ -32,7 +30,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_6_16;
+    kernelPackages = pkgs.linuxPackages_6_18;
   };
 
   # Localization
@@ -46,8 +44,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       # Core utilities
-      bat
-      eza
       htop
       git
       vim
@@ -61,12 +57,8 @@
       smartmontools
       lm_sensors
       neofetch
-      linuxKernel.packages.linux_6_16.turbostat
+      linuxKernel.packages.linux_6_18.turbostat
       powertop
-      msr-tools
-      hdparm
-      hd-idle
-      hddtemp
     ];
   };
 
@@ -75,15 +67,6 @@
   services = {
     fwupd.enable = true;
     thermald.enable = true;
-
-    # Immich photo management
-    immich = {
-      enable = true;
-      host = "192.168.2.22";
-      port = 2283;
-      machine-learning.enable = true;
-      database.enable = true;
-    };
   };
 
   # Power management for server efficiency
@@ -92,5 +75,5 @@
     cpuFreqGovernor = "ondemand";
   };
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }

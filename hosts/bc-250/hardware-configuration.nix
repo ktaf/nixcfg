@@ -10,13 +10,15 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.initrd.kernelModules = [ "amd" ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.kernelParams = [
-    "intel_idle.max_cstate=10"
-    "processor.max_cstate=10"
-    "rcu_nocbs=0-11"
-    "nohz=on"
+      "quiet"
+      "splash"
+      "rd.systemd.show_status=false"
+      "rd.udev.log_level=3"
+      "udev.log_priority=3"
+      "boot.shell_on_fail"
   ];
   boot.extraModulePackages = [ ];
 
@@ -34,18 +36,6 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  fileSystems."/data" = {
-    device = "/dev/disk/by-label/DATA";
-    fsType = "btrfs";
-    options = [ "subvol=@data" "compress=zstd:3" "ssd" "space_cache=v2" "noatime" "user" ];
-  };
-
-  # fileSystems."/backup" = {
-  #   device = "/dev/disk/by-label/BACKUP";
-  #   fsType = "btrfs";
-  #   options = [ "subvol=@backup" "compress=zstd:3" "space_cache=v2" "autodefrag" "noauto" "noatime" ];
-  # };
-
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -56,5 +46,5 @@
   # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
