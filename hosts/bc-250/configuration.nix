@@ -22,6 +22,8 @@
     };
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   # Minimal fonts for server
   fonts.packages = with pkgs; [ dejavu_fonts ];
 
@@ -37,45 +39,89 @@
   time.timeZone = "Europe/Tallinn";
   i18n.defaultLocale = "en_GB.UTF-8";
 
+  environment.systemPackages = with pkgs; [
+    # Core utilities
+    htop
+    git
+    vim
+    curl
+    wget
+    unzip
+    openssl
+
+    # Gaming diagnostics
+    mesa-demos
+    vulkan-tools
+
+    # System monitoring and hardware tools
+    pciutils
+    ethtool
+    smartmontools
+    lm_sensors
+    neofetch
+    linuxKernel.packages.linux_6_18.turbostat
+    powertop
+  ];
+
   # User configuration
   users.users.${user} = {
     isNormalUser = true;
     description = "Kourosh";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      # Core utilities
-      htop
-      git
-      vim
-      curl
-      wget
-      unzip
-      openssl
-      # Gaming machine
-      mesa-demos
-      vulkan-tools
-      # System monitoring and hardware tools
-      pciutils
-      ethtool
-      smartmontools
-      lm_sensors
-      neofetch
-      linuxKernel.packages.linux_6_18.turbostat
-      powertop
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      # graphics/input/audio access for Steam/Gamescope
+      "video"
+      "render"
+      "input"
+      "audio"
     ];
   };
 
-  nixpkgs.config.allowUnfree = true;
-
   services = {
     fwupd.enable = true;
-    thermald.enable = true;
   };
 
-  # Power management for server efficiency
-  powerManagement = {
+  # Steam
+  programs = {
+    steam.enable = true;
+    gamescope.enable = true;
+    gamemode.enable = true;
+  };
+
+  # Controllers / input
+  hardware.uinput.enable = true;
+  services.udev.packages = with pkgs; [ game-devices-udev-rules ];
+
+  # Audio (Steam/Proton friendly)
+  security.rtkit.enable = true;
+  services.pipewire = {
     enable = true;
-    cpuFreqGovernor = "ondemand";
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = false;
+  };
+
+  # No display manager: autologin on tty1 (Jovian autostart handles launching Steam UI)
+  services.getty.autologinUser = user;
+
+  # Jovian (Steam Deck UI / Gaming Mode)
+  jovian = {
+    hardware = {
+      has.amd.gpu = true;
+      amd.gpu.enableBacklightControl = false;
+    };
+
+    steam = {
+      enable = true;
+      autoStart = true;
+      user = user;
+      updater.splash = "vendor";
+      desktopSession = "gamescope-wayland"; # == desktopSession = null;
+    };
+
+    steamos.useSteamOSConfig = true;
   };
 
   system.stateVersion = "25.11";
