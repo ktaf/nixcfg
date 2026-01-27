@@ -135,13 +135,13 @@ in
       # python312Packages.usb-monitor
       # python312
       # Unified Python env: puts `inv` and `hcl2` (and friends) in the SAME interpreter
-      (python312.withPackages (pythonPkgs: [
-        pythonPkgs.invoke
-        pythonPkgs.python-hcl2
-        pythonPkgs.pip
-        pythonPkgs.tkinter
-        pythonPkgs.usb-monitor
-      ]))
+      # (python312.withPackages (pythonPkgs: [
+      #   pythonPkgs.invoke
+      #   pythonPkgs.python-hcl2
+      #   pythonPkgs.pip
+      #   pythonPkgs.tkinter
+      #   pythonPkgs.usb-monitor
+      # ]))
       qdigidoc
       remmina
       sshfs

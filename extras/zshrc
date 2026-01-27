@@ -48,4 +48,8 @@ USE_POWERLINE="true"
 
 alias rebase='n=$(git branch -l master main|xargs echo) && git checkout $n && git pull && git checkout - && git rebase $n'
 
+alias python3=/usr/bin/python3 # To force it out of /home/kourosh/.nix-profile/bin/
+alias pip=/usr/bin/pip # To force it out of /home/kourosh/.nix-profile/bin/
+
+
 autoload -U compinit; compinit

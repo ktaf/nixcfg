@@ -90,7 +90,7 @@
         dellakam = makeNixosSystem ./hosts/dellakam/configuration.nix { };
         daashy = makeNixosSystem ./hosts/daashy/configuration.nix { };
       };
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+      formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
     };
 }
 #nixos-25.11
