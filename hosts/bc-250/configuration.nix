@@ -51,6 +51,9 @@
       wget
       unzip
       openssl
+      # Gaming machine
+      mesa-demos
+      vulkan-tools
       # System monitoring and hardware tools
       pciutils
       ethtool
