@@ -11,12 +11,11 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ "amd" ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "nct6687" ];
   boot.kernelParams = [
     "quiet"
     "amdgpu.sg_display=0"
     "mitigations=off"
-    "amd_pstate=active"
   ];
   boot.extraModulePackages = [ ];
 

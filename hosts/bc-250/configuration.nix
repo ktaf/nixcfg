@@ -41,6 +41,8 @@
 
   environment.systemPackages = with pkgs; [
     # Core utilities
+    bat
+    eza
     htop
     git
     vim
@@ -50,8 +52,13 @@
     openssl
 
     # Gaming diagnostics
+    mesa
     mesa-demos
+    mesa.drivers
+    vulkan-loader
     vulkan-tools
+    libGL
+    libGLU
 
     # System monitoring and hardware tools
     pciutils
@@ -59,7 +66,6 @@
     smartmontools
     lm_sensors
     neofetch
-    linuxKernel.packages.linux_6_18.turbostat
     powertop
   ];
 
@@ -76,17 +82,6 @@
       "input"
       "audio"
     ];
-  };
-
-  services = {
-    fwupd.enable = true;
-  };
-
-  # Steam
-  programs = {
-    steam.enable = true;
-    gamescope.enable = true;
-    gamemode.enable = true;
   };
 
   # Controllers / input
@@ -110,7 +105,6 @@
   jovian = {
     hardware = {
       has.amd.gpu = true;
-      amd.gpu.enableBacklightControl = false;
     };
 
     steam = {
