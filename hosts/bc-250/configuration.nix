@@ -2,6 +2,7 @@
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
     ./network.nix
+    ./steamos.nix
     ../../_modules/shell.nix
   ];
 
@@ -51,15 +52,6 @@
     unzip
     openssl
 
-    # Gaming diagnostics
-    mesa
-    mesa-demos
-    mesa.drivers
-    vulkan-loader
-    vulkan-tools
-    libGL
-    libGLU
-
     # System monitoring and hardware tools
     pciutils
     ethtool
@@ -82,40 +74,6 @@
       "input"
       "audio"
     ];
-  };
-
-  # Controllers / input
-  hardware.uinput.enable = true;
-  services.udev.packages = with pkgs; [ game-devices-udev-rules ];
-
-  # Audio (Steam/Proton friendly)
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = false;
-  };
-
-  # No display manager: autologin on tty1 (Jovian autostart handles launching Steam UI)
-  services.getty.autologinUser = user;
-
-  # Jovian (Steam Deck UI / Gaming Mode)
-  jovian = {
-    hardware = {
-      has.amd.gpu = true;
-    };
-
-    steam = {
-      enable = true;
-      autoStart = true;
-      user = user;
-      updater.splash = "vendor";
-      desktopSession = "gamescope-wayland"; # == desktopSession = null;
-    };
-
-    steamos.useSteamOSConfig = true;
   };
 
   system.stateVersion = "25.11";

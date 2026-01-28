@@ -11,7 +11,7 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ "amd" ];
-  boot.kernelModules = [ "nct6687" ];
+  boot.kernelModules = [ ];
   boot.kernelParams = [
     "quiet"
     "amdgpu.sg_display=0"
@@ -41,11 +41,6 @@
     enableRedistributableFirmware = true;
     cpu.amd = {
       updateMicrocode = true;
-    };
-    xone.enable = true;
-    graphics = {
-      enable = true;
-      enable32Bit = true;
     };
   };
 }

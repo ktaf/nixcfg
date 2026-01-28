@@ -13,10 +13,6 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    jovian-nixos = {
-      url = "github:Jovian-Experiments/Jovian-NixOS/development";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
   outputs = { self, nixpkgs, nixpkgs-master, home-manager, nixos-hardware, nix-index-database, ... } @ inputs:
     let
@@ -92,11 +88,7 @@
         };
         dellakam = makeNixosSystem ./hosts/dellakam/configuration.nix { };
         daashy = makeNixosSystem ./hosts/daashy/configuration.nix { };
-        bc-250 = makeNixosSystem ./hosts/bc-250/configuration.nix {
-          extraModules = [
-            inputs.jovian-nixos.nixosModules.default
-          ];
-        };
+        bc-250 = makeNixosSystem ./hosts/bc-250/configuration.nix { };
       };
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
     };
