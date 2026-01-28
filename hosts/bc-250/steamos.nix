@@ -15,6 +15,10 @@
     gamemode
   ];
 
+  environment.sessionVariables = {
+    MANGOHUD = "1";
+  };
+
   # Controllers / input
   hardware.uinput.enable = true;
   services.udev.packages = with pkgs; [ game-devices-udev-rules ];

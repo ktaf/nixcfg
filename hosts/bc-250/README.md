@@ -1,4 +1,4 @@
-# bc-250
+# BC-250
 
 NixOS implementation of SteamOS for the ASRock AMD-BC-250 — tuned to boot fast, stay lean, and land you straight in gaming mode.
 
