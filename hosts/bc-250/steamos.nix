@@ -40,6 +40,7 @@
     steam = {
       enable = true;
       protontricks.enable = true;
+      extraCompatPackages = [ proton-ge-bin ];
     };
     gamescope = {
       enable = true;
@@ -65,10 +66,15 @@
   };
 
   hardware = {
+    amdgpu = {
+      initrd.enable = true;
+      overdrive.enable = true;
+    };
     xone.enable = true; # XBOX Drives
-    graphics = {
+    opengl = {
       enable = true;
-      enable32Bit = true;
+      driSupport = true;
+      driSupport32Bit = true;
     };
   };
 }

@@ -34,6 +34,7 @@
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.linuxPackages_6_12;
+    extraModulePackages = [ pkgs.linuxPackages_6_12.nct6687d ];
   };
 
   # Localization
