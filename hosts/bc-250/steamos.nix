@@ -8,11 +8,13 @@
     vulkan-tools
     libGL
     libGLU
+    radeontop
 
     # Steam
-    gamescope
     mangohud
-    gamemode
+
+    # Libs
+    keyutils
   ];
 
   environment.sessionVariables = {
@@ -37,6 +39,7 @@
   programs = {
     steam = {
       enable = true;
+      protontricks.enable = true;
     };
     gamescope = {
       enable = true;

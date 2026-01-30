@@ -11,11 +11,12 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ "amd" ];
-  boot.kernelModules = [ ];
   boot.kernelParams = [
     "quiet"
-    "amdgpu.sg_display=0"
+    "amd_iommu=off"
     "mitigations=off"
+    "amdgpu.sg_display=0"
+    "processor.ignore_ppc=1"
   ];
   boot.extraModulePackages = [ ];
 
