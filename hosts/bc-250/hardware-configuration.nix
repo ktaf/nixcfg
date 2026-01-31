@@ -17,6 +17,9 @@
     "mitigations=off"
     "amdgpu.sg_display=0"
     "processor.ignore_ppc=1"
+    "amdgpu.gttsize=14750"
+    "ttm.pages_limit=3776000"
+    "ttm.page_pool_size=3776000"
   ];
   boot.extraModulePackages = [ ];
 
