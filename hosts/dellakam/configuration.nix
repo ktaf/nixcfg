@@ -41,7 +41,7 @@
   users.users.${user} = {
     isNormalUser = true;
     description = "Kourosh";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       # Core utilities
       bat
@@ -59,7 +59,7 @@
       smartmontools
       lm_sensors
       neofetch
-      linuxKernel.packages.linux_6_17.turbostat
+      linuxKernel.packages.linux_6_18.turbostat
       powertop
 
       netbird
@@ -76,7 +76,7 @@
     # Immich photo management
     immich = {
       enable = true;
-      host = "192.168.2.16";
+      host = "192.168.2.27";
       port = 2283;
       machine-learning.enable = true;
       database.enable = true;
@@ -89,5 +89,16 @@
     cpuFreqGovernor = "ondemand";
   };
 
-  system.stateVersion = "25.05";
+  virtualisation = {
+    docker = {
+      enable = true;
+      # Enable rootless mode for better security
+      rootless = {
+        enable = true;
+        setSocketVariable = true;
+      };
+    };
+  };
+
+  system.stateVersion = "25.11";
 }
