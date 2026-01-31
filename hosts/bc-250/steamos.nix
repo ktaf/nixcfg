@@ -18,7 +18,18 @@
   ];
 
   environment.sessionVariables = {
-    MANGOHUD = "1";
+    # Force RADV driver (not AMDVLK)
+    AMD_VULKAN_ICD = "RADV";
+    # Fix some graphical glitches
+    RADV_DEBUG = "nohiz";
+
+    # Disable compute queue (may not be needed on Mesa 25.1+)
+    # RADV_DEBUG=nocompute
+
+    # Use Zink (OpenGL over Vulkan) for better performance
+    MESA_LOADER_DRIVER_OVERRIDE = "zink";
+
+    MANGOHUD = "0";
   };
 
   # Controllers / input
