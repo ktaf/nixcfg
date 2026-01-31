@@ -13,6 +13,7 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    cyan-skillfish-governor.url = "github:ktaf/cyan-skillfish-governor";
   };
   outputs = { self, nixpkgs, nixpkgs-master, home-manager, nixos-hardware, nix-index-database, ... } @ inputs:
     let
@@ -88,7 +89,11 @@
         };
         dellakam = makeNixosSystem ./hosts/dellakam/configuration.nix { };
         daashy = makeNixosSystem ./hosts/daashy/configuration.nix { };
-        bc-250 = makeNixosSystem ./hosts/bc-250/configuration.nix { };
+        bc-250 = makeNixosSystem ./hosts/bc-250/configuration.nix {
+          extraModules = [
+            inputs.cyan-skillfish-governor.nixosModules.default
+          ];
+        };
       };
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
     };
