@@ -64,6 +64,7 @@
 
       netbird
       iperf
+      docker-compose
     ];
   };
 
