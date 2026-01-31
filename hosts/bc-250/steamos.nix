@@ -8,7 +8,7 @@
     vulkan-tools
     libGL
     libGLU
-    radeontop
+    nvtopPackages.amd
 
     # Steam
     mangohud
@@ -20,16 +20,13 @@
   environment.sessionVariables = {
     # Force RADV driver (not AMDVLK)
     AMD_VULKAN_ICD = "RADV";
-    # Fix some graphical glitches
-    RADV_DEBUG = "nohiz";
-
-    # Disable compute queue (may not be needed on Mesa 25.1+)
-    # RADV_DEBUG=nocompute
+    # Fix some graphical glitches/Disable compute queue (may not be needed on Mesa 25.1+)
+    RADV_DEBUG = "nocompute,nohiz";
 
     # Use Zink (OpenGL over Vulkan) for better performance
     MESA_LOADER_DRIVER_OVERRIDE = "zink";
 
-    MANGOHUD = "0";
+    MANGOHUD = "1";
   };
 
   # Controllers / input
@@ -72,7 +69,7 @@
       RestartSec = "2s";
       StandardOutput = "journal";
       StandardError = "journal";
-      ExecStart = "${pkgs.gamescope}/bin/gamescope -f -- ${pkgs.steam}/bin/steam -gamepadui";
+      ExecStart = "${pkgs.gamescope}/bin/gamescope -e -f -- ${pkgs.steam}/bin/steam -gamepadui";
     };
   };
 
