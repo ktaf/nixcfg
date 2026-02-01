@@ -61,7 +61,7 @@
         in
         lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit user; };
+          specialArgs = { inherit user inputs; };
           modules = [ hostModule ] ++ homeModules ++ extraModules;
         };
     in

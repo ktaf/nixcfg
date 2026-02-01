@@ -6,11 +6,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1769893831,
-        "narHash": "sha256-RupFSigYC9I60CBHlQ32M9O38DP0hqOOxwe5qsRYjWA=",
+        "lastModified": 1769937165,
+        "narHash": "sha256-1/65SP98SGN31TMUuhJxME2WatqfEGxB7UzHYypE78A=",
         "owner": "ktaf",
         "repo": "cyan-skillfish-governor",
-        "rev": "7dd54c77ce558afda900c3bb6d0226b9ab409ac8",
+        "rev": "cdedf5c17e0f683e2ee60c2794e144350149ffd9",
         "type": "github"
       },
       "original": {
@@ -110,11 +110,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1769894241,
-        "narHash": "sha256-ZfQDpGsrh9bhFh7SPAS8qp03EAedvpMZoDrTPYdb5Jc=",
+        "lastModified": 1769937795,
+        "narHash": "sha256-iUQqvxgV9teH+O9ybB4rnNoc9QlPmy8fNDg1gifqsAw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b57299ca9f1e34d401c7b52921e30e2eddf875d8",
+        "rev": "81df8a66354f80e719be39bff55c520e5558676c",
         "type": "github"
       },
       "original": {

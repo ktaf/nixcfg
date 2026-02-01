@@ -1,4 +1,4 @@
-{ pkgs, user, ... }: {
+{ pkgs, user, inputs, config, ... }: {
 
   environment.systemPackages = with pkgs; [
     # Gaming diagnostics
@@ -73,42 +73,8 @@
     };
   };
 
-  services.cyan-skillfish-governor = {
-    enable = true;
-    configText = ''
-      # us
-      [timing.intervals]
-      sample = 2000
-      adjust = 20_000
-      finetune = 1_000_000_000
-
-      # MHz/ms
-      [timing.ramp-rates]
-      normal = 1
-      burst = 200
-
-      # number of samples
-      [timing]
-      burst-samples = 48
-
-      # MHz
-      [frequency-thresholds]
-      adjust = 100
-      finetune = 10
-
-      [load-target]
-      upper = 0.95
-      lower = 0.7
-
-      [[safe-points]]
-      frequency = 350 # MHz
-      voltage = 700 # mV
-
-      [[safe-points]]
-      frequency = 2000
-      voltage = 1000
-    '';
-  };
+  _module.args.self = inputs.cyan-skillfish-governor;
+  services.cyan-skillfish-governor.enable = true;
 
   hardware = {
     amdgpu = {
