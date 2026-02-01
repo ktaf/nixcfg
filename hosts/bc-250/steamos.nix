@@ -73,6 +73,7 @@
     };
   };
 
+  # GPU Governor on NixOS
   _module.args.self = inputs.cyan-skillfish-governor;
   services.cyan-skillfish-governor.enable = true;
 
