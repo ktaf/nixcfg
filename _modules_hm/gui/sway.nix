@@ -46,8 +46,6 @@
         # Auto monitor configuration
         { command = "systemctl --user restart kanshi.service"; always = true; }
 
-        { command = "swww-daemon && swww img ~/nixcfg/extras/wallpapers/mario-home.gif"; }
-
         # Clipboard history & Image clipboard history
         {
           command = ''
