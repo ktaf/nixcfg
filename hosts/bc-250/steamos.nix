@@ -1,32 +1,44 @@
 { pkgs, user, inputs, config, ... }: {
 
-  environment.systemPackages = with pkgs; [
-    # Gaming diagnostics
-    mesa
-    mesa-demos
-    vulkan-loader
-    vulkan-tools
-    libGL
-    libGLU
-    nvtopPackages.amd
-
-    # Steam
-    mangohud
-
-    # Libs
-    keyutils
+  # Minimal fonts for Steam+Proton
+  fonts.packages = with pkgs; [
+    corefonts
+    vistafonts
+    liberation_ttf
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
   ];
 
-  environment.sessionVariables = {
-    # Force RADV driver (not AMDVLK)
-    AMD_VULKAN_ICD = "RADV";
-    # Fix some graphical glitches/Disable compute queue (may not be needed on Mesa 25.1+)
-    RADV_DEBUG = "nocompute,nohiz";
+  environment = {
+    systemPackages = with pkgs; [
+      # Gaming diagnostics
+      mesa
+      mesa-demos
+      vulkan-loader
+      vulkan-tools
+      libGL
+      libGLU
+      nvtopPackages.amd
 
-    # Use Zink (OpenGL over Vulkan) for better performance
-    MESA_LOADER_DRIVER_OVERRIDE = "zink";
+      # Steam
+      mangohud
 
-    MANGOHUD = "1";
+      # Libs
+      keyutils
+    ];
+
+    sessionVariables = {
+      # Force RADV driver (not AMDVLK)
+      AMD_VULKAN_ICD = "RADV";
+      # Fix some graphical glitches/Disable compute queue (may not be needed on Mesa 25.1+)
+      RADV_DEBUG = "nocompute,nohiz";
+
+      # Use Zink (OpenGL over Vulkan) for better performance
+      MESA_LOADER_DRIVER_OVERRIDE = "zink";
+
+      MANGOHUD = "1";
+    };
   };
 
   # Controllers / input
