@@ -8,20 +8,22 @@
     [
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
-
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "amd" ];
-  boot.kernelParams = [
-    "quiet"
-    "amd_iommu=off"
-    "mitigations=off"
-    "amdgpu.sg_display=0"
-    "processor.ignore_ppc=1"
-    "amdgpu.gttsize=14750"
-    "ttm.pages_limit=3776000"
-    "ttm.page_pool_size=3776000"
-  ];
-  boot.extraModulePackages = [ ];
+  boot = {
+    initrd = {
+      availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
+      kernelModules = [ "amdgpu" ];
+    };
+    kernelParams = [
+      "quiet"
+      "amd_iommu=off"
+      "mitigations=off"
+      "amdgpu.sg_display=0"
+      "processor.ignore_ppc=1"
+      "amdgpu.gttsize=14750"
+      "ttm.pages_limit=3776000"
+      "ttm.page_pool_size=3776000"
+    ];
+  };
 
   fileSystems."/" =
     {
