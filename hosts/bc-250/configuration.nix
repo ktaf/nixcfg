@@ -25,15 +25,13 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  # Minimal fonts for server
-  fonts.packages = with pkgs; [ dejavu_fonts ];
-
   boot = {
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_6_12;
+    kernelPackages = pkgs.linuxPackages_6_19;
+    extraModulePackages = with config.boot.kernelPackages;[ rtl8852bu ];
   };
 
   # Localization
@@ -59,6 +57,7 @@
     lm_sensors
     neofetch
     powertop
+    usbutils
   ];
 
   # User configuration
