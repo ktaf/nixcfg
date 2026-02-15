@@ -1,4 +1,4 @@
-{ pkgs, inputs, user, ... }: {
+{ pkgs, inputs, user, config, ... }: {
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
     ./network.nix
@@ -31,7 +31,7 @@
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.linuxPackages_6_19;
-    extraModulePackages = with config.boot.kernelPackages;[ rtl8852bu ];
+    extraModulePackages = with config.boot.kernelPackages;[ rtl8188eus-aircrack ];
   };
 
   # Localization

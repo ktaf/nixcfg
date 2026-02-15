@@ -3,11 +3,11 @@
   # Minimal fonts for Steam+Proton
   fonts.packages = with pkgs; [
     corefonts
-    vistafonts
+    vista-fonts
     liberation_ttf
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
+    noto-fonts-color-emoji
   ];
 
   environment = {
