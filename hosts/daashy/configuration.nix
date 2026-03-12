@@ -54,7 +54,7 @@
       wget
       unzip
       openssl
-      neofetch
+      fastfetch
       powertop
     ];
   };

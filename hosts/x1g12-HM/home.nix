@@ -87,8 +87,10 @@ in
       bat
       blueman
       bluez
+      claude-code
       cpio
       curl
+      dbeaver-bin
       dbus
       dig
       docker-compose
@@ -117,7 +119,7 @@ in
       mission-center
       moonlight-qt
       nemo
-      neofetch
+      fastfetch
       nix-zsh-completions
       nmap
       novnc
@@ -139,7 +141,7 @@ in
         pythonPkgs.invoke
         pythonPkgs.python-hcl2
         pythonPkgs.pip
-        pythonPkgs.tkinter
+        # pythonPkgs.tkinter
         pythonPkgs.usb-monitor
       ]))
       qdigidoc

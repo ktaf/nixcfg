@@ -44,7 +44,7 @@
       libdigidocpp
       libudfread
       libinput
-      neofetch
+      fastfetch
       nix-zsh-completions
       nmap
       obsidian

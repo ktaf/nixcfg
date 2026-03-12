@@ -30,7 +30,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_6_18;
+    kernelPackages = pkgs.linuxPackages_6_19;
   };
 
   # Localization
@@ -58,7 +58,7 @@
       ethtool
       smartmontools
       lm_sensors
-      neofetch
+      fastfetch
       linuxKernel.packages.linux_6_18.turbostat
       powertop
 
