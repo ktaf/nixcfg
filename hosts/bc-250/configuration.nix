@@ -30,8 +30,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_6_19;
-    extraModulePackages = with config.boot.kernelPackages;[ rtl8188eus-aircrack ];
+    kernelPackages = pkgs.linuxPackages_6_18;
   };
 
   # Localization
@@ -55,9 +54,10 @@
     ethtool
     smartmontools
     lm_sensors
-    neofetch
+    fastfetch
     powertop
     usbutils
+    usb-modeswitch # usb_modeswitch -KW -v 0bda -p 1a2b
   ];
 
   # User configuration

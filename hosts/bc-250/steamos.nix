@@ -99,5 +99,6 @@
       enable = true;
       enable32Bit = true;
     };
+    firmware = [ pkgs.linux-firmware ];
   };
 }

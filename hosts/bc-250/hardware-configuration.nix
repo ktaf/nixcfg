@@ -11,7 +11,7 @@
   boot = {
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
-      kernelModules = [ "amdgpu" ];
+      kernelModules = [ "amdgpu" "rtw89_8851bu" ]; # "rtw89_usb" "rtw89_8851b" "rtw89_core"
     };
     kernelParams = [
       "quiet"
@@ -22,6 +22,7 @@
       "amdgpu.gttsize=14750"
       "ttm.pages_limit=3776000"
       "ttm.page_pool_size=3776000"
+      "usbcore.autosuspend=-1"
     ];
   };
 
@@ -48,5 +49,7 @@
     cpu.amd = {
       updateMicrocode = true;
     };
+    usb-modeswitch.enable = true;
+    bluetooth.enable = true;
   };
 }
