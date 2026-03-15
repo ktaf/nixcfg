@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, user, ... }: {
 
   # Minimal fonts for Steam+Proton
   fonts.packages = with pkgs; [
@@ -70,7 +70,7 @@
   };
 
   # No display manager: autologin on tty1
-  services.getty.autologinUser = "steam";
+  services.getty.autologinUser = user;
 
   systemd.user.services.steam-gamescope = {
     description = "Steam in Gamescope (TTY1)";
