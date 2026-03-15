@@ -31,8 +31,8 @@
     sessionVariables = {
       # Force RADV driver (not AMDVLK)
       AMD_VULKAN_ICD = "RADV";
-      # Fix some graphical glitches/Disable compute queue (may not be needed on Mesa 25.1+)
-      RADV_DEBUG = "nocompute,nohiz";
+      # Fix some graphical glitches
+      RADV_DEBUG = "nohiz";
 
       # # Use Zink (OpenGL over Vulkan) for better performance
       # MESA_LOADER_DRIVER_OVERRIDE = "zink";
