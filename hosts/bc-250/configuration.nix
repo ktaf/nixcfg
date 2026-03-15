@@ -58,6 +58,7 @@
     powertop
     usbutils
     usb-modeswitch # usb_modeswitch -KW -v 0bda -p 1a2b
+    bluez
   ];
 
   services.udev.extraRules = ''
