@@ -34,10 +34,10 @@
       # Fix some graphical glitches/Disable compute queue (may not be needed on Mesa 25.1+)
       RADV_DEBUG = "nocompute,nohiz";
 
-      # Use Zink (OpenGL over Vulkan) for better performance
-      MESA_LOADER_DRIVER_OVERRIDE = "zink";
+      # # Use Zink (OpenGL over Vulkan) for better performance
+      # MESA_LOADER_DRIVER_OVERRIDE = "zink";
 
-      MANGOHUD = "1";
+      # MANGOHUD = "1";
     };
   };
 
