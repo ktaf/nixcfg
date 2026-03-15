@@ -81,5 +81,17 @@
     ];
   };
 
+  users.users.steam = {
+    isNormalUser = true;
+    description = "Steam Console";
+    extraGroups = [
+      "networkmanager"
+      "video"
+      "render"
+      "input"
+      "audio"
+    ];
+  };
+
   system.stateVersion = "25.11";
 }

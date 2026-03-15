@@ -1,4 +1,4 @@
-{ pkgs, user, inputs, ... }: {
+{ pkgs, inputs, ... }: {
 
   # Minimal fonts for Steam+Proton
   fonts.packages = with pkgs; [
@@ -70,7 +70,7 @@
   };
 
   # No display manager: autologin on tty1
-  services.getty.autologinUser = user;
+  services.getty.autologinUser = "steam";
 
   systemd.user.services.steam-gamescope = {
     description = "Steam in Gamescope (TTY1)";
@@ -90,7 +90,7 @@
   services.cyan-skillfish-governor.enable = true;
 
   hardware = {
-    xone.enable = true; # XBOX Drives
+    xone.enable = true; # XBOX Drivers
     graphics = {
       enable = true;
       enable32Bit = true;
