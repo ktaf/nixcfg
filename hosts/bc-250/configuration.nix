@@ -1,4 +1,4 @@
-{ pkgs, inputs, user, config, ... }: {
+{ pkgs, inputs, user, ... }: {
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
     ./network.nix
@@ -59,6 +59,11 @@
     usbutils
     usb-modeswitch # usb_modeswitch -KW -v 0bda -p 1a2b
   ];
+
+  services.udev.extraRules = ''
+    # Force-switch the RTL8851BU dongle out of its fake CD-ROM mode.
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="${pkgs.usb-modeswitch}/bin/usb_modeswitch -KW -v 0bda -p 1a2b"
+  '';
 
   # User configuration
   users.users.${user} = {

@@ -1,4 +1,4 @@
-{ pkgs, user, inputs, config, ... }: {
+{ pkgs, user, inputs, ... }: {
 
   # Minimal fonts for Steam+Proton
   fonts.packages = with pkgs; [
@@ -90,15 +90,10 @@
   services.cyan-skillfish-governor.enable = true;
 
   hardware = {
-    amdgpu = {
-      initrd.enable = true;
-      overdrive.enable = true;
-    };
     xone.enable = true; # XBOX Drives
     graphics = {
       enable = true;
       enable32Bit = true;
     };
-    firmware = [ pkgs.linux-firmware ];
   };
 }

@@ -19,7 +19,6 @@
       "mitigations=off"
       "amdgpu.sg_display=0"
       "processor.ignore_ppc=1"
-      "amdgpu.gttsize=14750"
       "ttm.pages_limit=3776000"
       "ttm.page_pool_size=3776000"
       "usbcore.autosuspend=-1"
@@ -45,10 +44,9 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   hardware = {
-    enableRedistributableFirmware = true;
-    cpu.amd = {
-      updateMicrocode = true;
-    };
+    enableRedistributableFirmware = true; # hardware.firmware = [ pkgs.linux-firmware ];
+    cpu.amd.updateMicrocode = true;
+    amdgpu.initrd.enable = true;
     usb-modeswitch.enable = true;
     bluetooth.enable = true;
   };
