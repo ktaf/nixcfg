@@ -1,7 +1,7 @@
 { pkgs, config, lib, ... }:
 {
-  # Add systemd service for swww daemon
-  systemd.user.services.swww = {
+  # Add systemd service for awww daemon
+  systemd.user.services.awww = {
     Unit = {
       Description = "Wallpaper daemon for Wayland";
       After = [ "graphical-session.target" ];
@@ -9,8 +9,8 @@
     };
     Service = {
       Type = "simple";
-      Environment = "SWWW_TRANSITION_FPS=30"; # Lower FPS for better stability
-      ExecStart = "${pkgs.swww}/bin/swww-daemon";
+      Environment = "AWWW_TRANSITION_FPS=30"; # Lower FPS for better stability
+      ExecStart = "${pkgs.awww}/bin/awww-daemon";
       Restart = "on-failure";
       RestartSec = 3;
       TimeoutStartSec = 10;
@@ -272,7 +272,7 @@
       #!/bin/sh
       CURSOR_POS=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .rect | "\(.x + .width / 2),\(.y + .height / 2)"')
       
-      ${pkgs.swww}/bin/swww img "$1" \
+      ${pkgs.awww}/bin/awww img "$1" \
         --transition-type random \
         --transition-fps 60 \
         --transition-duration 2 \
@@ -290,7 +290,7 @@
       
       RANDOM_WALL=$(find "$WALLPAPERS_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \) | shuf -n 1)
       
-      ${pkgs.swww}/bin/swww img "$RANDOM_WALL" \
+      ${pkgs.awww}/bin/awww img "$RANDOM_WALL" \
         --transition-type random \
         --transition-fps 60 \
         --transition-duration 2 \

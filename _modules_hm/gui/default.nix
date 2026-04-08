@@ -38,7 +38,7 @@
 
     ## SWAY
     autotiling
-    swww
+    awww
 
     pango
     file
