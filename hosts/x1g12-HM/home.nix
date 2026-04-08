@@ -20,13 +20,12 @@ in
   services = {
     systembus-notify.enable = true;
     blueman-applet.enable = true;
-    trayscale.enable = true;
   };
 
   home = {
     username = user;
     homeDirectory = "/home/${user}";
-    stateVersion = "25.11";
+    stateVersion = "26.05";
 
     sessionVariables = {
       # Wayland configuration
