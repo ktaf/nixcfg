@@ -15,7 +15,10 @@ in
   programs.home-manager.enable = true;
 
   # Ease usage on non-NixOS installations
-  targets.genericLinux.enable = true;
+  targets.genericLinux = {
+    enable = true;
+    gpu.enable = true;
+  };
 
   services = {
     systembus-notify.enable = true;
@@ -77,12 +80,18 @@ in
       TG_LOG_FORMAT = "bare";
       TERRAGRUNT_QUIET = "true";
       SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
+
+      # Python config
+      # PYTHONDONTWRITEBYTECODE = "true";
+      # PIP_REQUIRE_VIRTUALENV = "true";
+      # POETRY_VIRTUALENVS_IN_PROJECT = "true";
     };
 
     packages = with pkgs; [
       _1password-gui
       avahi
       awscli2
+      aws-iam-authenticator
       bat
       blueman
       bluez
@@ -96,6 +105,7 @@ in
       eza
       ffmpeg
       firecracker
+      fluxcd
       fzf
       go
       google-chrome
@@ -107,6 +117,7 @@ in
       kubectl
       kubectx
       kubernetes-helm
+      kubeseal
       libdigidocpp
       libinput
       libudfread
@@ -129,18 +140,13 @@ in
       polkit_gnome
       pre-commit
       pulseaudio
-      # python312Packages.invoke
-      # python312Packages.python-hcl2
-      # python312Packages.pip
-      # python312Packages.tkinter
-      # python312Packages.usb-monitor
-      # python312
       # Unified Python env: puts `inv` and `hcl2` (and friends) in the SAME interpreter
-      (python312.withPackages (pythonPkgs: [
+      (python313.withPackages (pythonPkgs: [
         pythonPkgs.invoke
+        pythonPkgs.boto3
+        pythonPkgs.pandas
         pythonPkgs.python-hcl2
         pythonPkgs.pip
-        # pythonPkgs.tkinter
         pythonPkgs.usb-monitor
       ]))
       qdigidoc
