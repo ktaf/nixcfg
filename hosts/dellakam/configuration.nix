@@ -41,7 +41,7 @@
   users.users.${user} = {
     isNormalUser = true;
     description = "Kourosh";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "sonarr" "deluge" ];
     packages = with pkgs; [
       # Core utilities
       bat
@@ -59,7 +59,7 @@
       smartmontools
       lm_sensors
       fastfetch
-      linuxKernel.packages.linux_6_18.turbostat
+      linuxKernel.packages.linux_6_19.turbostat
       powertop
 
       netbird
@@ -82,6 +82,25 @@
       machine-learning.enable = true;
       database.enable = true;
     };
+
+    jellyfin.enable = true;
+    seerr.enable = true;
+    # sabnzbd.enable = true;
+    sonarr = {
+      enable = true;
+      group = "win";
+      user = "win";
+    };
+    radarr.enable = true;
+    bazarr.enable = true;
+    flaresolverr.enable = true;
+    prowlarr = {
+      enable = true;
+      openFirewall = true;
+    };
+    deluge = {
+      enable = true;
+    };
   };
 
   # Power management for server efficiency
@@ -101,5 +120,11 @@
     };
   };
 
-  system.stateVersion = "25.11";
+  systemd.tmpfiles.rules = [
+    "d /var/lib/deluge 0750 deluge deluge -"
+    "d /var/lib/deluge/.config 0750 deluge deluge -"
+    "d /var/lib/deluge/.config/deluge 0750 deluge deluge -"
+  ];
+
+  system.stateVersion = "26.05";
 }
