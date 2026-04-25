@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 {
   networking = {
@@ -9,6 +9,7 @@
     # bridges.br0.interfaces = [ "enp3s0" ];
     # interfaces.br0.useDHCP = true;
 
+    wireless.enable = lib.mkForce false;
     useDHCP = false;
     defaultGateway = {
       address = "192.168.2.1";
