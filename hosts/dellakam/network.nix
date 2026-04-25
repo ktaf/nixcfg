@@ -64,13 +64,16 @@
           "valid users" = "win";
           "create mask" = "0664";
           "directory mask" = "0775";
+          "force directory mode" = "2775";
         };
       };
     };
   };
   # Ensure directory exists with correct ownership/permissions
   systemd.tmpfiles.rules = [
-    "d /data/samba/public 0775 win win -"
+    "d /data 2775 win win -"
+    "d /data/samba 2775 win win -"
+    "d /data/samba/public 2775 win win -"
   ];
 
   users.groups.win = { };

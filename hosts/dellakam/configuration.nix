@@ -1,4 +1,4 @@
-{ pkgs, inputs, user, ... }: {
+{ lib, pkgs, inputs, user, ... }: {
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
     ./network.nix
@@ -30,7 +30,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_7_0;
+    kernelPackages = pkgs.linuxPackages_6_18;
   };
 
   # Localization
@@ -41,7 +41,7 @@
   users.users.${user} = {
     isNormalUser = true;
     description = "Kourosh";
-    extraGroups = [ "networkmanager" "wheel" "docker" "sonarr" "qbittorrent" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "win" ];
     packages = with pkgs; [
       # Core utilities
       bat
@@ -59,7 +59,7 @@
       smartmontools
       lm_sensors
       fastfetch
-      linuxKernel.packages.linux_7_0.turbostat
+      linuxKernel.packages.linux_6_18.turbostat
       powertop
 
       netbird
@@ -83,16 +83,27 @@
       database.enable = true;
     };
 
-    jellyfin.enable = true;
+    jellyfin = {
+      enable = true;
+      group = "win";
+    };
     seerr.enable = true;
-    sabnzbd.enable = true;
+    sabnzbd = {
+      enable = true;
+      group = "win";
+    };
     sonarr = {
       enable = true;
       group = "win";
-      user = "win";
     };
-    radarr.enable = true;
-    bazarr.enable = true;
+    radarr = {
+      enable = true;
+      group = "win";
+    };
+    bazarr = {
+      enable = true;
+      group = "win";
+    };
     flaresolverr.enable = true;
     prowlarr = {
       enable = true;
@@ -100,8 +111,18 @@
     };
     qbittorrent = {
       enable = true;
+      group = "win";
       webuiPort = 8181;
     };
+  };
+
+  systemd.services = {
+    bazarr.serviceConfig.UMask = lib.mkForce "0002";
+    jellyfin.serviceConfig.UMask = lib.mkForce "0002";
+    qbittorrent.serviceConfig.UMask = lib.mkForce "0002";
+    radarr.serviceConfig.UMask = lib.mkForce "0002";
+    sabnzbd.serviceConfig.UMask = lib.mkForce "0002";
+    sonarr.serviceConfig.UMask = lib.mkForce "0002";
   };
 
   # Power management for server efficiency
@@ -113,11 +134,6 @@
   virtualisation = {
     docker = {
       enable = true;
-      # Enable rootless mode for better security
-      rootless = {
-        enable = true;
-        setSocketVariable = true;
-      };
     };
   };
 

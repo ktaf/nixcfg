@@ -1,16 +1,4 @@
-{ pkgs, user, ... }:
-
-{
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
-  home = {
-    username = "${user}";
-    homeDirectory = "/home/${user}";
-    stateVersion = "25.11";
-
-    packages = with pkgs; [ ];
-  };
+{ pkgs, user, ... }: {
 
   programs.git = {
     enable = true;
@@ -23,4 +11,5 @@
       pull.rebase = "false";
     };
   };
+
 }
