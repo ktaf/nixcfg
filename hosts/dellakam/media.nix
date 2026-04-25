@@ -117,6 +117,7 @@ in
   };
 
   systemd.tmpfiles.rules = [
+    "d /var/lib/radarr 0700 radarr radarr -"
     "z /var/lib/radarr 0700 radarr radarr -"
     "d /var/lib/sonarr 0750 sonarr sonarr -"
     "z /var/lib/sonarr 0750 sonarr sonarr -"
