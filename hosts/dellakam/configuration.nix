@@ -95,9 +95,18 @@
       enable = true;
       openFirewall = true;
     };
-    qbittorrent = {
+    transmission = {
       enable = true;
-      webuiPort = 8181;
+      settings = {
+        download-dir = "/data/downloads/complete";
+        incomplete-dir = "/data/downloads/incomplete";
+        incomplete-dir-enabled = true;
+        watch-dir = "/data/downloads/watch";
+        watch-dir-enabled = true;
+        rpc-bind-address = "127.0.0.1";
+        rpc-port = 8081;
+        umask = "002";
+      };
     };
   };
 
@@ -110,7 +119,7 @@
       SupplementaryGroups = [ "win" ];
       UMask = lib.mkForce "0002";
     };
-    qbittorrent.serviceConfig = {
+    transmission.serviceConfig = {
       SupplementaryGroups = [ "win" ];
       UMask = lib.mkForce "0002";
     };
@@ -139,6 +148,13 @@
       enable = true;
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "d /data/downloads 2775 win win -"
+    "d /data/downloads/complete 2775 transmission win -"
+    "d /data/downloads/incomplete 2775 transmission win -"
+    "d /data/downloads/watch 2775 transmission win -"
+  ];
 
   system.stateVersion = "26.05";
 }
