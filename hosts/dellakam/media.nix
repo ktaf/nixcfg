@@ -26,7 +26,10 @@ in
     sabnzbd.enable = true;
 
     sonarr.enable = true;
-    radarr.enable = true;
+    radarr = {
+      enable = true;
+      dataDir = "/var/lib/radarr";
+    };
     bazarr.enable = true;
     flaresolverr.enable = true;
     prowlarr = {
@@ -114,12 +117,7 @@ in
   };
 
   systemd.tmpfiles.rules = [
-    "d /var/lib/radarr 0750 radarr radarr -"
-    "z /var/lib/radarr 0750 radarr radarr -"
-    "d /var/lib/radarr/.config 0750 radarr radarr -"
-    "z /var/lib/radarr/.config 0750 radarr radarr -"
-    "d /var/lib/radarr/.config/Radarr 0750 radarr radarr -"
-    "Z /var/lib/radarr/.config/Radarr - radarr radarr -"
+    "z /var/lib/radarr 0700 radarr radarr -"
     "d /var/lib/sonarr 0750 sonarr sonarr -"
     "z /var/lib/sonarr 0750 sonarr sonarr -"
     "d /var/lib/sonarr/.config 0750 sonarr sonarr -"
