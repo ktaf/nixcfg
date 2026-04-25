@@ -162,6 +162,16 @@
   systemd.tmpfiles.rules = [
     "d /data/downloads 2775 win win -"
     "z /data/downloads 2775 win win -"
+    "d /data/downloads/complete 2775 transmission win -"
+    "z /data/downloads/complete 2775 transmission win -"
+    "d /data/downloads/complete/tv-sonarr 2775 transmission win -"
+    "z /data/downloads/complete/tv-sonarr 2775 transmission win -"
+    "d /data/downloads/complete/movies-radarr 2775 transmission win -"
+    "z /data/downloads/complete/movies-radarr 2775 transmission win -"
+    "d /data/downloads/incomplete 2775 transmission win -"
+    "z /data/downloads/incomplete 2775 transmission win -"
+    "d /data/downloads/watch 2775 transmission win -"
+    "z /data/downloads/watch 2775 transmission win -"
   ];
 
   system.stateVersion = "26.05";
