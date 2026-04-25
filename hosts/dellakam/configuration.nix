@@ -30,7 +30,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_6_18;
+    kernelPackages = pkgs.linuxPackages_7_0;
   };
 
   # Localization
@@ -59,7 +59,7 @@
       smartmontools
       lm_sensors
       fastfetch
-      linuxKernel.packages.linux_6_18.turbostat
+      linuxKernel.packages.linux_7_0.turbostat
       powertop
 
       netbird
@@ -136,12 +136,6 @@
       enable = true;
     };
   };
-
-  systemd.tmpfiles.rules = [
-    "d /var/lib/deluge 0750 deluge deluge -"
-    "d /var/lib/deluge/.config 0750 deluge deluge -"
-    "d /var/lib/deluge/.config/deluge 0750 deluge deluge -"
-  ];
 
   system.stateVersion = "26.05";
 }
