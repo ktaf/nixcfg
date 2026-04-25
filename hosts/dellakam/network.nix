@@ -9,8 +9,36 @@
     # bridges.br0.interfaces = [ "enp3s0" ];
     # interfaces.br0.useDHCP = true;
 
+    useDHCP = false;
+    defaultGateway = {
+      address = "192.168.2.1";
+      interface = "enp3s0";
+    };
+    interfaces.enp3s0.ipv4.addresses = [
+      {
+        address = "192.168.2.100";
+        prefixLength = 24;
+      }
+    ];
+
     # Enable networking
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      unmanaged = [ "enp3s0" ];
+      ensureProfiles.profiles.enp2s0 = {
+        connection = {
+          id = "enp2s0";
+          type = "ethernet";
+          interface-name = "enp2s0";
+          autoconnect = true;
+        };
+        ipv4 = {
+          method = "auto";
+          route-metric = 500;
+        };
+        ipv6.method = "disabled";
+      };
+    };
 
     # Enable IP forwarding
     firewall = {

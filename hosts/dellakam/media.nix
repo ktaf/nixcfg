@@ -11,7 +11,7 @@ in
   services = {
     immich = {
       enable = true;
-      host = "192.168.2.27";
+      host = "192.168.2.100";
       port = 2283;
       machine-learning.enable = true;
       database.enable = true;
