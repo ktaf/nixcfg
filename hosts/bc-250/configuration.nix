@@ -4,6 +4,7 @@
     ./network.nix
     ./steamos.nix
     ../../_modules/shell.nix
+    ../../_modules/git.nix
   ];
 
   nix = {

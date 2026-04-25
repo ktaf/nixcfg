@@ -3,6 +3,7 @@
     ./hardware-configuration.nix
     ./network.nix
     ../../_modules/shell.nix
+    ../../_modules/git.nix
   ];
 
   nix = {
