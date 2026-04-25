@@ -1,13 +1,20 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   networking = {
     hostName = "dellakam";
     nameservers = [ "208.67.220.220" "158.64.1.29" ];
     enableIPv6 = false;
-    # Enable bridge mode for the VM
-    bridges.br0.interfaces = [ "enp3s0" ];
-    interfaces.br0.useDHCP = true;
+    # # Enable bridge mode for the VM
+    # bridges.br0.interfaces = [ "enp3s0" ];
+    # interfaces.br0.useDHCP = true;
+
+    interfaces.enp3s0.ipv4.addresses = [
+      {
+        address = "192.168.2.100";
+        prefixLength = 24;
+      }
+    ];
 
     # Enable networking
     networkmanager.enable = true;
@@ -25,65 +32,5 @@
         X11Forwarding = false;
       };
     };
-    samba-wsdd = {
-      enable = true;
-      openFirewall = true;
-      workgroup = "WORKGROUP"; # optional override
-      hostname = "dellakam"; # optional, defaults to hostName
-    };
-    samba = {
-      enable = true;
-      package = pkgs.samba4Full;
-      openFirewall = true;
-      nsswins = true;
-      nmbd.enable = true;
-      settings = {
-        global = {
-          workgroup = "WORKGROUP";
-          "server string" = "dellakam";
-          "map to guest" = "Never";
-          "server min protocol" = "SMB3";
-          security = "user";
-          "netbios name" = "dellakam";
-          "os level" = "65";
-          "socket options" = "TCP_NODELAY IPTOS_LOWDELAY SO_RCVBUF=262144 SO_SNDBUF=262144";
-          "use sendfile" = "yes";
-          "aio read size" = "16384";
-          "aio write size" = "16384";
-          "max xmit" = "131072";
-          "kernel oplocks" = "no";
-          "level2 oplocks" = "no";
-        };
-        public = {
-          path = "/data/samba/public";
-          browseable = "yes";
-          "read only" = "no";
-          "guest ok" = "no";
-          "force user" = "win";
-          "force group" = "win";
-          "valid users" = "win";
-          "create mask" = "0664";
-          "directory mask" = "0775";
-          "force directory mode" = "2775";
-        };
-      };
-    };
-  };
-  # Ensure directory exists with correct ownership/permissions
-  systemd.tmpfiles.rules = [
-    "d /data 2775 win win -"
-    "z /data 2775 win win -"
-    "d /data/samba 2775 win win -"
-    "z /data/samba 2775 win win -"
-    "d /data/samba/public 2775 win win -"
-    "z /data/samba/public 2775 win win -"
-  ];
-
-  users.groups.win = { };
-  users.users."win" = {
-    isSystemUser = true;
-    group = "win";
-    home = "/var/empty";
-    shell = "/run/current-system/sw/bin/nologin";
   };
 }
