@@ -3,6 +3,10 @@ let
   user = "kourosh";
 in
 {
+  imports = [
+    ../../_modules/git.nix
+  ];
+
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [
@@ -178,16 +182,9 @@ in
   };
 
   programs.git = {
-    enable = true;
     settings = {
-      user = {
-        name = "ktaf";
-        email = "kourosh.tafreshi@bolt.eu";
-      };
-      init.defaultBranch = "main";
+      user.email = "kourosh.tafreshi@bolt.eu";
       core.editor = "code";
-      protocol.keybase.allow = "always";
-      pull.rebase = "false";
       push.autoSetupRemote = true;
     };
   };
