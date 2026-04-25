@@ -114,6 +114,14 @@ in
   };
 
   systemd.tmpfiles.rules = [
+    "d /var/lib/radarr 0750 radarr radarr -"
+    "d /var/lib/radarr/.config 0750 radarr radarr -"
+    "Z /var/lib/radarr/.config/Radarr - radarr radarr -"
+    "d /var/lib/sonarr 0750 sonarr sonarr -"
+    "d /var/lib/sonarr/.config 0750 sonarr sonarr -"
+    "Z /var/lib/sonarr/.config/NzbDrone - sonarr sonarr -"
+    "Z /var/lib/bazarr - bazarr bazarr -"
+    "Z /var/lib/sabnzbd - sabnzbd sabnzbd -"
     "d /data 2775 win win -"
     "z /data 2775 win win -"
     "d /data/samba 2775 win win -"
