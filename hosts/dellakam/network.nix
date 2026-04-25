@@ -3,7 +3,7 @@
 {
   networking = {
     hostName = "dellakam";
-    nameservers = [ "8.8.8.8" "1.1.1.1" ];
+    nameservers = [ "208.67.220.220" "158.64.1.29" ];
     enableIPv6 = false;
     # Enable bridge mode for the VM
     bridges.br0.interfaces = [ "enp3s0" ];
