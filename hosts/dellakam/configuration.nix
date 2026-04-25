@@ -31,7 +31,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_7_0;
+    kernelPackages = pkgs.linuxPackages_6_18;
   };
 
   # Localization
@@ -105,7 +105,6 @@
         incomplete-dir-enabled = true;
         watch-dir = "/data/downloads/watch";
         watch-dir-enabled = true;
-        rpc-bind-address = "127.0.0.1";
         rpc-port = 8081;
         umask = "002";
       };
