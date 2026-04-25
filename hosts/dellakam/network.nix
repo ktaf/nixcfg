@@ -72,8 +72,11 @@
   # Ensure directory exists with correct ownership/permissions
   systemd.tmpfiles.rules = [
     "d /data 2775 win win -"
+    "z /data 2775 win win -"
     "d /data/samba 2775 win win -"
+    "z /data/samba 2775 win win -"
     "d /data/samba/public 2775 win win -"
+    "z /data/samba/public 2775 win win -"
   ];
 
   users.groups.win = { };

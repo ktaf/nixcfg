@@ -116,28 +116,34 @@
     bazarr.serviceConfig = {
       SupplementaryGroups = [ "win" ];
       UMask = lib.mkForce "0002";
+      PrivateUsers = lib.mkForce false;
     };
     jellyfin.serviceConfig = {
       SupplementaryGroups = [ "win" ];
       UMask = lib.mkForce "0002";
+      PrivateUsers = lib.mkForce false;
     };
     transmission = {
       requires = [ "transmission-setup.service" ];
       serviceConfig = {
         UMask = lib.mkForce "0002";
+        PrivateUsers = lib.mkForce false;
       };
     };
     radarr.serviceConfig = {
       SupplementaryGroups = [ "win" ];
       UMask = lib.mkForce "0002";
+      PrivateUsers = lib.mkForce false;
     };
     sabnzbd.serviceConfig = {
       SupplementaryGroups = [ "win" ];
       UMask = lib.mkForce "0002";
+      PrivateUsers = lib.mkForce false;
     };
     sonarr.serviceConfig = {
       SupplementaryGroups = [ "win" ];
       UMask = lib.mkForce "0002";
+      PrivateUsers = lib.mkForce false;
     };
   };
 
