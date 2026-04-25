@@ -129,6 +129,7 @@ in
       mission-center
       moonlight-qt
       nemo
+      ripgrep
       fastfetch
       nix-zsh-completions
       nmap
