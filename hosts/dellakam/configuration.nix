@@ -84,27 +84,12 @@
       database.enable = true;
     };
 
-    jellyfin = {
-      enable = true;
-      group = "win";
-    };
+    jellyfin.enable = true;
     seerr.enable = true;
-    sabnzbd = {
-      enable = true;
-      group = "win";
-    };
-    sonarr = {
-      enable = true;
-      group = "win";
-    };
-    radarr = {
-      enable = true;
-      group = "win";
-    };
-    bazarr = {
-      enable = true;
-      group = "win";
-    };
+    sabnzbd.enable = true;
+    sonarr.enable = true;
+    radarr.enable = true;
+    bazarr.enable = true;
     flaresolverr.enable = true;
     prowlarr = {
       enable = true;
@@ -112,18 +97,35 @@
     };
     qbittorrent = {
       enable = true;
-      group = "win";
       webuiPort = 8181;
     };
   };
 
   systemd.services = {
-    bazarr.serviceConfig.UMask = lib.mkForce "0002";
-    jellyfin.serviceConfig.UMask = lib.mkForce "0002";
-    qbittorrent.serviceConfig.UMask = lib.mkForce "0002";
-    radarr.serviceConfig.UMask = lib.mkForce "0002";
-    sabnzbd.serviceConfig.UMask = lib.mkForce "0002";
-    sonarr.serviceConfig.UMask = lib.mkForce "0002";
+    bazarr.serviceConfig = {
+      SupplementaryGroups = [ "win" ];
+      UMask = lib.mkForce "0002";
+    };
+    jellyfin.serviceConfig = {
+      SupplementaryGroups = [ "win" ];
+      UMask = lib.mkForce "0002";
+    };
+    qbittorrent.serviceConfig = {
+      SupplementaryGroups = [ "win" ];
+      UMask = lib.mkForce "0002";
+    };
+    radarr.serviceConfig = {
+      SupplementaryGroups = [ "win" ];
+      UMask = lib.mkForce "0002";
+    };
+    sabnzbd.serviceConfig = {
+      SupplementaryGroups = [ "win" ];
+      UMask = lib.mkForce "0002";
+    };
+    sonarr.serviceConfig = {
+      SupplementaryGroups = [ "win" ];
+      UMask = lib.mkForce "0002";
+    };
   };
 
   # Power management for server efficiency
