@@ -30,7 +30,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_6_19;
+    kernelPackages = pkgs.linuxPackages_7_0;
   };
 
   # Localization
@@ -41,7 +41,7 @@
   users.users.${user} = {
     isNormalUser = true;
     description = "Kourosh";
-    extraGroups = [ "networkmanager" "wheel" "docker" "sonarr" "deluge" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "sonarr" "qbittorrent" ];
     packages = with pkgs; [
       # Core utilities
       bat
@@ -59,7 +59,7 @@
       smartmontools
       lm_sensors
       fastfetch
-      linuxKernel.packages.linux_6_19.turbostat
+      linuxKernel.packages.linux_7_0.turbostat
       powertop
 
       netbird
@@ -85,7 +85,7 @@
 
     jellyfin.enable = true;
     seerr.enable = true;
-    # sabnzbd.enable = true;
+    sabnzbd.enable = true;
     sonarr = {
       enable = true;
       group = "win";
@@ -98,8 +98,9 @@
       enable = true;
       openFirewall = true;
     };
-    deluge = {
+    qbittorrent = {
       enable = true;
+      webuiPort = 8181;
     };
   };
 
