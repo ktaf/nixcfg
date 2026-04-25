@@ -97,6 +97,8 @@
     };
     transmission = {
       enable = true;
+      group = "win";
+      downloadDirPermissions = "2775";
       settings = {
         download-dir = "/data/downloads/complete";
         incomplete-dir = "/data/downloads/incomplete";
@@ -119,9 +121,11 @@
       SupplementaryGroups = [ "win" ];
       UMask = lib.mkForce "0002";
     };
-    transmission.serviceConfig = {
-      SupplementaryGroups = [ "win" ];
-      UMask = lib.mkForce "0002";
+    transmission = {
+      requires = [ "transmission-setup.service" ];
+      serviceConfig = {
+        UMask = lib.mkForce "0002";
+      };
     };
     radarr.serviceConfig = {
       SupplementaryGroups = [ "win" ];
@@ -151,9 +155,7 @@
 
   systemd.tmpfiles.rules = [
     "d /data/downloads 2775 win win -"
-    "d /data/downloads/complete 2775 transmission win -"
-    "d /data/downloads/incomplete 2775 transmission win -"
-    "d /data/downloads/watch 2775 transmission win -"
+    "z /data/downloads 2775 win win -"
   ];
 
   system.stateVersion = "26.05";
