@@ -1,6 +1,7 @@
-{ lib, pkgs, inputs, user, ... }: {
+{ pkgs, inputs, user, ... }: {
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
+    ./media.nix
     ./network.nix
     ../../_modules/shell.nix
     ../../_modules/git.nix
@@ -74,76 +75,6 @@
   services = {
     fwupd.enable = true;
     thermald.enable = true;
-
-    # Immich photo management
-    immich = {
-      enable = true;
-      host = "192.168.2.27";
-      port = 2283;
-      machine-learning.enable = true;
-      database.enable = true;
-    };
-
-    jellyfin.enable = true;
-    seerr.enable = true;
-    sabnzbd.enable = true;
-    sonarr.enable = true;
-    radarr.enable = true;
-    bazarr.enable = true;
-    flaresolverr.enable = true;
-    prowlarr = {
-      enable = true;
-      openFirewall = true;
-    };
-    transmission = {
-      enable = true;
-      group = "win";
-      downloadDirPermissions = "2775";
-      settings = {
-        download-dir = "/data/downloads/complete";
-        incomplete-dir = "/data/downloads/incomplete";
-        incomplete-dir-enabled = true;
-        watch-dir = "/data/downloads/watch";
-        watch-dir-enabled = true;
-        rpc-port = 8081;
-        umask = "002";
-      };
-    };
-  };
-
-  systemd.services = {
-    bazarr.serviceConfig = {
-      SupplementaryGroups = [ "win" ];
-      UMask = lib.mkForce "0002";
-      PrivateUsers = lib.mkForce false;
-    };
-    jellyfin.serviceConfig = {
-      SupplementaryGroups = [ "win" ];
-      UMask = lib.mkForce "0002";
-      PrivateUsers = lib.mkForce false;
-    };
-    transmission = {
-      requires = [ "transmission-setup.service" ];
-      serviceConfig = {
-        UMask = lib.mkForce "0002";
-        PrivateUsers = lib.mkForce false;
-      };
-    };
-    radarr.serviceConfig = {
-      SupplementaryGroups = [ "win" ];
-      UMask = lib.mkForce "0002";
-      PrivateUsers = lib.mkForce false;
-    };
-    sabnzbd.serviceConfig = {
-      SupplementaryGroups = [ "win" ];
-      UMask = lib.mkForce "0002";
-      PrivateUsers = lib.mkForce false;
-    };
-    sonarr.serviceConfig = {
-      SupplementaryGroups = [ "win" ];
-      UMask = lib.mkForce "0002";
-      PrivateUsers = lib.mkForce false;
-    };
   };
 
   # Power management for server efficiency
@@ -157,21 +88,6 @@
       enable = true;
     };
   };
-
-  systemd.tmpfiles.rules = [
-    "d /data/downloads 2775 win win -"
-    "z /data/downloads 2775 win win -"
-    "d /data/downloads/complete 2775 transmission win -"
-    "z /data/downloads/complete 2775 transmission win -"
-    "d /data/downloads/complete/tv-sonarr 2775 transmission win -"
-    "z /data/downloads/complete/tv-sonarr 2775 transmission win -"
-    "d /data/downloads/complete/movies-radarr 2775 transmission win -"
-    "z /data/downloads/complete/movies-radarr 2775 transmission win -"
-    "d /data/downloads/incomplete 2775 transmission win -"
-    "z /data/downloads/incomplete 2775 transmission win -"
-    "d /data/downloads/watch 2775 transmission win -"
-    "z /data/downloads/watch 2775 transmission win -"
-  ];
 
   system.stateVersion = "26.05";
 }
