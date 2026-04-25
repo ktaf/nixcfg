@@ -100,7 +100,10 @@ in
 
   systemd.services = {
     bazarr.serviceConfig = dataWriter;
-    radarr.serviceConfig = dataWriter;
+    radarr.serviceConfig = dataWriter // {
+      StateDirectory = "radarr";
+      StateDirectoryMode = "0700";
+    };
     sabnzbd.serviceConfig = dataWriter;
     sonarr.serviceConfig = dataWriter;
     plex.serviceConfig = {
@@ -117,8 +120,6 @@ in
   };
 
   systemd.tmpfiles.rules = [
-    "d /var/lib/radarr 0700 radarr radarr -"
-    "z /var/lib/radarr 0700 radarr radarr -"
     "d /var/lib/sonarr 0750 sonarr sonarr -"
     "z /var/lib/sonarr 0750 sonarr sonarr -"
     "d /var/lib/sonarr/.config 0750 sonarr sonarr -"
