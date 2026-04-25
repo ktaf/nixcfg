@@ -31,7 +31,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_7_0;
+    kernelPackages = pkgs.linuxPackages_6_18;
   };
 
   # Localization
