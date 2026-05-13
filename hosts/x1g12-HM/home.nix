@@ -93,19 +93,12 @@ in
 
     packages = with pkgs; [
       _1password-gui
-      avahi
       awscli2
       aws-iam-authenticator
       bat
       blueman
-      bluez
       claude-code
-      cpio
-      curl
       dbeaver-bin
-      dbus
-      dig
-      docker-compose
       eza
       ffmpeg
       firecracker
@@ -115,7 +108,6 @@ in
       google-chrome
       htop
       inframap
-      jq
       kind
       krew
       kubectl
@@ -125,7 +117,6 @@ in
       libdigidocpp
       libinput
       libudfread
-      libv4l
       libxkbcommon
       # localstack
       looking-glass-client
@@ -135,13 +126,13 @@ in
       nemo
       ripgrep
       fastfetch
-      nix-zsh-completions
       nmap
       novnc
       obsidian
       okta-aws-cli
+      opencode
+      opencode-desktop
       openh264
-      pciutils
       polkit_gnome
       pre-commit
       pulseaudio
@@ -170,10 +161,9 @@ in
       virt-manager
       vsh
       wayvnc
-      which
       whois
       winbox
-      wireshark
+      # wireshark
       xfontsel
       slack
       vscode
