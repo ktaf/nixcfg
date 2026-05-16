@@ -125,31 +125,20 @@ in
 
   systemd.tmpfiles.rules = [
     "d /var/lib/sonarr 0750 sonarr sonarr -"
-    "z /var/lib/sonarr 0750 sonarr sonarr -"
     "d /var/lib/sonarr/.config 0750 sonarr sonarr -"
-    "z /var/lib/sonarr/.config 0750 sonarr sonarr -"
     "d /var/lib/sonarr/.config/NzbDrone 0750 sonarr sonarr -"
     "Z /var/lib/sonarr/.config/NzbDrone - sonarr sonarr -"
     "Z /var/lib/bazarr - bazarr bazarr -"
     "Z /var/lib/sabnzbd - sabnzbd sabnzbd -"
     "d /data 2775 win win -"
-    "z /data 2775 win win -"
     "d /data/samba 2775 win win -"
-    "z /data/samba 2775 win win -"
     "d /data/samba/public 2775 win win -"
-    "z /data/samba/public 2775 win win -"
     "d /data/downloads 2775 win win -"
-    "z /data/downloads 2775 win win -"
     "d /data/downloads/complete 2775 transmission win -"
-    "z /data/downloads/complete 2775 transmission win -"
     "d /data/downloads/complete/tv-sonarr 2775 transmission win -"
-    "z /data/downloads/complete/tv-sonarr 2775 transmission win -"
     "d /data/downloads/complete/radarr 2775 transmission win -"
-    "z /data/downloads/complete/radarr 2775 transmission win -"
     "d /data/downloads/incomplete 2775 transmission win -"
-    "z /data/downloads/incomplete 2775 transmission win -"
     "d /data/downloads/watch 2775 transmission win -"
-    "z /data/downloads/watch 2775 transmission win -"
   ];
 
   users.groups.win = { };
