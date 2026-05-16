@@ -47,6 +47,10 @@ in
         incomplete-dir-enabled = true;
         watch-dir = "/data/downloads/watch";
         watch-dir-enabled = true;
+        openFirewall = true;
+        rpc-bind-address = "0.0.0.0";
+        rpc-whitelist-enabled = true;
+        rpc-whitelist = "127.0.0.1,192.168.2.*";
         rpc-port = 8081;
         umask = "002";
       };
