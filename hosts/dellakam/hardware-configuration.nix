@@ -6,7 +6,7 @@
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "uas" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.kernelParams = [
@@ -20,14 +20,21 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/0948688b-34bf-44a3-9394-97a97b798dd6";
+      device = "/dev/disk/by-uuid/6650efb0-96ca-4693-87a3-568df75747c2";
       fsType = "btrfs";
       options = [ "subvol=@" "compress=zstd:3" "ssd" "space_cache=v2" "noatime" ];
     };
 
+  fileSystems."/home" =
+    {
+      device = "/dev/disk/by-uuid/6650efb0-96ca-4693-87a3-568df75747c2";
+      fsType = "btrfs";
+      options = [ "subvol=@home" "compress=zstd:3" "ssd" "space_cache=v2" "noatime" ];
+    };
+
   fileSystems."/boot" =
     {
-      device = "/dev/disk/by-uuid/6547-47C3";
+      device = "/dev/disk/by-uuid/1DC0-7818";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
@@ -37,7 +44,6 @@
     fsType = "btrfs";
     options = [ "compress=zstd:3" "ssd" "space_cache=v2" "noatime" ];
   };
-
 
   swapDevices = [ ];
 
