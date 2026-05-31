@@ -14,11 +14,10 @@
       "quiet"
       "amd_iommu=off"
       "mitigations=off"
-      "amdgpu.sg_display=0"
-      "amd_pstate=passive"
+      "amd_pstate=disable"
       "processor.ignore_ppc=1"
-      "ttm.pages_limit=4194304"
-      "ttm.page_pool_size=4194304"
+      "ttm.pages_limit=3801088"
+      # "ttm.page_pool_size=3801088"
       "usbcore.autosuspend=-1"
     ];
   };
