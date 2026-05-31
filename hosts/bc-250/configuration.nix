@@ -32,6 +32,15 @@
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.linuxPackages_6_18;
+    kernelPatches = [
+      {
+        name = "bc250-40cu-amdgpu";
+        patch = ./patches/bc250-40cu-amdgpu.patch;
+      }
+    ];
+    kernelParams = [
+      "amdgpu.bc250_cc_write_mode=3"
+    ];
   };
 
   # Localization
