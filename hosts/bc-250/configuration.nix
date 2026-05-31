@@ -1,4 +1,4 @@
-{ pkgs, inputs, user, ... }: {
+{ config, pkgs, inputs, user, ... }: {
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
     ./network.nix
@@ -32,14 +32,8 @@
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.linuxPackages_6_18;
-    kernelPatches = [
-      {
-        name = "bc250-40cu-amdgpu";
-        patch = ./patches/bc250-40cu-amdgpu.patch;
-      }
-    ];
-    kernelParams = [
-      "amdgpu.bc250_cc_write_mode=3"
+    extraModulePackages = [
+      config.boot.kernelPackages.nct6687d
     ];
   };
 
