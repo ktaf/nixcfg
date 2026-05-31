@@ -82,4 +82,4 @@
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
     };
 }
-#nixos-25.11
+#nixos-26.05
