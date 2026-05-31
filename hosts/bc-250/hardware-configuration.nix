@@ -17,8 +17,8 @@
       "amdgpu.sg_display=0"
       "amd_pstate=passive"
       "processor.ignore_ppc=1"
-      # "ttm.pages_limit=3776000"
-      # "ttm.page_pool_size=3776000"
+      "ttm.pages_limit=4194304"
+      "ttm.page_pool_size=4194304"
       "usbcore.autosuspend=-1"
     ];
   };
