@@ -49,6 +49,7 @@
     wget
     unzip
     openssl
+    python3
 
     # System monitoring and hardware tools
     pciutils
@@ -59,6 +60,7 @@
     powertop
     usbutils
     usb-modeswitch # usb_modeswitch -KW -v 0bda -p 1a2b
+    umr
     bluez
   ];
 
