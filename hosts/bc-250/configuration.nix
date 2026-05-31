@@ -3,7 +3,6 @@
     ./hardware-configuration.nix
     ./network.nix
     ./steamos.nix
-    ./cu-live-unlock.nix
     ../../_modules/shell.nix
     ../../_modules/git.nix
   ];
