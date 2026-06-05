@@ -30,8 +30,10 @@
 
     config = {
       startup = [
-        # Environment setup for screensharing IMORTANT!
-        { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway"; }
+        # Environment setup for screensharing.
+        { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway XDG_SESSION_DESKTOP=sway XDG_SESSION_TYPE=wayland XDG_DESKTOP_PORTAL_DIR=${config.home.homeDirectory}/.local/share/xdg-desktop-portal/portals"; }
+        { command = "systemctl --user daemon-reload"; always = true; }
+        { command = "systemctl --user restart xdg-desktop-portal xdg-desktop-portal-wlr"; always = true; }
 
         { command = "gnome-keyring-daemon --start --components=secrets"; }
 

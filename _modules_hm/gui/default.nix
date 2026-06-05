@@ -11,6 +11,27 @@
     ./sway.nix
   ];
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
+    config = {
+      sway = {
+        "org.freedesktop.impl.portal.ScreenCast" = "wlr";
+        "org.freedesktop.impl.portal.Screenshot" = "wlr";
+      };
+    };
+  };
+
+  xdg.configFile."systemd/user/xdg-desktop-portal-wlr.service".source =
+    "${pkgs.xdg-desktop-portal-wlr}/share/systemd/user/xdg-desktop-portal-wlr.service";
+
+  xdg.dataFile = {
+    "dbus-1/services/org.freedesktop.impl.portal.desktop.wlr.service".source =
+      "${pkgs.xdg-desktop-portal-wlr}/share/dbus-1/services/org.freedesktop.impl.portal.desktop.wlr.service";
+    "xdg-desktop-portal/portals/wlr.portal".source =
+      "${pkgs.xdg-desktop-portal-wlr}/share/xdg-desktop-portal/portals/wlr.portal";
+  };
+
   home.packages = with pkgs; [
     gtk4
     grim

@@ -41,6 +41,8 @@ in
       GDK_BACKEND = "wayland";
       CLUTTER_BACKEND = "wayland";
       SDL_VIDEODRIVER = "wayland";
+      # Used by the nixpkgs Chrome wrapper even outside NixOS.
+      NIXOS_OZONE_WL = "1";
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
 
       # Graphics and performance
