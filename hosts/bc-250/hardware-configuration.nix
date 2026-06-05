@@ -8,15 +8,17 @@
   boot = {
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
-      kernelModules = [ "amdgpu" "rtw89_8851bu" "nct6687" ]; # "rtw89_usb" "rtw89_8851b" "rtw89_core"
+      kernelModules = [ "amdgpu" "rtw89_8851bu" ]; # "rtw89_usb" "rtw89_8851b" "rtw89_core"
     };
+    # nct6687 is a hardware-monitor module.
+    kernelModules = [ "nct6687" ];
     kernelParams = [
       "quiet"
       "amd_iommu=off"
       "mitigations=off"
       "amd_pstate=disable"
       "processor.ignore_ppc=1"
-      "ttm.pages_limit=3801088"
+      "ttm.pages_limit=3959290"
       # "ttm.page_pool_size=3801088"
       "usbcore.autosuspend=-1"
     ];
@@ -44,14 +46,5 @@
     enableRedistributableFirmware = true; # hardware.firmware = [ pkgs.linux-firmware ];
     cpu.amd.updateMicrocode = true;
     amdgpu.initrd.enable = true;
-    usb-modeswitch.enable = true;
-    bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-      settings.General = {
-        Experimental = true;
-        FastConnectable = true;
-      };
-    };
   };
 }
