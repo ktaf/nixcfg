@@ -18,43 +18,52 @@
     let
       user = "kourosh";
       system = "x86_64-linux";
+      lib = nixpkgs.lib;
       pkgs = import nixpkgs {
         inherit system;
-        config = {
-          allowUnfree = true;
-          allowUnfreePredicate = _: true;
-        };
+        config.allowUnfree = true;
       };
-      lib = nixpkgs.lib;
-      makeNixosSystem = hostModule: { extraModules ? [ ] }:
+
+      # Build a NixOS host from ./hosts/<name>. A sibling home.nix, if present,
+      # is wired in as a Home Manager module automatically.
+      makeNixosSystem = name: extraModules:
         let
-          dir = builtins.dirOf hostModule;
-          hasHome = builtins.pathExists (dir + "/home.nix");
-          homeModules =
-            if hasHome then [
-              home-manager.nixosModules.home-manager
-              {
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  extraSpecialArgs = { inherit user; };
-                  users.${user} = import (dir + "/home.nix");
-                };
-              }
-            ] else [ ];
+          dir = ./hosts + "/${name}";
+          homeModules = lib.optionals (builtins.pathExists (dir + "/home.nix")) [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = { inherit user inputs; };
+                users.${user} = import (dir + "/home.nix");
+              };
+            }
+          ];
         in
         lib.nixosSystem {
           inherit system;
           specialArgs = { inherit user inputs; };
-          modules = [ hostModule ] ++ homeModules ++ extraModules;
+          modules = [ (dir + "/configuration.nix") ] ++ homeModules ++ extraModules;
         };
+
+      # hostname -> host-specific NixOS modules. The name must match the
+      # directory under ./hosts.
+      hosts = {
+        homie = [ ];
+        arvanix = [ ];
+        dellakam = [ ];
+        daashy = [ ];
+        x1g12 = [ nixos-hardware.nixosModules.lenovo-thinkpad-x1-12th-gen ];
+        bc-250 = [ inputs.cyan-skillfish-governor.nixosModules.default ];
+      };
     in
     {
-      homeConfigurations."${user}" = home-manager.lib.homeManagerConfiguration {
+      nixosConfigurations = lib.mapAttrs makeNixosSystem hosts;
+
+      homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = {
-          inherit self nixpkgs inputs;
-        };
+        extraSpecialArgs = { inherit self nixpkgs inputs user; };
         modules = [
           nix-index-database.homeModules.nix-index
           ./hosts/x1g12-HM/home.nix
@@ -63,23 +72,8 @@
           # ./_modules_hm/syncthing.nix
         ];
       };
-      nixosConfigurations = {
-        homie = makeNixosSystem ./hosts/homie/configuration.nix { };
-        arvanix = makeNixosSystem ./hosts/arvanix/configuration.nix { };
-        x1g12 = makeNixosSystem ./hosts/x1g12/configuration.nix {
-          extraModules = [
-            nixos-hardware.nixosModules.lenovo-thinkpad-x1-12th-gen
-          ];
-        };
-        dellakam = makeNixosSystem ./hosts/dellakam/configuration.nix { };
-        daashy = makeNixosSystem ./hosts/daashy/configuration.nix { };
-        bc-250 = makeNixosSystem ./hosts/bc-250/configuration.nix {
-          extraModules = [
-            inputs.cyan-skillfish-governor.nixosModules.default
-          ];
-        };
-      };
-      formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
+
+      formatter.${system} = pkgs.nixpkgs-fmt;
     };
 }
 #nixos-26.05
