@@ -46,5 +46,14 @@
     enableRedistributableFirmware = true; # hardware.firmware = [ pkgs.linux-firmware ];
     cpu.amd.updateMicrocode = true;
     amdgpu.initrd.enable = true;
+    usb-modeswitch.enable = true;
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      settings.General = {
+        Experimental = true;
+        FastConnectable = true;
+      };
+    };
   };
 }
