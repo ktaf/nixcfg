@@ -48,7 +48,7 @@ default_border pixel 2 # disable window titlebar
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
-output * bg ~/extras/wallpapers/background.jpg fill
+output * bg ~/extras/wallpapers/mario-home.gif fill
 #
 # Example configuration:
 #

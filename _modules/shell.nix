@@ -22,10 +22,10 @@
       "histignorespace"
     ];
     shellAliases = {
-      ls = "eza";
+      # ls = "eza";
       ll = "eza -lha";
       tree = "eza --tree";
-      cat = "bat";
+      #  cat = "bat";
       k = "kubectl";
       kx = "kubectx";
       tf = "terraform";

@@ -62,37 +62,38 @@
       bluez
       blueman
       htop
+      #intune-portal
       libva
       linuxHeaders
       lshw
       lxappearance
       networkmanagerapplet
-      glxinfo
+      mesa-demos
       go
       openssl
       unzip
       usbutils
       polkit_gnome
-      python3Full
-      python311Packages.pip
+      # python3Full
+      # python311Packages.pip
       xdg-desktop-portal-wlr
       xdg-desktop-portal
       xdg-desktop-portal-gtk
-      electron
       direnv
       nix-direnv
-      kitty
-      nodejs_18
       gnumake
       gcc
       glib
       cmake
       #########System#########
       google-chrome
-      firefox
       libnotify
       poweralertd
       dbus
+      eza
+      bat
+      vscode
+      git
     ];
   };
 
@@ -105,6 +106,9 @@
 
   services.gvfs.enable = true;
   services.tumbler.enable = true;
+  services.intune.enable = true;
+  programs.seahorse.enable = true;
+
 
   #Steam
   programs.steam = {

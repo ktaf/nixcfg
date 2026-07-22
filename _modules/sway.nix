@@ -34,7 +34,7 @@ in
     autotiling
     dbus-sway-environment
     egl-wayland
-    glfw-wayland
+    glfw
     gnome-themes-extra
     gtk4
     grim
@@ -55,6 +55,11 @@ in
     wlogout
     xcur2png
     xdg-utils
+    microsoft-edge
+    microsoft-identity-broker
+    intune-portal
+    gnome-keyring
+    libsecret
   ];
 
   # xdg-desktop-portal works by exposing a series of D-Bus interfaces
@@ -76,7 +81,7 @@ in
     enable = true;
     wrapperFeatures.gtk = true;
     extraOptions = [ "--unsupported-gpu" ];
-    extraPackages = with pkgs; [ light ];
+    extraPackages = with pkgs; [ brightnessctl ];
   };
   environment.etc.zprofile.text = ''
     # If running from tty1 start sway
