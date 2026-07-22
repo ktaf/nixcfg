@@ -56,7 +56,7 @@ in
       __GLX_VENDOR_LIBRARY_NAME = "mesa";
 
       GSK_RENDERER = "gl"; # Changed from cairo to gl for better performance
-      AMD_VULKAN_ICD = "RADV";           # Explicit RADV for better perf
+      AMD_VULKAN_ICD = "RADV"; # Explicit RADV for better perf
       XCURSOR_THEME = "Adwaita";
 
       # XDG Base Directories
