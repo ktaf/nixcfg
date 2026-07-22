@@ -136,7 +136,7 @@
         };
 
         temperature = {
-          thermal-zone = 2;
+          thermal-zone = 0;
           format = " {temperatureC}°";
           critical-threshold = 70;
           format-critical = " {temperatureC}°";

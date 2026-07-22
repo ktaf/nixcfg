@@ -62,12 +62,12 @@
     {
       nixosConfigurations = lib.mapAttrs makeNixosSystem hosts;
 
-      homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.ktaf = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = { inherit self nixpkgs inputs user; };
         modules = [
           nix-index-database.homeModules.nix-index
-          ./hosts/x1g12-HM/home.nix
+          ./hosts/t14g5-hm/home.nix
           ./_modules_hm/gui
           ./_modules_hm/terminal
           # ./_modules_hm/syncthing.nix
