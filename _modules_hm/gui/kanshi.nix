@@ -8,17 +8,18 @@
           name = "home-docked";
           outputs = [
             {
-              criteria = "eDP-1";
-              status = "disable";
-            }
-            {
-              criteria = "Samsung Electric Company Odyssey G93SC HNTX201462";
-              mode = "5120x1440@240.000Hz";
+              criteria = "HDMI-A-1";
+              mode = "3820x1080@120.000Hz";
               position = "0,0";
             }
+            {
+              criteria = "eDP-1";
+              mode = "1920x1200@60.002Hz";
+              position = "3840,0";
+            }
             # {
-            #   criteria = "Dell Inc. DELL S3422DWG FSF4KK3";
-            #   mode = "3440x1440@99.98Hz";
+            #   criteria = "Samsung Electric Company Odyssey G93SC HNTX201462"; # DP
+            #   mode = "5120x1440@240.000Hz";
             #   position = "0,0";
             # }
           ];
@@ -34,12 +35,12 @@
             {
               criteria = "eDP-1";
               mode = "1920x1200@60Hz";
-              position = "3440,240";
+              position = "0,406";
             }
             {
-              criteria = "Dell Inc. DELL S3423DWC C74VNH3";
-              mode = "3440x1440@99.98Hz";
-              position = "0,0";
+              criteria = "DP-2";
+              mode = "3440x1440@100Hz";
+              position = "1920,166";
             }
           ];
           # exec = [

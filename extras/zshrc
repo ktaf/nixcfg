@@ -16,7 +16,7 @@ function git_branch() {
 # Function to display hostname conditionally
 function show_hostname() {
     local hostname=$(hostname)
-    local hidden_hostnames=("ktaf-x1" "Kourosh")
+    local hidden_hostnames=("lnx-001" "Kourosh")
     
     for hidden in "${hidden_hostnames[@]}"; do
         if [[ "${hostname}" == "${hidden}" ]]; then

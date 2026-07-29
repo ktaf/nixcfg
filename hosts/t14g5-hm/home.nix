@@ -50,7 +50,7 @@ in
       MOZ_ACCELERATED = "1";
       MOZ_WEBRENDER = "1";
 
-      WLR_DRM_NO_ATOMIC = "1 sway";
+      WLR_DRM_NO_ATOMIC = "1";
       WLR_NO_HARDWARE_CURSORS = "1";
       WLR_RENDERER = "vulkan";
       __GLX_VENDOR_LIBRARY_NAME = "mesa";
@@ -95,6 +95,7 @@ in
     };
 
     packages = with pkgs; [
+      azure-cli
       bat
       blueman
       claude-code
@@ -110,6 +111,7 @@ in
       krew
       kubectl
       kubectx
+      kubelogin
       kubernetes-helm
       kubeseal
       libdigidocpp
@@ -150,6 +152,8 @@ in
       xfontsel
       slack
       vscode
+      rtk
+      gh
     ];
   };
 
@@ -161,10 +165,22 @@ in
     };
   };
 
+  # Make Electron apps quieter and more consistent on Wayland
+  xdg.configFile."code-flags.conf".text = ''
+    --ozone-platform=wayland
+    --enable-features=WaylandWindowDecorations
+  '';
+
+  xdg.configFile."electron-flags.conf".text = ''
+    --ozone-platform=wayland
+    --enable-features=WaylandWindowDecorations
+  '';
+
   xdg.configFile."environment.d/envvars.conf".text = ''
     PATH="$HOME/.nix-profile/bin:$PATH"
   '';
+
   xdg.configFile."swaylock/config".text = ''
-    image=${config.home.homeDirectory}/lockscreen.png
+    image=${config.home.homeDirectory}/mario.gif
   '';
 }
