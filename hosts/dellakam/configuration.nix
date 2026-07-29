@@ -32,7 +32,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_6_18;
+    kernelPackages = pkgs.linuxPackages_7_1;
   };
 
   # Localization
@@ -61,10 +61,9 @@
       smartmontools
       lm_sensors
       fastfetch
-      linuxKernel.packages.linux_7_0.turbostat
+      linuxKernel.packages.linux_7_1.turbostat
       powertop
 
-      netbird
       iperf
       docker-compose
     ];

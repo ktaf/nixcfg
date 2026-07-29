@@ -21,9 +21,6 @@ in
       enable = true;
       openFirewall = true;
     };
-    overseerr.enable = true;
-
-    sabnzbd.enable = true;
 
     sonarr.enable = true;
     radarr = {
@@ -56,12 +53,12 @@ in
       };
     };
 
-    samba-wsdd = {
-      enable = true;
-      openFirewall = true;
-      workgroup = "WORKGROUP";
-      hostname = "dellakam";
-    };
+    # samba-wsdd = {
+    #   enable = true;
+    #   openFirewall = true;
+    #   workgroup = "WORKGROUP";
+    #   hostname = "dellakam";
+    # };
 
     samba = {
       enable = true;
