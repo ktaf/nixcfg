@@ -96,6 +96,10 @@ in
 
     packages = with pkgs; [
       azure-cli
+      azure-cli-extensions.costmanagement
+      azure-cli-extensions.fzf
+      azure-cli-extensions.resource-graph
+      azure-cli-extensions.quota
       bat
       blueman
       claude-code
@@ -142,6 +146,7 @@ in
       trousers
       usbview
       usbrip
+      uv
       v4l-utils
       virt-manager
       vsh
@@ -154,13 +159,16 @@ in
       vscode
       rtk
       gh
+      python314Packages.pip
+      gnumake
+      gcc
     ];
   };
 
   programs.git = {
     settings = {
       user.email = "kouroshtaf@gmail.com";
-      core.editor = "code";
+      core.editor = "code --wait";
       push.autoSetupRemote = true;
     };
   };

@@ -35,7 +35,6 @@
   home.packages = with pkgs; [
     gtk4
     grim
-    nordic
     papirus-icon-theme
     adwaita-icon-theme # Fallback icons
     hicolor-icon-theme # Base icon theme

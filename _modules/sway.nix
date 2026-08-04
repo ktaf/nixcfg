@@ -38,7 +38,6 @@ in
     gnome-themes-extra
     gtk4
     grim
-    nordic
     papirus-icon-theme
     swaybg
     swaycons
