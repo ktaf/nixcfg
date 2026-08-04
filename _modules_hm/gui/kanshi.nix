@@ -9,7 +9,7 @@
           outputs = [
             {
               criteria = "HDMI-A-1";
-              mode = "3820x1080@120.000Hz";
+              mode = "3840x1080@120.000Hz";
               position = "0,0";
             }
             {
