@@ -36,6 +36,14 @@
       config.boot.kernelPackages.nct6687d
     ];
   };
+  powerManagement.cpuFreqGovernor = "schedutil";
+
+  # sched_ext latency-critical scheduler (kernel 7.1 has CONFIG_SCHED_CLASS_EXT).
+  services.scx = {
+    enable = true;
+    package = pkgs.scx.rustscheds;
+    scheduler = "scx_lavd";
+  };
 
   # Localization
   time.timeZone = "Europe/Tallinn";
