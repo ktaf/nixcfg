@@ -101,6 +101,7 @@ in
       azure-cli-extensions.resource-graph
       azure-cli-extensions.quota
       bat
+      bitwarden-desktop
       blueman
       claude-code
       eza
@@ -122,6 +123,7 @@ in
       libinput
       libudfread
       libxkbcommon
+      mcp-grafana
       mesa-demos
       minimodem
       mission-center
@@ -142,6 +144,7 @@ in
       telegram-desktop
       tenv
       terraform-docs
+      terraform-mcp-server
       tfautomv
       trousers
       usbview
@@ -166,6 +169,7 @@ in
   };
 
   programs.git = {
+    lfs.enable = true;
     settings = {
       user.email = "kouroshtaf@gmail.com";
       core.editor = "code --wait";
