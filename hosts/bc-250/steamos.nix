@@ -103,40 +103,21 @@
         };
         ramp-rates = {
           # MHz/ms
-          normal = 1;
-          burst = 50;
+          normal = 4;
+          burst = 100; # idle → max in ~18 ms once burst triggers
         };
-        # number of samples
-        burst-samples = 60;
-        down-events = 5;
+        burst-samples = 32;
       };
-
-      gpu-usage = {
-        fix-metrics = true;
-        method = "process"; # "busy-flag" or "process"
-        flush-every = 10;
-      };
-
-      gpu.set-method = "kernel"; # "smu" or "kernel"
-
-      dbus.enabled = true;
-
       # MHz
       frequency-thresholds.adjust = 10;
 
       load-target = {
-        upper = 0.80;
+        upper = 0.75;
         lower = 0.65;
       };
-
-      # °C
-      temperature = {
-        throttling = 85;
-        throttling_recovery = 75;
-      };
-
       # MHz / mV
       safe-points = [
+        { frequency = 350; voltage = 700; }
         { frequency = 500; voltage = 700; }
         { frequency = 1175; voltage = 700; }
         { frequency = 1400; voltage = 750; }
@@ -152,7 +133,7 @@
         { frequency = 2230; voltage = 1085; }
         { frequency = 2300; voltage = 1110; }
         { frequency = 2350; voltage = 1130; }
-        # { frequency = 2400; voltage = 1150; }
+        # { frequency = 2400; voltage = 1150; } # docs: liquid cooling only
       ];
     };
   };
