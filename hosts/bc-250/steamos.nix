@@ -31,13 +31,12 @@
     sessionVariables = {
       # Force RADV driver (not AMDVLK)
       AMD_VULKAN_ICD = "RADV";
-      # Fix some graphical glitches
-      RADV_DEBUG = "nohiz";
+
+      # On-disk cache under ~/.cache; default is 1G, which re-stutters on replay.
+      MESA_SHADER_CACHE_MAX_SIZE = "32G";
 
       # # Use Zink (OpenGL over Vulkan) for better performance
       # MESA_LOADER_DRIVER_OVERRIDE = "zink";
-
-      # MANGOHUD = "1";
     };
   };
 
@@ -75,13 +74,16 @@
   systemd.user.services.steam-gamescope = {
     description = "Steam in Gamescope (TTY1)";
     wantedBy = [ "default.target" ];
+    path = [ "/run/wrappers" "/run/current-system/sw" pkgs.mangohud pkgs.gamescope ];
     serviceConfig = {
       Type = "simple";
       Restart = "on-failure";
       RestartSec = "2s";
       StandardOutput = "journal";
       StandardError = "journal";
-      ExecStart = "${pkgs.gamescope}/bin/gamescope -e -f -- ${pkgs.steam}/bin/steam -gamepadui";
+      # --mangoapp with -e exports STEAM_USE_MANGOAPP/STEAM_MANGOAPP_PRESETS_SUPPORTED,
+      # which is what puts the overlay control in the Steam QAM ("..." menu).
+      ExecStart = "${pkgs.gamescope}/bin/gamescope -e -f --mangoapp -- ${pkgs.steam}/bin/steam -gamepadui";
     };
   };
 
