@@ -19,9 +19,18 @@
       "amd_pstate=disable"
       "processor.ignore_ppc=1"
       "ttm.pages_limit=3959290"
-      # "ttm.page_pool_size=3801088"
+      "ttm.page_pool_size=3959290"
       "usbcore.autosuspend=-1"
     ];
+
+    # Tuned for zram-only swap: no readahead on swap-in, prefer compressing
+    # idle anon pages over dropping page cache, smooth kswapd instead of bursts.
+    kernel.sysctl = {
+      "vm.page-cluster" = 0;
+      "vm.swappiness" = 180;
+      "vm.watermark_boost_factor" = 0;
+      "vm.watermark_scale_factor" = 125;
+    };
   };
 
   fileSystems."/" =
