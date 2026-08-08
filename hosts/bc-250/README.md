@@ -58,9 +58,22 @@ outputs = { self, nixpkgs, cyan-skillfish-governor, ... }:
 ### 2. Enable it in `configuration.nix`
 
 ```nix
-_module.args.self = inputs.cyan-skillfish-governor;
 services.cyan-skillfish-governor = {
   enable = true;
+
+  # Optional: every key from default-config.toml is a typed NixOS option.
+  # Unset keys keep the upstream defaults.
+  settings = {
+    load-target = {
+      upper = 0.95;
+      lower = 0.7;
+    };
+    timing.intervals.sample = 2000; # µs
+    safe-points = [
+      { frequency = 350; voltage = 700; }   # MHz / mV
+      { frequency = 2000; voltage = 1000; }
+    ];
+  };
 };
 ```
 

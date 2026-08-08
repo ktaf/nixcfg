@@ -6,11 +6,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1769937165,
-        "narHash": "sha256-1/65SP98SGN31TMUuhJxME2WatqfEGxB7UzHYypE78A=",
+        "lastModified": 1786204639,
+        "narHash": "sha256-kp9Lsl66BhnvhoNOtTCmO9ieQCEYZvcpM4WZq86Dp7I=",
         "owner": "ktaf",
         "repo": "cyan-skillfish-governor",
-        "rev": "cdedf5c17e0f683e2ee60c2794e144350149ffd9",
+        "rev": "e1e4b0bce874e018a1b47a011adb56addae8ed9e",
         "type": "github"
       },
       "original": {

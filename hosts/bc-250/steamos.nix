@@ -1,4 +1,4 @@
-{ pkgs, inputs, user, ... }: {
+{ pkgs, user, ... }: {
 
   # Minimal fonts for Steam+Proton
   fonts.packages = with pkgs; [
@@ -91,9 +91,72 @@
   };
 
   # GPU Governor on NixOS
-  _module.args.self = inputs.cyan-skillfish-governor;
-  services.cyan-skillfish-governor.enable = true;
+  services.cyan-skillfish-governor = {
+    enable = true;
 
+    settings = {
+      timing = {
+        intervals = {
+          # µs
+          sample = 500;
+          adjust = 200000;
+        };
+        ramp-rates = {
+          # MHz/ms
+          normal = 1;
+          burst = 50;
+        };
+        # number of samples
+        burst-samples = 60;
+        down-events = 5;
+      };
+
+      gpu-usage = {
+        fix-metrics = true;
+        method = "process"; # "busy-flag" or "process"
+        flush-every = 10;
+      };
+
+      gpu.set-method = "kernel"; # "smu" or "kernel"
+
+      dbus.enabled = true;
+
+      # MHz
+      frequency-thresholds.adjust = 10;
+
+      load-target = {
+        upper = 0.80;
+        lower = 0.65;
+      };
+
+      # °C
+      temperature = {
+        throttling = 85;
+        throttling_recovery = 75;
+      };
+
+      # MHz / mV
+      safe-points = [
+        { frequency = 500; voltage = 700; }
+        { frequency = 1175; voltage = 700; }
+        { frequency = 1400; voltage = 750; }
+        { frequency = 1600; voltage = 800; }
+        { frequency = 1700; voltage = 850; }
+        { frequency = 1850; voltage = 900; }
+        { frequency = 2000; voltage = 950; }
+        { frequency = 2050; voltage = 975; }
+        { frequency = 2100; voltage = 1000; }
+        { frequency = 2125; voltage = 1015; }
+        { frequency = 2150; voltage = 1030; }
+        { frequency = 2200; voltage = 1050; }
+        { frequency = 2230; voltage = 1085; }
+        { frequency = 2300; voltage = 1110; }
+        { frequency = 2350; voltage = 1130; }
+        # { frequency = 2400; voltage = 1150; }
+      ];
+    };
+  };
+  
   hardware = {
     xone.enable = true; # XBOX Drivers
     graphics = {
