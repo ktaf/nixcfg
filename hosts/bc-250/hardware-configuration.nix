@@ -40,6 +40,12 @@
 
   swapDevices = [ ];
 
+  # 16GB GDDR6 is shared with the GPU; compressed swap beats an OOM kill mid-game.
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+  };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   hardware = {
