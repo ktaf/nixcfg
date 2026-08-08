@@ -83,9 +83,7 @@
       StandardOutput = "journal";
       StandardError = "journal";
       # The /run/wrappers capability wrapper passes cap_sys_nice via AMBIENT caps,
-      # which every descendant inherits — and Steam's bubblewrap sandbox refuses to
-      # run with unexpected capabilities (instant, silent exit). setpriv strips the
-      # ambient/inheritable sets for the Steam side only; gamescope keeps its RT cap.
+      # setpriv strips the ambient/inheritable sets for the Steam side only; gamescope keeps its RT cap.
       ExecStart = "/run/wrappers/bin/gamescope -e -f --mangoapp -- ${pkgs.util-linux}/bin/setpriv --ambient-caps -all --inh-caps -all ${pkgs.steam}/bin/steam -gamepadui";
     };
   };
@@ -103,21 +101,20 @@
         };
         ramp-rates = {
           # MHz/ms
-          normal = 4;
-          burst = 100; # idle → max in ~18 ms once burst triggers
+          burst = 50;
         };
-        burst-samples = 32;
+        # number of samples
+        burst-samples = 60;
       };
       # MHz
       frequency-thresholds.adjust = 10;
 
       load-target = {
-        upper = 0.75;
+        upper = 0.80;
         lower = 0.65;
       };
       # MHz / mV
       safe-points = [
-        { frequency = 350; voltage = 700; }
         { frequency = 500; voltage = 700; }
         { frequency = 1175; voltage = 700; }
         { frequency = 1400; voltage = 750; }
