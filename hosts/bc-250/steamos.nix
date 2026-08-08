@@ -75,15 +75,18 @@
     description = "Steam in Gamescope (TTY1)";
     wantedBy = [ "default.target" ];
     path = [ "/run/wrappers" "/run/current-system/sw" pkgs.mangohud pkgs.gamescope ];
+    environment.MANGOHUD_CONFIG = "preset=2";
     serviceConfig = {
       Type = "simple";
       Restart = "on-failure";
       RestartSec = "2s";
       StandardOutput = "journal";
       StandardError = "journal";
-      # --mangoapp with -e exports STEAM_USE_MANGOAPP/STEAM_MANGOAPP_PRESETS_SUPPORTED,
-      # which is what puts the overlay control in the Steam QAM ("..." menu).
-      ExecStart = "${pkgs.gamescope}/bin/gamescope -e -f --mangoapp -- ${pkgs.steam}/bin/steam -gamepadui";
+      # The /run/wrappers capability wrapper passes cap_sys_nice via AMBIENT caps,
+      # which every descendant inherits — and Steam's bubblewrap sandbox refuses to
+      # run with unexpected capabilities (instant, silent exit). setpriv strips the
+      # ambient/inheritable sets for the Steam side only; gamescope keeps its RT cap.
+      ExecStart = "/run/wrappers/bin/gamescope -e -f --mangoapp -- ${pkgs.util-linux}/bin/setpriv --ambient-caps -all --inh-caps -all ${pkgs.steam}/bin/steam -gamepadui";
     };
   };
 
