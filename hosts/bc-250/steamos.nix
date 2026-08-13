@@ -134,7 +134,7 @@
       ];
     };
   };
-  
+
   hardware = {
     xone.enable = true; # XBOX Drivers
     graphics = {

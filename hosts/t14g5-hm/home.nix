@@ -104,6 +104,9 @@ in
       bitwarden-desktop
       blueman
       claude-code
+      claude-agent-acp
+      codex
+      codex-acp
       eza
       ffmpeg
       firecracker
@@ -127,13 +130,16 @@ in
       mesa-demos
       minimodem
       mission-center
-      moonlight-qt
+      # moonlight-qt
       ripgrep
       fastfetch
       nmap
       novnc
       obsidian
+      ollama-vulkan
+      opencode
       openh264
+      pinact
       polkit_gnome
       pre-commit
       pulseaudio
