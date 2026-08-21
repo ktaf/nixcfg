@@ -88,6 +88,8 @@ in
       TERRAGRUNT_QUIET = "true";
       SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
 
+      OLLAMA_IGPU_ENABLE = "1";
+
       # Python config
       # PYTHONDONTWRITEBYTECODE = "true";
       # PIP_REQUIRE_VIRTUALENV = "true";
@@ -95,6 +97,8 @@ in
     };
 
     packages = with pkgs; [
+      antigravity-cli
+      antigravity-ide
       azure-cli
       azure-cli-extensions.costmanagement
       azure-cli-extensions.fzf
@@ -113,6 +117,7 @@ in
       fzf
       go
       google-chrome
+      goose-cli
       htop
       inframap
       kind
@@ -152,6 +157,7 @@ in
       terraform-docs
       terraform-mcp-server
       tfautomv
+      tflint
       trousers
       usbview
       usbrip
@@ -164,6 +170,8 @@ in
       winbox
       # wireshark
       xfontsel
+      yamllint
+      nodejs_26
       slack
       vscode
       rtk

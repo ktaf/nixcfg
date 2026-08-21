@@ -16,7 +16,7 @@
     hack-font
     fira-code
     fira-code-symbols
-    # jetbrains-mono
+    jetbrains-mono
     cascadia-code
     comfortaa
     nerd-fonts.hack
