@@ -12,25 +12,6 @@
     };
     # nct6687 is a hardware-monitor module.
     kernelModules = [ "nct6687" ];
-    kernelParams = [
-      "quiet"
-      "amd_iommu=off"
-      "mitigations=off"
-      "amd_pstate=disable"
-      "processor.ignore_ppc=1"
-      "ttm.pages_limit=3959290"
-      "ttm.page_pool_size=3959290"
-      "usbcore.autosuspend=-1"
-    ];
-
-    # Tuned for zram-only swap: no readahead on swap-in, prefer compressing
-    # idle anon pages over dropping page cache, smooth kswapd instead of bursts.
-    kernel.sysctl = {
-      "vm.page-cluster" = 0;
-      "vm.swappiness" = 180;
-      "vm.watermark_boost_factor" = 0;
-      "vm.watermark_scale_factor" = 125;
-    };
   };
 
   fileSystems."/" =
@@ -46,14 +27,6 @@
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
-
-  swapDevices = [ ];
-
-  # 16GB GDDR6 is shared with the GPU; compressed swap beats an OOM kill mid-game.
-  zramSwap = {
-    enable = true;
-    memoryPercent = 50;
-  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
