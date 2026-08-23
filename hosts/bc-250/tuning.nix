@@ -43,7 +43,7 @@ in
     enable = true;
     package = pkgs.scx.rustscheds;
     scheduler = "scx_lavd";
-    extraArgs = [ "--autopilot" "--pinned-slice-us" "500" ];
+    extraArgs = [ "--autopilot" "--pinned-slice-us" "500" "--no-freq-scaling" ];
   };
 
   swapDevices = [ ];
