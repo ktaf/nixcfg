@@ -39,13 +39,6 @@ in
 
   powerManagement.cpuFreqGovernor = "schedutil";
 
-  services.scx = {
-    enable = true;
-    package = pkgs.scx.rustscheds;
-    scheduler = "scx_lavd";
-    extraArgs = [ "--autopilot" "--pinned-slice-us" "500" "--no-freq-scaling" ];
-  };
-
   swapDevices = [ ];
   zramSwap = {
     enable = true;
@@ -57,33 +50,20 @@ in
     settings = {
       timing = {
         intervals = {
-          sample = 500;
-          adjust = 200000;
+          sample = 2000;
+          adjust = 20000;
         };
-        ramp-rates.burst = 50;
-        burst-samples = 60;
+        ramp-rates.burst = 200;
+        burst-samples = 48;
       };
-      frequency-thresholds.adjust = 10;
+      frequency-thresholds.adjust = 100;
       load-target = {
-        upper = 0.80;
-        lower = 0.65;
+        upper = 0.95;
+        lower = 0.7;
       };
       safe-points = [
-        { frequency = 500; voltage = 700; }
-        { frequency = 1175; voltage = 700; }
-        { frequency = 1400; voltage = 750; }
-        { frequency = 1600; voltage = 800; }
-        { frequency = 1700; voltage = 850; }
-        { frequency = 1850; voltage = 900; }
-        { frequency = 2000; voltage = 950; }
-        { frequency = 2050; voltage = 975; }
-        { frequency = 2100; voltage = 1000; }
-        { frequency = 2125; voltage = 1015; }
-        { frequency = 2150; voltage = 1030; }
-        { frequency = 2200; voltage = 1050; }
-        { frequency = 2230; voltage = 1085; }
-        { frequency = 2300; voltage = 1110; }
-        { frequency = 2350; voltage = 1130; }
+        { frequency = 350; voltage = 700; }
+        { frequency = 2000; voltage = 1000; }
       ];
     };
   };
