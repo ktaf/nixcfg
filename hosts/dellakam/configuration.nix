@@ -32,7 +32,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_7_1;
+    kernelPackages = pkgs.linuxPackages_7_2;
   };
 
   # Localization
@@ -43,7 +43,7 @@
   users.users.${user} = {
     isNormalUser = true;
     description = "Kourosh";
-    extraGroups = [ "networkmanager" "wheel" "docker" "win" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       # Core utilities
       bat
@@ -61,7 +61,7 @@
       smartmontools
       lm_sensors
       fastfetch
-      linuxKernel.packages.linux_7_1.turbostat
+      linuxKernel.packages.linux_7_2.turbostat
       powertop
 
       iperf

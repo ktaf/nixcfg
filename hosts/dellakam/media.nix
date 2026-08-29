@@ -1,10 +1,25 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, user, ... }:
 
 let
-  dataWriter = {
-    SupplementaryGroups = [ "win" ];
+  mediaGroup = "media";
+
+  mediaWriter = {
     UMask = lib.mkForce "0002";
-    PrivateUsers = lib.mkForce false;
+  };
+
+  sharedDirectory = {
+    d = {
+      mode = "2775";
+      user = "root";
+      group = mediaGroup;
+    };
+  };
+
+  sharedTree = sharedDirectory // {
+    Z = {
+      mode = "~2775";
+      group = mediaGroup;
+    };
   };
 in
 {
@@ -36,8 +51,7 @@ in
 
     transmission = {
       enable = true;
-      group = "win";
-      downloadDirPermissions = "2775";
+      group = mediaGroup;
       settings = {
         download-dir = "/data/downloads/complete";
         incomplete-dir = "/data/downloads/incomplete";
@@ -89,7 +103,7 @@ in
           "read only" = "no";
           "guest ok" = "no";
           "force user" = "win";
-          "force group" = "win";
+          "force group" = mediaGroup;
           "valid users" = "win";
           "create mask" = "0664";
           "directory mask" = "0775";
@@ -100,48 +114,39 @@ in
   };
 
   systemd.services = {
-    bazarr.serviceConfig = dataWriter;
-    radarr.serviceConfig = dataWriter // {
-      StateDirectory = "radarr";
-      StateDirectoryMode = "0700";
-    };
-    sabnzbd.serviceConfig = dataWriter;
-    sonarr.serviceConfig = dataWriter;
-    plex.serviceConfig = {
-      SupplementaryGroups = [ "win" ];
+    bazarr.serviceConfig = mediaWriter;
+    radarr.serviceConfig = mediaWriter // {
       PrivateUsers = lib.mkForce false;
     };
-    transmission = {
-      requires = [ "transmission-setup.service" ];
-      serviceConfig = {
-        UMask = lib.mkForce "0002";
-        PrivateUsers = lib.mkForce false;
-      };
+    sonarr.serviceConfig = mediaWriter // {
+      PrivateUsers = lib.mkForce false;
     };
+    transmission.requires = [ "transmission-setup.service" ];
   };
 
-  systemd.tmpfiles.rules = [
-    "d /var/lib/sonarr 0750 sonarr sonarr -"
-    "d /var/lib/sonarr/.config 0750 sonarr sonarr -"
-    "d /var/lib/sonarr/.config/NzbDrone 0750 sonarr sonarr -"
-    "Z /var/lib/sonarr/.config/NzbDrone - sonarr sonarr -"
-    "Z /var/lib/bazarr - bazarr bazarr -"
-    "Z /var/lib/sabnzbd - sabnzbd sabnzbd -"
-    "d /data 2775 win win -"
-    "d /data/samba 2775 win win -"
-    "d /data/samba/public 2775 win win -"
-    "d /data/downloads 2775 win win -"
-    "d /data/downloads/complete 2775 transmission win -"
-    "d /data/downloads/complete/tv-sonarr 2775 transmission win -"
-    "d /data/downloads/complete/radarr 2775 transmission win -"
-    "d /data/downloads/incomplete 2775 transmission win -"
-    "d /data/downloads/watch 2775 transmission win -"
+  systemd.tmpfiles.settings."10-media" = {
+    "/data" = sharedDirectory;
+    "/data/samba" = sharedDirectory;
+    "/data/samba/public" = sharedTree;
+    "/data/downloads" = sharedTree;
+    "/data/downloads/complete" = sharedDirectory;
+    "/data/downloads/complete/tv-sonarr" = sharedDirectory;
+    "/data/downloads/complete/radarr" = sharedDirectory;
+    "/data/downloads/incomplete" = sharedDirectory;
+    "/data/downloads/watch" = sharedDirectory;
+  };
+
+  users.groups.${mediaGroup}.members = [
+    user
+    "sonarr"
+    "radarr"
+    "bazarr"
+    "plex"
   ];
 
-  users.groups.win = { };
   users.users.win = {
     isSystemUser = true;
-    group = "win";
+    group = mediaGroup;
     home = "/var/empty";
     shell = "/run/current-system/sw/bin/nologin";
   };
