@@ -171,6 +171,7 @@ in
       # wireshark
       xfontsel
       yamllint
+      yq
       nodejs_26
       slack
       vscode
