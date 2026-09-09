@@ -25,11 +25,12 @@
   #fonts
   fonts.packages = with pkgs; [
     font-awesome
-    nerdfonts
+    nerd-fonts.hack
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
     ibm-plex
     hack-font
     fira-code
-    fira-code-nerdfont
     fira-code-symbols
     jetbrains-mono
   ];
@@ -46,7 +47,7 @@
         efiSysMountPoint = "/boot";
       };
     };
-    kernelPackages = pkgs.linuxPackages_6_8; # pkgs.linuxPackages_latest
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   # Set your time zone.
@@ -63,10 +64,6 @@
   };
 
   hardware = {
-    pulseaudio = {
-      enable = false;
-      extraModules = [ pkgs.pulseaudio-modules-bt ];
-    };
     bluetooth = { enable = true; };
     graphics.extraPackages = with pkgs;
       [

@@ -19,7 +19,7 @@
       anydesk
       awscli2
       bat
-      bitwarden
+      bitwarden-desktop
       cifs-utils
       curl
       dig
@@ -33,7 +33,7 @@
       fluxcd
       fwupd
       fzf
-      gnome.gnome-keyring
+      gnome-keyring
       grive2
       jq
       kind
@@ -56,14 +56,14 @@
       pciutils
       qbittorrent
       qdigidoc
-      qflipper
+      qFlipper
       remmina
       ripgrep
       s3cmd
       # samba4Full
       slack
       terraform
-      tdesktop
+      telegram-desktop
       tfautomv
       trousers
       vsh
@@ -71,19 +71,21 @@
       winbox
       whois
       wsdd
-      zoom
+      zoom-us
     ];
   };
 
   programs.git = {
     enable = true;
-    userName = "ktaf";
-    userEmail = "kouroshtaf@gmail.com";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "ktaf";
+        email = "kouroshtaf@gmail.com";
+      };
       init.defaultBranch = "main";
       core.editor = "code";
       protocol.keybase.allow = "always";
-      pull.rebase = "false";
+      pull.rebase = false;
     };
   };
 

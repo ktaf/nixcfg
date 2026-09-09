@@ -5,11 +5,9 @@
   environment = {
     systemPackages = with pkgs; [
       gnupg
-      pcsctools
+      pcsc-tools
       yubikey-personalization
-      yubikey-personalization-gui
       yubikey-manager
-      yubikey-manager-qt
       yubico-piv-tool
       yubioath-flutter
     ];

@@ -14,13 +14,15 @@
 
   programs.git = {
     enable = true;
-    userName = "ktaf";
-    userEmail = "kouroshtaf@gmail.com";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "ktaf";
+        email = "kouroshtaf@gmail.com";
+      };
       init.defaultBranch = "main";
       core.editor = "vim";
       protocol.keybase.allow = "always";
-      pull.rebase = "false";
+      pull.rebase = false;
     };
   };
 }
