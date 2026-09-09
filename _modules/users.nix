@@ -12,7 +12,6 @@
       "qemu-libvirtd"
       "libvirtd"
       "kvm"
-      "wheel"
       "disk"
       "docker"
       "audio"

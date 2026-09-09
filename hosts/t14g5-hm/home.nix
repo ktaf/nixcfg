@@ -144,6 +144,7 @@ in
       ollama-vulkan
       opencode
       openh264
+      pi-coding-agent
       pinact
       polkit_gnome
       pre-commit

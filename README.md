@@ -8,10 +8,14 @@ nix flake update
 sudo nixos-rebuild switch --flake .#<hostname>
 ```
 
-To apply the Home Manager configuration:
+To apply the standalone Home Manager configuration:
 
 ```bash
-home-manager switch --flake .#kourosh
+home-manager switch --flake .#ktaf
 ```
 
-Replace `<hostname>` with one of the hosts defined in `flake.nix` such as `homie`, `arvanix` or `x1g12`.
+All host configurations (defined in `flake.nix` under `nixosConfigurations`) can be built with:
+
+```bash
+nixos-rebuild build --flake .#<hostname>   # e.g. .#homie, .#arvanix, .#x1g12
+```

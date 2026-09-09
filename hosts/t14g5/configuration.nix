@@ -57,7 +57,6 @@
     nerd-fonts.hurmit
     material-icons
     material-design-icons
-    jetbrains-mono
   ];
 
   # Bootloader.
