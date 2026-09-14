@@ -57,6 +57,7 @@
         x1g12 = [ nixos-hardware.nixosModules.lenovo-thinkpad-x1-12th-gen ];
         bc-250 = [ inputs.cyan-skillfish-governor.nixosModules.default ];
         t14g5 = [ ];
+        walter = [ ];
       };
     in
     {
