@@ -3,11 +3,10 @@
 let
   mediaGroup = "media";
 
-  bulk = "/data";
   library = "/media";
   scratch = "/fast";
 
-  mounts = [ bulk library scratch ];
+  mounts = [ library scratch ];
 
   mediaWriter = {
     UMask = lib.mkForce "0002";
@@ -56,10 +55,10 @@ in
       group = mediaGroup;
       openPeerPorts = true;
       settings = {
-        download-dir = "${bulk}/downloads/complete";
-        incomplete-dir = "${bulk}/downloads/incomplete";
+        download-dir = "${scratch}/downloads/complete";
+        incomplete-dir = "${scratch}/downloads/incomplete";
         incomplete-dir-enabled = true;
-        watch-dir = "${bulk}/downloads/watch";
+        watch-dir = "${library}/downloads/watch";
         watch-dir-enabled = true;
         rpc-bind-address = "0.0.0.0";
         rpc-whitelist-enabled = true;
@@ -96,7 +95,7 @@ in
           "force directory mode" = "2775";
         };
         public = {
-          path = "${bulk}/samba/public";
+          path = "${library}/samba/public";
           browseable = "yes";
           "read only" = "no";
           "guest ok" = "no";
@@ -149,15 +148,6 @@ in
     "${library}/downloads/watch" = sharedDirectory;
     "${library}/samba" = sharedDirectory;
     "${library}/samba/public" = sharedDirectory;
-    "${bulk}" = sharedDirectory;
-    "${bulk}/downloads" = sharedDirectory;
-    "${bulk}/downloads/complete" = sharedDirectory;
-    "${bulk}/downloads/complete/radarr" = sharedDirectory;
-    "${bulk}/downloads/complete/tv-sonarr" = sharedDirectory;
-    "${bulk}/downloads/incomplete" = sharedDirectory;
-    "${bulk}/downloads/watch" = sharedDirectory;
-    "${bulk}/samba" = sharedDirectory;
-    "${bulk}/samba/public" = sharedDirectory;
     "${scratch}/plex".d = { mode = "0700"; user = "plex"; group = "plex"; };
     "${scratch}/immich".d = { mode = "0700"; user = "immich"; group = "immich"; };
   };
