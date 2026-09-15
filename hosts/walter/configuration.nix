@@ -3,7 +3,6 @@
     ./hardware-configuration.nix
     ./media.nix
     ./network.nix
-    ./storage.nix
     ./tuning.nix
     ../../_modules/shell.nix
     ../../_modules/git.nix
@@ -72,6 +71,7 @@
 
       iperf
       docker-compose
+      compsize
     ];
   };
 

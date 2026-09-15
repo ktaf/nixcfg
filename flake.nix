@@ -4,10 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -61,7 +57,7 @@
         x1g12 = [ nixos-hardware.nixosModules.lenovo-thinkpad-x1-12th-gen ];
         bc-250 = [ inputs.cyan-skillfish-governor.nixosModules.default ];
         t14g5 = [ ];
-        walter = [ inputs.disko.nixosModules.disko ];
+        walter = [ ];
       };
     in
     {

@@ -6,26 +6,9 @@
     cpuFreqGovernor = "powersave";
   };
 
-  boot.kernelParams = [ "pcie_aspm.policy=powersupersave" ];
-
   services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="med_power_with_dipm"
+    ACTION=="add|change", SUBSYSTEM=="cpu", ATTR{cpufreq/energy_performance_preference}="balance_power"
   '';
-
-  systemd.services.walter-power = {
-    description = "Walter CPU energy preference";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "cpufreq.service" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-    script = ''
-      for policy in /sys/devices/system/cpu/cpufreq/policy*; do
-        echo balance_power > "$policy/energy_performance_preference"
-      done
-    '';
-  };
 
   zramSwap = {
     enable = true;
@@ -42,5 +25,16 @@
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime ];
+  };
+
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "monthly";
+    fileSystems = [ "/" "/data" "/media" "/fast" ];
+  };
+
+  services.smartd = {
+    enable = true;
+    autodetect = true;
   };
 }

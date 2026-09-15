@@ -22,82 +22,49 @@ nixos-rebuild build --flake .#<hostname>   # e.g. .#homie, .#arvanix, .#x1g12
 
 ## Walter
 
-Named after Walter Bishop from *Fringe*. Lenovo ThinkCentre M80q Gen 3,
-i5-12500T (6 cores / 12 threads), Intel UHD 770, 16 GB RAM, gigabit Ethernet.
+Lenovo ThinkCentre M80q Gen 3. i5-12500T, UHD 770, 2x8 GB DDR5-4800, I219-LM.
 
 | Disk | Mount | Role |
 | --- | --- | --- |
-| Samsung 256 GB NVMe | `/`, `/home`, `/nix`, `/boot` | Existing OS; never provision with Disko |
-| Kingston NV2 2 TB | `/data` | Existing downloads and public share; never provision with Disko |
-| Crucial BX500 4 TB, serial `2522E9C1AC01` | `/media` | Movies, series and future downloads |
-| Crucial P5 Plus 1 TB, serial `21303083DCC2` | `/fast` | Plex transcode scratch; reserved `apps` and `vms` directories |
+| Samsung MZALQ256 256 GB | `/` `/home` `/nix` `/boot` | OS |
+| Kingston NV2 2 TB | `/data` | Current library, 84 % full |
+| Crucial BX500 4 TB SATA | `/media` | Movies, series, downloads, public share |
+| Crucial P5 Plus 1 TB | `/fast` | Immich library, Plex transcode |
 
-`hosts/walter/storage.nix` declares only the two spare disks in Disko, by stable
-hardware IDs. The filesystems remain independent: no striping or pooling.
-Normal rebuilds never format disks. Initial provisioning, **only after verifying
-both target disks are disposable and unmounted**, is:
+`/media` is flat on purpose so Sonarr/Radarr hardlinks work between
+`downloads/complete` and the library. The spare disks were made with:
 
 ```bash
-nix build .#nixosConfigurations.walter.config.system.build.formatScript -o result-format
-sudo ./result-format
-sudo nixos-rebuild switch --flake .#walter
+printf 'label: gpt\nstart=1MiB, type=linux, name=media\n' | sudo sfdisk /dev/sda
+printf 'label: gpt\nstart=1MiB, type=linux, name=fast\n'  | sudo sfdisk /dev/nvme0n1
+sudo mkfs.btrfs -L media /dev/sda1
+sudo mkfs.btrfs -L fast  /dev/nvme0n1p1
 ```
 
-Track new source files with Git before using `.#walter`. The format script is
-separate from activation; do not use Disko's destroy mode. Inspect the generated
-script before running it. Both disks must be provisioned before switching.
+### Retiring the Kingston
 
-### Efficiency and maintenance
+`media.nix` derives service paths from `bulk`, `library` and `scratch`. Copy in
+one rsync so cross-tree hardlinks survive, then set `bulk = "/media"`:
 
-- Intel `powersave` with `balance_power` favours efficiency while retaining turbo
-  for short jobs. Thermald stays enabled. PCIe power saving respects advertised
-  hardware support; SATA uses `med_power_with_dipm`. NVMe retains kernel APST defaults.
-- ZSTD zram provides up to half of RAM in logical swap capacity, allocated on
-  demand. It does not reserve 8 GB up front or replace physical RAM.
-- OS and new disks use `compress=zstd:1`, `noatime`, and asynchronous discard.
-  `/data` keeps its existing ZSTD level 3. Compression affects new writes;
-  already compressed video gains little. No forced recompression or defragmentation.
-- Monthly Btrfs scrubs, weekly TRIM and SMART monitoring are enabled. Scrubbing
-  detects corrupt single-copy data but cannot repair it without another copy.
-- Plex has Intel drivers, GPU access, hardware codec preferences, low-priority
-  event-driven scans and `/fast/plex-transcode`. Preview thumbnail generation and
-  automatic trash emptying are disabled. Preferences are applied at service start
-  while preserving credentials and unrelated settings. Hardware transcoding needs
-  Plex Pass; verify `(hw)` during actual playback. Prefer Direct Play.
-- Samba uses the standard package with default socket tuning. Shares are
-  `\\192.168.2.100\public` and `\\192.168.2.100\media`, using the existing `win`
-  account. Its Samba password database is runtime secret state, not a Nix setting.
-- The static `eno1` configuration replaces obsolete Dell NetworkManager profiles.
-  Wake-on-LAN stays enabled. EEE was enabled but inactive because the switch did
-  not advertise it. Keep MTU 1500; gigabit networking will cap large transfers
-  before NVMe speed matters.
+```bash
+sudo systemctl stop transmission sonarr radarr bazarr plex samba-smbd
+sudo rsync -aHAX --info=progress2 /data/ /media/
+```
 
-### Media migration and future workloads
+Afterwards update the *arr root folders and Transmission locations, then drop
+`/data` from `hardware-configuration.nix`. The BX500 is QLC and DRAM-less, so
+budget several hours.
 
-Existing Transmission paths remain under `/data`. For the eventual migration,
-keep completed torrents and the Sonarr/Radarr library on the **same filesystem**
-under `/media`; separate subvolumes would also prevent hardlinks. Pause writers,
-copy with `rsync -aHAX` (include all hardlinked trees in one invocation), verify
-checksums, then update library roots and torrent locations. Keep the originals
-until playback and seeding are verified. Copies between disks cannot preserve
-Btrfs reflinks, so allow for expanded space use. Adding the new Plex library path
-before removing the old one preserves the migration workflow.
+### Power
 
-Reserve `/fast` for latency-sensitive apps, databases or a few small VMs; move
-state there only with a service-specific backup and migration. For Immich, Intel
-Quick Sync transcoding and limited background job concurrency are the next
-steps when imports grow. With 16 GB RAM, monitor memory pressure before adding
-VMs or concurrent photo indexing; zram is a cushion. Keep irreplaceable photos,
-databases and configuration backed up to another machine or offline disk.
+Idle measures 1.63 W package, 99 % core C10, 99.97 % GFX RC6. The package stays
+at PC2 and cannot go deeper: the Kingston NV2 reports `ASPM not supported`, and
+the BX500 carries libata's `nolpm` quirk, so its SATA link is forced to
+`max_power`. Either one alone pins PC2, so pulling the Kingston does not reach
+PC8/PC10 while the 4 TB SATA disk is fitted. Firmware also sets `FADT indicates
+ASPM is unsupported`, which makes `pcie_aspm.policy=` a no-op.
 
-Initial 2026-09-15 idle sample: CPU package 1.6–1.7 W, approximately 99% core C10,
-but package mostly PC2. The Kingston NV2 reports no ASPM support and may limit
-deeper package states. These are not wall-power measurements. Measure at the
-socket under comparable idle/load conditions before claiming savings; every
-continuous watt is 8.76 kWh/year. BIOS C-states/ASPM and switch EEE need hardware
-support and cannot be guaranteed by this repo.
+### Set outside Nix
 
-References: [Intel CPU power management](https://docs.kernel.org/admin-guide/pm/intel_pstate.html),
-[Btrfs compression](https://btrfs.readthedocs.io/en/latest/Compression.html),
-[Plex hardware transcoding](https://support.plex.tv/articles/115002178853-using-hardware-accelerated-streaming/),
-[Immich hardware transcoding](https://docs.immich.app/features/hardware-transcoding/).
+Plex hardware transcoding and library paths, Immich's QSV toggle, and
+`smbpasswd -a win`.
