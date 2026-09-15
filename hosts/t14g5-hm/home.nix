@@ -86,6 +86,7 @@ in
       TENV_DETACHED_PROXY = "false";
       TG_LOG_FORMAT = "bare";
       TERRAGRUNT_QUIET = "true";
+      TG_PARALLELISM = "4";
       SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
 
       OLLAMA_IGPU_ENABLE = "1";
