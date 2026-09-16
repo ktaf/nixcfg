@@ -55,8 +55,8 @@ in
       group = mediaGroup;
       openPeerPorts = true;
       settings = {
-        download-dir = "${scratch}/downloads/complete";
-        incomplete-dir = "${scratch}/downloads/incomplete";
+        download-dir = "${library}/downloads/complete";
+        incomplete-dir = "${library}/downloads/incomplete";
         incomplete-dir-enabled = true;
         watch-dir = "${library}/downloads/watch";
         watch-dir-enabled = true;
