@@ -119,6 +119,7 @@ in
       go
       google-chrome
       goose-cli
+      graphify
       htop
       inframap
       kind
