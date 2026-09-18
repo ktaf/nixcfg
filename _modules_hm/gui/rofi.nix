@@ -4,6 +4,6 @@
   home.file."${config.home.homeDirectory}/.config/rofi/colors.rasi".source = ../../.config/rofi/colors.rasi;
   programs.rofi = {
     enable = true;
-    font = "JetBrainsMono Nerd Font 11.6";
+    settings.font = "JetBrainsMono Nerd Font 11.6";
   };
 }
