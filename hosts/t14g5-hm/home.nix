@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 let
   user = "ktaf";
 in
@@ -14,6 +14,32 @@ in
       "python-2.7.18.12"
     ];
   };
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      opencode =
+        let
+          bun_1_3_13 = prev.bun.overrideAttrs (old: rec {
+            version = "1.3.13";
+            src = prev.fetchurl {
+              url = "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-${
+              {
+                "x86_64-linux" = "linux-x64-baseline";
+                "aarch64-linux" = "linux-aarch64";
+                "aarch64-darwin" = "darwin-aarch64";
+              }.${final.system}
+            }.zip";
+              hash = {
+                "x86_64-linux" = "sha256-nYokKSpwaAkCBdqsCloiP19pc29Sh+N7+I07QDHtx1A=";
+                "aarch64-linux" = "sha256-cLrkGzkIsKEg4eWMXIrzDnSvrjuNEbDT/djnh937SyI=";
+                "aarch64-darwin" = "sha256-VGfj9l26Umuf6pjwzOBO+vwMY+Fpcz7Ce4dqOtMtoZA=";
+              }.${final.system};
+            };
+          });
+        in
+        inputs.nixpkgs.legacyPackages.${final.stdenv.hostPlatform.system}.opencode.override { bun = bun_1_3_13; };
+    })
+  ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -112,6 +138,7 @@ in
       claude-agent-acp
       codex
       codex-acp
+      comfyui
       eza
       ffmpeg
       firecracker
@@ -162,6 +189,7 @@ in
       tfautomv
       tflint
       trousers
+      unsloth-desktop
       usbview
       usbrip
       uv
