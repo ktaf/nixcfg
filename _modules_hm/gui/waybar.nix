@@ -144,7 +144,7 @@
         };
 
         backlight = {
-          device = "intel_backlight";
+          device = "amdgpu_bl1";
           format = "{icon}";
           "format-icons" = [ "" "" "" ];
           tooltip = true;
@@ -155,7 +155,7 @@
 
         battery = {
           bat = "BAT0";
-          adapter = "ADP0";
+          adapter = "AC";
           interval = 60;
           states = {
             warning = 19;
