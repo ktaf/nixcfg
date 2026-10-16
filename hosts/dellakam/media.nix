@@ -95,6 +95,18 @@ in
           "directory mask" = "0775";
           "force directory mode" = "2775";
         };
+        movies = {
+          path = "${data}/movies";
+          browseable = "yes";
+          "read only" = "no";
+          "guest ok" = "no";
+          "force user" = "win";
+          "force group" = mediaGroup;
+          "valid users" = "win";
+          "create mask" = "0664";
+          "directory mask" = "0775";
+          "force directory mode" = "2775";
+        };
         public = {
           path = "${library}/samba/public";
           browseable = "yes";
@@ -113,20 +125,20 @@ in
 
   systemd.services = {
     bazarr.serviceConfig = mediaWriter;
-    bazarr.unitConfig.RequiresMountsFor = mounts;
-    radarr.unitConfig.RequiresMountsFor = mounts;
+    bazarr.unitConfig.RequiresMountsFor = [ library data ];
+    radarr.unitConfig.RequiresMountsFor = [ library data ];
     radarr.serviceConfig = mediaWriter // {
       PrivateUsers = lib.mkForce false;
     };
-    sonarr.unitConfig.RequiresMountsFor = mounts;
+    sonarr.unitConfig.RequiresMountsFor = [ library ];
     sonarr.serviceConfig = mediaWriter // {
       PrivateUsers = lib.mkForce false;
     };
     transmission = {
       requires = [ "transmission-setup.service" ];
-      unitConfig.RequiresMountsFor = mounts;
+      unitConfig.RequiresMountsFor = [ library ];
     };
-    transmission-setup.unitConfig.RequiresMountsFor = mounts;
+    transmission-setup.unitConfig.RequiresMountsFor = [ library ];
     plex = {
       unitConfig.RequiresMountsFor = mounts;
       serviceConfig.SupplementaryGroups = [ "render" "video" ];
@@ -134,7 +146,7 @@ in
     };
     immich-server.unitConfig.RequiresMountsFor = [ data ];
     immich-machine-learning.unitConfig.RequiresMountsFor = [ data ];
-    samba-smbd.unitConfig.RequiresMountsFor = mounts;
+    samba-smbd.unitConfig.RequiresMountsFor = [ library data ];
   };
 
   systemd.tmpfiles.settings."10-media" = {
