@@ -20,6 +20,14 @@ let
       group = mediaGroup;
     };
   };
+
+  sharedTree = sharedDirectory // {
+    Z = {
+      mode = "~2775";
+      user = "win";
+      group = mediaGroup;
+    };
+  };
 in
 {
   services = {
@@ -92,8 +100,10 @@ in
           "force group" = mediaGroup;
           "valid users" = "win";
           "create mask" = "0664";
+          "force create mode" = "0664";
           "directory mask" = "0775";
           "force directory mode" = "2775";
+          "delete readonly" = "yes";
         };
         movies = {
           path = "${data}/movies";
@@ -104,8 +114,10 @@ in
           "force group" = mediaGroup;
           "valid users" = "win";
           "create mask" = "0664";
+          "force create mode" = "0664";
           "directory mask" = "0775";
           "force directory mode" = "2775";
+          "delete readonly" = "yes";
         };
         public = {
           path = "${library}/samba/public";
@@ -116,8 +128,10 @@ in
           "force group" = mediaGroup;
           "valid users" = "win";
           "create mask" = "0664";
+          "force create mode" = "0664";
           "directory mask" = "0775";
           "force directory mode" = "2775";
+          "delete readonly" = "yes";
         };
       };
     };
@@ -152,7 +166,7 @@ in
   systemd.tmpfiles.settings."10-media" = {
     "${library}" = sharedDirectory;
     "${data}" = sharedDirectory;
-    "${data}/movies" = sharedDirectory;
+    "${data}/movies" = sharedTree;
     "${library}/series" = sharedDirectory;
     "${library}/downloads" = sharedDirectory;
     "${library}/downloads/complete" = sharedDirectory;
@@ -161,7 +175,7 @@ in
     "${library}/downloads/incomplete" = sharedDirectory;
     "${library}/downloads/watch" = sharedDirectory;
     "${library}/samba" = sharedDirectory;
-    "${library}/samba/public" = sharedDirectory;
+    "${library}/samba/public" = sharedTree;
     "${scratch}/plex".d = { mode = "0700"; user = "plex"; group = "plex"; };
     "${data}/immich".d = { mode = "0700"; user = "immich"; group = "immich"; };
   };
