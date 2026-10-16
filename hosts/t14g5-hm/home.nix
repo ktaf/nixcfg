@@ -149,6 +149,7 @@ in
       graphify
       htop
       inframap
+      k9s
       kind
       krew
       kubectl
@@ -188,6 +189,7 @@ in
       terraform-mcp-server
       tfautomv
       tflint
+      tgrep
       trousers
       unsloth-desktop
       usbview
@@ -236,6 +238,11 @@ in
 
   xdg.configFile."environment.d/envvars.conf".text = ''
     PATH="$HOME/.nix-profile/bin:$PATH"
+  '';
+
+  xdg.configFile."systemd/user/snap.prompting-client.daemon.service.d/90-require-apparmor.conf".text = ''
+    [Unit]
+    ConditionPathExists=/sys/kernel/security/apparmor/features
   '';
 
   xdg.configFile."swaylock/config".text = ''
