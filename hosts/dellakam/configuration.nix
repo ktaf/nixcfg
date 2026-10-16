@@ -1,8 +1,9 @@
-{ pkgs, inputs, user, ... }: {
-  imports = with inputs.self.nixosModules; [
+{ pkgs, user, ... }: {
+  imports = [
     ./hardware-configuration.nix
     ./media.nix
     ./network.nix
+    ./tuning.nix
     ../../_modules/shell.nix
     ../../_modules/git.nix
   ];
@@ -43,7 +44,7 @@
   users.users.${user} = {
     isNormalUser = true;
     description = "Kourosh";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "wheel" "docker" ];
     packages = with pkgs; [
       # Core utilities
       bat
@@ -63,9 +64,14 @@
       fastfetch
       linuxKernel.packages.linux_7_2.turbostat
       powertop
+      nvme-cli
+      intel-gpu-tools
+      libva-utils
+      rsync
 
       iperf
       docker-compose
+      compsize
     ];
   };
 
@@ -74,12 +80,6 @@
   services = {
     fwupd.enable = true;
     thermald.enable = true;
-  };
-
-  # Power management for server efficiency
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "ondemand";
   };
 
   virtualisation = {

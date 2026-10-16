@@ -9,13 +9,6 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "uas" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.kernelParams = [
-    "intel_idle.max_cstate=10"
-    "processor.max_cstate=10"
-    "rcu_nocbs=0-11"
-    "nohz=on"
-    "iomem=relaxed"
-  ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
@@ -41,6 +34,12 @@
 
   fileSystems."/data" = {
     device = "/dev/disk/by-uuid/b9c7d002-ff5a-40be-a406-2ac046d9af8a";
+    fsType = "btrfs";
+    options = [ "compress=zstd:3" "ssd" "space_cache=v2" "noatime" ];
+  };
+
+  fileSystems."/media" = {
+    device = "/dev/disk/by-uuid/1a858864-f759-420b-9482-b12e32bdb101";
     fsType = "btrfs";
     options = [ "compress=zstd:3" "ssd" "space_cache=v2" "noatime" ];
   };
