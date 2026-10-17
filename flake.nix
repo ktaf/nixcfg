@@ -80,4 +80,4 @@
       formatter.${system} = pkgs.nixpkgs-fmt;
     };
 }
-#nixos-26.05
+#nixos-26.11
