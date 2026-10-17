@@ -95,6 +95,7 @@ in
 
   systemd.services.cyan-skillfish-governor-smu = {
     description = "Cyan Skillfish SMU GPU governor";
+    path = [ pkgs.util-linux ];
     wantedBy = [ "multi-user.target" ];
     after = [ "dbus.service" ];
     requires = [ "dbus.service" ];
