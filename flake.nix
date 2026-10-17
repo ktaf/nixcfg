@@ -12,7 +12,7 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    cyan-skillfish-governor.url = "github:ktaf/cyan-skillfish-governor";
+    # cyan-skillfish-governor.url = "github:ktaf/cyan-skillfish-governor";
   };
   outputs = { self, nixpkgs, home-manager, nixos-hardware, nix-index-database, ... } @ inputs:
     let
@@ -55,7 +55,9 @@
         dellakam = [ ];
         daashy = [ ];
         x1g12 = [ nixos-hardware.nixosModules.lenovo-thinkpad-x1-12th-gen ];
-        bc-250 = [ inputs.cyan-skillfish-governor.nixosModules.default ];
+        bc-250 = [
+          # inputs.cyan-skillfish-governor.nixosModules.default
+        ];
         t14g5 = [ ];
         walter = [ ];
       };

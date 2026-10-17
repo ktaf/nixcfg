@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   bc250PstateTable = pkgs.fetchurl {
@@ -45,9 +45,31 @@ in
     memoryPercent = 50;
   };
 
-  services.cyan-skillfish-governor = {
-    enable = true;
-    settings = {
+  # services.cyan-skillfish-governor = {
+  #   enable = true;
+  #   settings = {
+  #     timing = {
+  #       intervals = {
+  #         sample = 2000;
+  #         adjust = 20000;
+  #       };
+  #       ramp-rates.burst = 200;
+  #       burst-samples = 48;
+  #     };
+  #     frequency-thresholds.adjust = 100;
+  #     load-target = {
+  #       upper = 0.95;
+  #       lower = 0.7;
+  #     };
+  #     safe-points = [
+  #       { frequency = 350; voltage = 700; }
+  #       { frequency = 2000; voltage = 1000; }
+  #     ];
+  #   };
+  # };
+
+  environment.etc."cyan-skillfish-governor-smu/config.toml".source =
+    (pkgs.formats.toml { }).generate "cyan-skillfish-governor-smu.toml" {
       timing = {
         intervals = {
           sample = 2000;
@@ -65,6 +87,22 @@ in
         { frequency = 350; voltage = 700; }
         { frequency = 2000; voltage = 1000; }
       ];
+      gpu.set-method = "smu";
+      dbus.enabled = true;
+    };
+
+  services.dbus.packages = [ pkgs.cyan-skillfish-governor-smu ];
+
+  systemd.services.cyan-skillfish-governor-smu = {
+    description = "Cyan Skillfish SMU GPU governor";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "dbus.service" ];
+    requires = [ "dbus.service" ];
+    restartTriggers = [ config.environment.etc."cyan-skillfish-governor-smu/config.toml".source ];
+    serviceConfig = {
+      ExecStart = "${pkgs.cyan-skillfish-governor-smu}/bin/cyan-skillfish-governor-smu /etc/cyan-skillfish-governor-smu/config.toml";
+      Restart = "on-failure";
+      RestartSec = 5;
     };
   };
 }

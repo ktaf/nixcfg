@@ -65,6 +65,8 @@
     usb-modeswitch # usb_modeswitch -KW -v 0bda -p 1a2b
     umr
     bluez
+
+    cyan-skillfish-governor-smu
   ];
 
   services.udev.extraRules = ''
@@ -87,5 +89,5 @@
     ];
   };
 
-  system.stateVersion = "26.05";
+  system.stateVersion = "26.11";
 }
