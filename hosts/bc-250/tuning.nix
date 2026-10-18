@@ -50,9 +50,14 @@ in
       timing.burst-samples = 48;
       frequency-thresholds.adjust = 100;
       load-target.lower = 0.7;
+      temperature = {
+        throttling = 84;
+        throttling_recovery = 70;
+      };
       safe-points = [
         { frequency = 350; voltage = 700; }
         { frequency = 2000; voltage = 1000; }
+        { frequency = 2050; voltage = 1000; }
       ];
       dbus.enabled = true;
     };

@@ -19,9 +19,13 @@ This host uses `cyan-skillfish-governor-smu` from nixpkgs. The previous custom f
 * Upstream: [filippor/cyan-skillfish-governor](https://github.com/filippor/cyan-skillfish-governor)
 * [configuration.nix](configuration.nix) installs the package.
 * [tuning.nix](tuning.nix) generates `/etc/cyan-skillfish-governor-smu/config.toml` and starts the systemd service at boot.
-* The configured frequency/voltage points are 350 MHz at 700 mV and 2000 MHz at 1000 mV.
+* The configured frequency/voltage points are 350 MHz at 700 mV, 2000 MHz at 1000 mV, and 2050 MHz at 1000 mV.
+* Software thermal throttling starts above 84°C, with recovery below 70°C.
 * D-Bus support enables the packaged `cyan-skillfish-performance-mode` helper.
 * The service includes `util-linux` in its command path for the GPU metrics bind mount.
+
+The 2050 MHz ceiling is experimental. Two 20-second vkmark blur runs gained about 1.5–2.2% over their paired 2000 MHz baselines.
+Cooldown freezes occurred during testing, so sustained stability is not established. The new thermal limits have not been benchmarked with this ceiling.
 
 Change the governor settings in `tuning.nix`, then rebuild:
 
