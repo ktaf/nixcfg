@@ -50,10 +50,7 @@ in
       timing.burst-samples = 48;
       frequency-thresholds.adjust = 100;
       load-target.lower = 0.7;
-      temperature = {
-        throttling = 91;
-        throttling_recovery = 89;
-      };
+      temperature.throttling = false;
       safe-points = [
         { frequency = 350; voltage = 700; }
         { frequency = 2000; voltage = 1000; }
