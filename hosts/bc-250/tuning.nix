@@ -51,8 +51,8 @@ in
       frequency-thresholds.adjust = 100;
       load-target.lower = 0.7;
       temperature = {
-        throttling = 84;
-        throttling_recovery = 70;
+        throttling = 91;
+        throttling_recovery = 89;
       };
       safe-points = [
         { frequency = 350; voltage = 700; }

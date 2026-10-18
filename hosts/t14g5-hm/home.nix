@@ -19,7 +19,7 @@ in
     (final: prev: {
       opencode =
         let
-          bun_1_3_13 = prev.bun.overrideAttrs (old: rec {
+          bun_1_3_13 = prev.bun.overrideAttrs (_old: rec {
             version = "1.3.13";
             src = prev.fetchurl {
               url = "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-${
