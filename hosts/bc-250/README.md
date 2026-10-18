@@ -43,6 +43,22 @@ systemctl --no-pager --full status cyan-skillfish-governor-smu.service
 journalctl -u cyan-skillfish-governor-smu.service -b --no-pager
 ```
 
+## Decky Loader
+
+Decky Loader uses Jovian's package and standalone service module with the existing Steam/Gamescope session.
+The loader and plugins store their data in `/var/lib/decky-loader`, using `kourosh` for unprivileged plugins.
+Steam's CEF debugging marker is created before the Gamescope session starts so Decky can inject its interface.
+
+After rebuilding, restart the Steam session or reboot. Open Steam's Quick Access menu and select the Decky plug icon.
+Manage plugins from Decky; update the loader through the Nix configuration.
+
+Check the service:
+
+```bash
+systemctl --no-pager --full status decky-loader.service
+journalctl -u decky-loader.service -b --no-pager
+```
+
 ## Notes
 
 * **BIOS of choice:** P3 Modded version
