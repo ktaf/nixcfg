@@ -9,81 +9,32 @@ This repo focuses on *control, reproducibility, and performance* rather than mim
 * SteamOS‑style console experience built on **pure NixOS**
 * Boots directly into Steam / Gamescope
 * Minimal background services, low idle overhead
-* **Custom GPU governor fully nixified** (see below)
+* SMU GPU governor packaged in nixpkgs and configured through NixOS
 * Jovian has been tested and works, but is noticeably heavier and laggier on this hardware
 
-## GPU Governor (Nixified)
+## GPU Governor
 
-The GPU power/performance governor is no longer a WIP.
+This host uses `cyan-skillfish-governor-smu` from nixpkgs. The previous custom flake has been retired.
 
-I **forked and fully nixified** the Cyan Skillfish governor and made it easy to consume from Nix flakes.
+* Upstream: [filippor/cyan-skillfish-governor](https://github.com/filippor/cyan-skillfish-governor)
+* [configuration.nix](configuration.nix) installs the package.
+* [tuning.nix](tuning.nix) generates `/etc/cyan-skillfish-governor-smu/config.toml` and starts the systemd service at boot.
+* The configured frequency/voltage points are 350 MHz at 700 mV and 2000 MHz at 1000 mV.
+* D-Bus support enables the packaged `cyan-skillfish-performance-mode` helper.
+* The service includes `util-linux` in its command path for the GPU metrics bind mount.
 
-* Fork (NixOS-friendly): [https://github.com/ktaf/cyan-skillfish-governor](https://github.com/ktaf/cyan-skillfish-governor)
-* Upstream project: [https://github.com/Magnap/cyan-skillfish-governor](https://github.com/Magnap/cyan-skillfish-governor)
-* Original author: **Magnap**
-* Works cleanly on NixOS
-* Can be enabled declaratively
-* Suitable for auto-switching profiles (idle vs gaming)
-
-### Why this approach?
-
-* No mutable scripts living outside the Nix store
-* Reproducible behavior across rebuilds
-* Easy to audit, tweak, or disable
-* Designed to integrate nicely with GameMode / Gamescope workflows
-
-## How to Use the GPU Governor on NixOS
-
-### 1. Add it to your `flake.nix`
-
-```nix
-inputs = {
-  cyan-skillfish-governor.url = "github:ktaf/cyan-skillfish-governor";
-};
-```
-
-Then pass it through your outputs (example):
-
-```nix
-outputs = { self, nixpkgs, cyan-skillfish-governor, ... }:
-{
-  nixosConfigurations.bc-250 = nixpkgs.lib.nixosSystem {
-    modules = [
-      cyan-skillfish-governor.nixosModules.default
-    ];
-  };
-};
-```
-
-### 2. Enable it in `configuration.nix`
-
-```nix
-services.cyan-skillfish-governor = {
-  enable = true;
-
-  # Optional: every key from default-config.toml is a typed NixOS option.
-  # Unset keys keep the upstream defaults.
-  settings = {
-    load-target = {
-      upper = 0.95;
-      lower = 0.7;
-    };
-    timing.intervals.sample = 2000; # µs
-    safe-points = [
-      { frequency = 350; voltage = 700; }   # MHz / mV
-      { frequency = 2000; voltage = 1000; }
-    ];
-  };
-};
-```
-
-Rebuild and you’re done:
+Change the governor settings in `tuning.nix`, then rebuild:
 
 ```bash
-sudo nixos-rebuild switch --flake .#
+sudo nixos-rebuild switch --flake .#bc-250
 ```
 
-The governor will now manage GPU clocks/power states according to the configured profile.
+Check the service and logs:
+
+```bash
+systemctl --no-pager --full status cyan-skillfish-governor-smu.service
+journalctl -u cyan-skillfish-governor-smu.service -b --no-pager
+```
 
 ## Notes
 
