@@ -47,24 +47,13 @@ in
 
   environment.etc."cyan-skillfish-governor-smu/config.toml".source =
     (pkgs.formats.toml { }).generate "cyan-skillfish-governor-smu.toml" {
-      timing = {
-        intervals = {
-          sample = 2000;
-          adjust = 20000;
-        };
-        ramp-rates.burst = 200;
-        burst-samples = 48;
-      };
+      timing.burst-samples = 48;
       frequency-thresholds.adjust = 100;
-      load-target = {
-        upper = 0.95;
-        lower = 0.7;
-      };
+      load-target.lower = 0.7;
       safe-points = [
         { frequency = 350; voltage = 700; }
         { frequency = 2000; voltage = 1000; }
       ];
-      gpu.set-method = "smu";
       dbus.enabled = true;
     };
 
