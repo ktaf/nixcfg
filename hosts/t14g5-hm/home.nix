@@ -60,6 +60,8 @@ in
     homeDirectory = "/home/${user}";
     stateVersion = "26.05";
 
+    sessionPath = [ "${config.home.homeDirectory}/.local/bin" ]; # to suport user-installed binaries like uv
+
     sessionVariables = {
       # Wayland configuration
       QT_QPA_PLATFORM = "wayland;xcb";
@@ -146,7 +148,6 @@ in
       go
       google-chrome
       goose-cli
-      graphify
       htop
       inframap
       k9s

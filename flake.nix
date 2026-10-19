@@ -58,7 +58,7 @@
         dellakam = [ ];
         daashy = [ ];
         x1g12 = [ nixos-hardware.nixosModules.lenovo-thinkpad-x1-12th-gen ];
-        bc-250 = [];
+        bc-250 = [ ];
         t14g5 = [ ];
         walter = [ ];
       };
