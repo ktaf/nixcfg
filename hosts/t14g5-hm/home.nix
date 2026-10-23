@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 let
   user = "ktaf";
 in
@@ -17,6 +17,10 @@ in
 
   nixpkgs.overlays = [
     (final: prev: {
+      inherit (inputs.nixpkgs-azure-cli.legacyPackages.${final.stdenv.hostPlatform.system})
+        azure-cli
+        azure-cli-extensions
+        ;
       opencode =
         let
           bun_1_3_13 = prev.bun.overrideAttrs (_old: rec {
@@ -27,13 +31,13 @@ in
                 "x86_64-linux" = "linux-x64-baseline";
                 "aarch64-linux" = "linux-aarch64";
                 "aarch64-darwin" = "darwin-aarch64";
-              }.${final.system}
+              }.${final.stdenv.hostPlatform.system}
             }.zip";
               hash = {
                 "x86_64-linux" = "sha256-nYokKSpwaAkCBdqsCloiP19pc29Sh+N7+I07QDHtx1A=";
                 "aarch64-linux" = "sha256-cLrkGzkIsKEg4eWMXIrzDnSvrjuNEbDT/djnh937SyI=";
                 "aarch64-darwin" = "sha256-VGfj9l26Umuf6pjwzOBO+vwMY+Fpcz7Ce4dqOtMtoZA=";
-              }.${final.system};
+              }.${final.stdenv.hostPlatform.system};
             };
           });
         in
@@ -170,7 +174,6 @@ in
       ripgrep
       fastfetch
       nmap
-      novnc
       obsidian
       ollama-vulkan
       opencode
@@ -183,6 +186,7 @@ in
       qdigidoc
       remmina
       sshfs
+      steam
       subnetcalc
       telegram-desktop
       tenv
