@@ -186,7 +186,6 @@ in
       qdigidoc
       remmina
       sshfs
-      steam
       subnetcalc
       telegram-desktop
       tenv

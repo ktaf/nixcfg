@@ -1,13 +1,4 @@
-{ pkgs, user, inputs, ... }: {
-
-  imports = [ "${inputs.jovian}/modules/decky-loader.nix" ];
-
-  jovian.decky-loader = {
-    enable = true;
-    inherit user;
-    package = pkgs.callPackage "${inputs.jovian}/pkgs/decky-loader" { };
-    extraPackages = with pkgs; [ lsof gdb ];
-  };
+{ pkgs, user, ... }: {
 
   # Minimal fonts for Steam+Proton
   fonts.packages = with pkgs; [
@@ -82,11 +73,6 @@
     wantedBy = [ "default.target" ];
     path = [ "/run/wrappers" "/run/current-system/sw" pkgs.mangohud pkgs.gamescope ];
     environment.MANGOHUD_CONFIG = "preset=2";
-    preStart = ''
-      steamRoot="''${XDG_DATA_HOME:-$HOME/.local/share}/Steam"
-      mkdir -p "$steamRoot"
-      touch "$steamRoot/.cef-enable-remote-debugging"
-    '';
     serviceConfig = {
       Type = "simple";
       Restart = "on-failure";

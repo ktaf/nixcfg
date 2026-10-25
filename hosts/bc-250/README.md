@@ -43,21 +43,39 @@ systemctl --no-pager --full status cyan-skillfish-governor-smu.service
 journalctl -u cyan-skillfish-governor-smu.service -b --no-pager
 ```
 
-## Decky Loader
+## Storage and memory
 
-Decky Loader uses Jovian's package and standalone service module with the existing Steam/Gamescope session.
-The loader and plugins store their data in `/var/lib/decky-loader`, using `kourosh` for unprivileged plugins.
-Steam's CEF debugging marker is created before the Gamescope session starts so Decky can inject its interface.
+* Root uses Btrfs with `compress=zstd:3`, `noatime`, and SSD options. `/boot` uses FAT without compression.
+* Zram swap is enabled with a logical capacity of 50% of kernel-visible RAM. Its physical RAM use grows with stored data.
+* The pinned NixOS configuration selects `zstd` for zram. No disk swap or zram writeback device is configured.
+* `vm.swappiness = 180` favors compressed swap relative to reclaiming filesystem cache; it is not a percentage of RAM to swap.
+* SSD TRIM runs weekly. Automatic Btrfs scrubbing is not enabled.
 
-After rebuilding, restart the Steam session or reboot. Open Steam's Quick Access menu and select the Decky plug icon.
-Manage plugins from Decky; update the loader through the Nix configuration.
-
-Check the service:
+Check the running system:
 
 ```bash
-systemctl --no-pager --full status decky-loader.service
-journalctl -u decky-loader.service -b --no-pager
+findmnt -no FSTYPE,OPTIONS /
+zramctl
+swapon --show
+free -h
+sysctl vm.swappiness vm.page-cluster vm.watermark_boost_factor vm.watermark_scale_factor
+systemctl status fstrim.timer --no-pager
 ```
+
+In `zramctl`, `DATA` is the uncompressed data size, `COMPR` is its compressed size, and `TOTAL` includes RAM overhead.
+Filesystem mount options describe the compression policy, not the compression ratio of existing files.
+
+## Removing a previous Decky installation
+
+Decky is no longer configured. Rebuild to remove its service, then disable CEF Remote Debugging in Steam's Developer settings.
+Remove the marker created by the previous configuration as the Steam user, then restart the Steam session:
+
+```bash
+rm -f "${XDG_DATA_HOME:-$HOME/.local/share}/Steam/.cef-enable-remote-debugging"
+systemctl --user restart steam-gamescope.service
+```
+
+Saved plugins and settings in `/var/lib/decky-loader` are retained.
 
 ## Notes
 
