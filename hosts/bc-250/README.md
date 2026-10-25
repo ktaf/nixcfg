@@ -43,6 +43,62 @@ systemctl --no-pager --full status cyan-skillfish-governor-smu.service
 journalctl -u cyan-skillfish-governor-smu.service -b --no-pager
 ```
 
+## 40-CU runtime unlock
+
+The `bc250-cu-live-manager` package uses [WinnieLV's UMR workflow](https://github.com/WinnieLV/bc250-cu-live-manager)
+to clear the harvest mask and enable all WGP dispatch registers. It uses the stock NixOS kernel and requires no kernel recompilation.
+The source is pinned to a commit and hash in [the package](../../pkgs/bc250-cu-live-manager.nix).
+
+Normal boot does not apply the unlock. The `40cu` boot specialisation applies it before user sessions and the GPU governor start.
+Track the new Nix files, build the configuration, then reboot and choose its `40cu` entry:
+
+```bash
+git add pkgs/bc250-cu-live-manager.nix hosts/bc-250/cu-unlock.nix
+sudo nixos-rebuild boot --flake .#bc-250
+```
+
+Boot the normal entry to restore the stock driver layout.
+
+Inspect the routing and test the command plan without changing it:
+
+```bash
+sudo bc250-cu-live-manager status
+sudo bc250-cu-live-manager --dry-run enable all
+```
+
+For a manual runtime trial from normal boot, run `sudo bc250-cu-live-manager enable all` and review the tool's prompts.
+This applies the registers immediately and does not save a boot service.
+
+After choosing the `40cu` boot entry:
+
+```bash
+systemctl status bc250-40cu-unlock.service --no-pager
+sudo bc250-cu-live-manager status
+```
+
+This updates live hardware dispatch. The driver's cached CU count and Vulkan reports may still show 24 CUs.
+A readback of the routing masks alone does not prove performance gains or CU correctness; compare the same workload before and after.
+GPU resets may clear the live register settings. The boot service does not watch for resets.
+
+The current 2050 MHz / 1000 mV curve and disabled governor throttling are unchanged.
+Our previous 24-CU test reached 85°C at 2000 MHz. The [original project's results](https://github.com/duggasco/bc250-40cu-unlock)
+show higher power and temperature with 40 CUs and recommend starting at 1500 MHz / 900 mV.
+This profile has not been hardware-tested here.
+
+Build just the tool with `nix build .#bc250-cu-live-manager`.
+Do not use its imperative `install-service` command on NixOS; the specialisation manages the boot service.
+
+### Patched-driver alternative
+
+[duggasco's patch](https://github.com/duggasco/bc250-40cu-unlock) applies during driver enumeration, so the driver can also report all 40 CUs.
+It requires rebuilding `amdgpu` for each kernel ABI, but does not require rebuilding the rest of the kernel.
+The original installer writes to `/lib/modules` and is not suitable for the Nix store.
+
+A full custom kernel can also be exposed as a flake package and selected with `linuxPackagesFor`.
+Neither a custom kernel nor a module package is automatically published to `cache.nixos.org`.
+For prebuilt updates, a builder or CI must build each pinned revision and publish its closure to a configured Nix binary cache.
+Clients then download matching cached outputs during rebuilds. Cache misses still require a build somewhere.
+
 ## Storage and memory
 
 * Root uses Btrfs with `compress=zstd:3`, `noatime`, and SSD options. `/boot` uses FAT without compression.

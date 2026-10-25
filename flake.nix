@@ -63,6 +63,8 @@
     {
       nixosConfigurations = lib.mapAttrs makeNixosSystem hosts;
 
+      packages.${system}.bc250-cu-live-manager = pkgs.callPackage ./pkgs/bc250-cu-live-manager.nix { };
+
       homeConfigurations.ktaf = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = { inherit self nixpkgs inputs user; };

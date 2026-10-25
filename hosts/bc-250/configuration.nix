@@ -4,6 +4,7 @@
     ./network.nix
     ./steamos.nix
     ./tuning.nix
+    ./cu-unlock.nix
     ../../_modules/shell.nix
     ../../_modules/git.nix
   ];
