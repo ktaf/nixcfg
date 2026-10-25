@@ -49,15 +49,17 @@ The `bc250-cu-live-manager` package uses [WinnieLV's UMR workflow](https://githu
 to clear the harvest mask and enable all WGP dispatch registers. It uses the stock NixOS kernel and requires no kernel recompilation.
 The source is pinned to a commit and hash in [the package](../../pkgs/bc250-cu-live-manager.nix).
 
-Normal boot does not apply the unlock. The `40cu` boot specialisation applies it before user sessions and the GPU governor start.
-Track the new Nix files, build the configuration, then reboot and choose its `40cu` entry:
+Normal boot applies the unlock before user sessions and the GPU governor start, without boot-menu interaction.
+Build the configuration, then reboot:
 
 ```bash
-git add pkgs/bc250-cu-live-manager.nix hosts/bc-250/cu-unlock.nix
 sudo nixos-rebuild boot --flake .#bc-250
+sudo reboot
 ```
 
-Boot the normal entry to restore the stock driver layout.
+The `24cu` boot specialisation disables the unlock service and restores the stock layout after reboot.
+For headless recovery, select its installed entry ID with `sudo bootctl set-oneshot ENTRY-ID` before rebooting.
+Use `bootctl list --no-pager` to find the entry marked `NixOS (24cu)` for the intended generation.
 
 Inspect the routing and test the command plan without changing it:
 
@@ -66,10 +68,10 @@ sudo bc250-cu-live-manager status
 sudo bc250-cu-live-manager --dry-run enable all
 ```
 
-For a manual runtime trial from normal boot, run `sudo bc250-cu-live-manager enable all` and review the tool's prompts.
+For a manual runtime trial from a `24cu` boot, run `sudo bc250-cu-live-manager enable all` and review the tool's prompts.
 This applies the registers immediately and does not save a boot service.
 
-After choosing the `40cu` boot entry:
+After rebooting into the normal entry:
 
 ```bash
 systemctl status bc250-40cu-unlock.service --no-pager
@@ -86,7 +88,7 @@ show higher power and temperature with 40 CUs and recommend starting at 1500 MHz
 This profile has not been hardware-tested here.
 
 Build just the tool with `nix build .#bc250-cu-live-manager`.
-Do not use its imperative `install-service` command on NixOS; the specialisation manages the boot service.
+Do not use its imperative `install-service` command on NixOS; [cu-unlock.nix](cu-unlock.nix) manages the boot service.
 
 ### Patched-driver alternative
 
