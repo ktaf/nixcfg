@@ -33,7 +33,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_7_2;
+    kernelPackages = pkgs.linuxPackages_7_3;
   };
 
   # Localization
@@ -62,7 +62,7 @@
       smartmontools
       lm_sensors
       fastfetch
-      linuxKernel.packages.linux_7_2.turbostat
+      linuxKernel.packages.linux_7_3.turbostat
       powertop
       nvme-cli
       intel-gpu-tools

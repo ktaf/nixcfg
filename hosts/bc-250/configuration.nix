@@ -33,7 +33,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_7_2;
+    kernelPackages = pkgs.linuxPackages_7_3;
     extraModulePackages = [
       config.boot.kernelPackages.nct6687d
     ];
