@@ -1,16 +1,20 @@
 { config, pkgs, ... }:
 
 let
-  bc250PstateTable = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/bc250-collective/bc250-acpi-fix/1594d72f11d674bd7e46f4e51eee4216155e52fb/SSDT-PST.aml";
-    hash = "sha256-o3D86dlogCyaLmSzqogNiPLoHnpLlvKOrPFLBkou4zw=";
+  bc250AcpiFix = pkgs.fetchFromGitHub {
+    owner = "ktaf";
+    repo = "bc250-acpi-fix";
+    rev = "e55543c822811d2e6daa3e8ee44e7c5193886fbd";
+    hash = "sha256-b9g/hF+otnbbI94wOJUGtyi3G1TPr0MiTcEBWRGjFs8=";
   };
-  bc250PstateOverride = pkgs.runCommand "bc250-pstate-acpi-override.cpio"
+  # P-state table and corrected firmware C-state table, compiled from source.
+  bc250AcpiOverride = pkgs.runCommand "bc250-acpi-override.cpio"
     {
-      nativeBuildInputs = [ pkgs.cpio ];
+      nativeBuildInputs = [ pkgs.cpio pkgs.acpica-tools ];
     } ''
     mkdir -p kernel/firmware/acpi
-    cp ${bc250PstateTable} kernel/firmware/acpi/SSDT-PST.aml
+    iasl -p kernel/firmware/acpi/SSDT-PST ${bc250AcpiFix}/SSDT-PST.dsl
+    iasl -p kernel/firmware/acpi/SSDT-CST ${bc250AcpiFix}/SSDT-CST.dsl
     find kernel -exec touch -h -d @1 {} +
     find kernel -print0 | sort -z | cpio --null --reproducible -o -H newc > "$out"
   '';
@@ -18,7 +22,7 @@ in
 
 {
   boot = {
-    initrd.prepend = [ "${bc250PstateOverride}" ];
+    initrd.prepend = [ "${bc250AcpiOverride}" ];
     kernelParams = [
       "quiet"
       "amd_iommu=off"

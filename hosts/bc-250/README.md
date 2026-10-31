@@ -101,6 +101,34 @@ Neither a custom kernel nor a module package is automatically published to `cach
 For prebuilt updates, a builder or CI must build each pinned revision and publish its closure to a configured Nix binary cache.
 Clients then download matching cached outputs during rebuilds. Cache misses still require a build somewhere.
 
+## ACPI tables
+
+The P3.00 firmware has two CPU power-management bugs. [tuning.nix](tuning.nix) fixes both with initrd ACPI table overrides
+from [ktaf/bc250-acpi-fix](https://github.com/ktaf/bc250-acpi-fix), a fork of the community repo. Both tables are compiled from source with `iasl` at a pinned commit.
+
+* **No P-states.** The firmware ships no usable `_PSS`. `SSDT-PST` adds 8 P-states for `acpi-cpufreq`.
+* **No deep C-states.** The firmware "AMD CPU" SSDT puts `_CST` on `\_PR.C000..C00B`, but the DSDT names the CPUs `\_PR.P000..P00B`.
+  The table fails to load with 12 `AE_NOT_FOUND` errors, so cores never enter CC6.
+  `SSDT-CST` is the same table with the scopes renamed and the OEM revision raised to 2, so the kernel replaces the firmware table.
+  The fork's README explains why the upstream `SSDT-CST` was replaced.
+
+To update, push to the fork, then change `rev` and `hash` in [tuning.nix](tuning.nix).
+
+After the fix, idle Steam UI dropped from 36–62 W / 69–71 °C to 32–37 W / 60 °C Tctl (24-CU boot, one sample each, not a controlled test).
+Single-core boost still reaches about 3.5 GHz.
+With 40 CUs, the SMU governor, vkmark `effect2d` and 40% load on all 12 threads, CC6 on and off measured the same:
+about 140 W PPT and the same vkmark score. Both runs reached 95 °C Tctl within 50 seconds.
+
+Check the running system:
+
+```bash
+sudo dmesg | grep -E "Table Upgrade|AE_NOT_FOUND"   # expect "override [SSDT- AMD- AMD CPU]", no AE_NOT_FOUND
+cat /sys/devices/system/cpu/cpuidle/current_driver  # acpi_idle
+grep . /sys/devices/system/cpu/cpu0/cpuidle/state*/{name,desc,usage}  # C2 = ACPI IOPORT 0x414 (CC6)
+```
+
+If CC6 causes instability, add `processor.max_cstate=1` to `boot.kernelParams` to keep C1 only.
+
 ## Storage and memory
 
 * Root uses Btrfs with `compress=zstd:3`, `noatime`, and SSD options. `/boot` uses FAT without compression.
