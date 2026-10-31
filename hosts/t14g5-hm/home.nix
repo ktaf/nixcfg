@@ -178,6 +178,7 @@ in
       ollama-vulkan
       opencode
       openh264
+      rizin
       pi-coding-agent
       pinact
       polkit_gnome
