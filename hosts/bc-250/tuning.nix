@@ -58,9 +58,12 @@ in
 
   environment.etc."cyan-skillfish-governor-smu/config.toml".source =
     (pkgs.formats.toml { }).generate "cyan-skillfish-governor-smu.toml" {
-      timing.burst-samples = 48;
+      timing.burst-samples = 32;
+      timing.down-events = 30;
+      timing.ramp-rates.normal = 5;
       frequency-thresholds.adjust = 100;
-      load-target.lower = 0.7;
+      load-target.upper = 0.85;
+      load-target.lower = 0.65;
       temperature.throttling = false;
       gpu-usage.temp-read = "sysfs";
       safe-points = [

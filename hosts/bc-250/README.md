@@ -31,6 +31,21 @@ This host uses `cyan-skillfish-governor-smu` from nixpkgs. The previous custom f
 A 2050 MHz point is commented out. Two 20-second vkmark blur runs gained about 1.5–2.2% over their paired 2000 MHz baselines,
 but cooldown freezes occurred during testing.
 
+### Clock response in games
+
+Safe-points only set the voltage curve; they are not clock steps. The clock is chosen by the load loop.
+One loop pass takes about 130 ms (65 busy-flag samples at 2 ms). Each step is `ramp-rates.normal` × 20 ms.
+
+| Setting | Default / before | Now | Effect |
+|---|---|---|---|
+| `load-target.upper` | 0.95 | 0.85 | Clock rises when the GPU is busy more than 85% of the time, leaving frame-time headroom |
+| `load-target.lower` | 0.7 | 0.65 | Clock may fall when the GPU is busy less than 65% of the time |
+| `timing.ramp-rates.normal` | 1 (20 MHz/step, ~150 MHz/s) | 5 (100 MHz/step, ~770 MHz/s) | 1000 → 2000 MHz in about 1.3 s instead of about 7 s |
+| `timing.down-events` | 10 (~1.3 s) | 30 (~4 s) | Short dips (loading, cutscenes) no longer drop the clock |
+| `timing.burst-samples` | 48 (96 ms) | 32 (64 ms) | Continuous GPU work jumps to 2000 MHz sooner |
+
+Idle and Steam menus still drop to 350 MHz after about 4 s of low load. Games spend more time at high clocks, so expect more heat.
+
 For governor v0.4.14, `temperature.throttling = false` disables the software limiter through the parser's non-integer fallback.
 It logs a type warning and uses no threshold. Omitting the setting restores the default 85°C threshold; `0` means 0°C.
 
