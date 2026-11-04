@@ -48,6 +48,16 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  programs.google-chrome = {
+    enable = true;
+    commandLineArgs = [
+      "--enable-unsafe-webgpu"
+      "--ozone-platform=wayland"
+      "--use-angle=vulkan"
+      "--enable-features=Vulkan,VulkanFromANGLE"
+    ];
+  };
+
   # Ease usage on non-NixOS installations
   targets.genericLinux = {
     enable = true;
@@ -150,8 +160,8 @@ in
       firecracker
       fzf
       go
-      google-chrome
       goose-cli
+      herdr
       htop
       inframap
       k9s
@@ -203,6 +213,7 @@ in
       v4l-utils
       virt-manager
       vsh
+      waydroid
       wayvnc
       whois
       winbox
