@@ -58,7 +58,7 @@ in
       safe-points = [
         { frequency = 350; voltage = 700; }
         { frequency = 2000; voltage = 1000; }
-        { frequency = 2050; voltage = 1000; }
+        # { frequency = 2050; voltage = 1000; }
       ];
       dbus.enabled = true;
     };
