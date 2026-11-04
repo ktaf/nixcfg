@@ -49,12 +49,20 @@ in
     memoryPercent = 50;
   };
 
+  systemd.sleep.settings.Sleep = {
+    AllowSuspend = "no";
+    AllowHibernation = "no";
+    AllowHybridSleep = "no";
+    AllowSuspendThenHibernate = "no";
+  };
+
   environment.etc."cyan-skillfish-governor-smu/config.toml".source =
     (pkgs.formats.toml { }).generate "cyan-skillfish-governor-smu.toml" {
       timing.burst-samples = 48;
       frequency-thresholds.adjust = 100;
       load-target.lower = 0.7;
       temperature.throttling = false;
+      gpu-usage.temp-read = "sysfs";
       safe-points = [
         { frequency = 350; voltage = 700; }
         { frequency = 2000; voltage = 1000; }

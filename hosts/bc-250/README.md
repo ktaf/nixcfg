@@ -19,13 +19,17 @@ This host uses `cyan-skillfish-governor-smu` from nixpkgs. The previous custom f
 * Upstream: [filippor/cyan-skillfish-governor](https://github.com/filippor/cyan-skillfish-governor)
 * [configuration.nix](configuration.nix) installs the package.
 * [tuning.nix](tuning.nix) generates `/etc/cyan-skillfish-governor-smu/config.toml` and starts the systemd service at boot.
-* The configured frequency/voltage points are 350 MHz at 700 mV, 2000 MHz at 1000 mV, and 2050 MHz at 1000 mV.
+* The configured frequency/voltage points are 350 MHz at 700 mV and 2000 MHz at 1000 mV.
 * Governor software thermal throttling is disabled; firmware thermal limits are unchanged.
+* `gpu-usage.temp-read = "sysfs"` reads the GPU temperature from hwmon `temp1_input` instead of keeping a DRM handle open.
+  It is the same sensor. Without the DRM handle, gamescope session handovers are faster
+  ([measured](https://github.com/MastaG/linux-cachyos-bc250#cyan-skillfish-governor-recommendations) at 0.09 s instead of 4.4 s).
+  The governor logs `temperature read: sysfs` at startup.
 * D-Bus support enables the packaged `cyan-skillfish-performance-mode` helper.
 * The service includes `util-linux` in its command path for the GPU metrics bind mount.
 
-The 2050 MHz ceiling is experimental. Two 20-second vkmark blur runs gained about 1.5–2.2% over their paired 2000 MHz baselines.
-Cooldown freezes occurred during testing, so sustained stability is not established.
+A 2050 MHz point is commented out. Two 20-second vkmark blur runs gained about 1.5–2.2% over their paired 2000 MHz baselines,
+but cooldown freezes occurred during testing.
 
 For governor v0.4.14, `temperature.throttling = false` disables the software limiter through the parser's non-integer fallback.
 It logs a type warning and uses no threshold. Omitting the setting restores the default 85°C threshold; `0` means 0°C.
@@ -82,7 +86,7 @@ This updates live hardware dispatch. The driver's cached CU count and Vulkan rep
 A readback of the routing masks alone does not prove performance gains or CU correctness; compare the same workload before and after.
 GPU resets may clear the live register settings. The boot service does not watch for resets.
 
-The current 2050 MHz / 1000 mV curve and disabled governor throttling are unchanged.
+The 2000 MHz / 1000 mV ceiling and disabled governor throttling are unchanged.
 Our previous 24-CU test reached 85°C at 2000 MHz. The [original project's results](https://github.com/duggasco/bc250-40cu-unlock)
 show higher power and temperature with 40 CUs and recommend starting at 1500 MHz / 900 mV.
 This profile has not been hardware-tested here.
@@ -162,6 +166,16 @@ systemctl --user restart steam-gamescope.service
 ```
 
 Saved plugins and settings in `/var/lib/decky-loader` are retained.
+
+## Sleep
+
+ACPI suspend on this board does not resume; the board needs a power cycle.
+[tuning.nix](tuning.nix) sets `AllowSuspend`, `AllowHibernation`, `AllowHybridSleep` and `AllowSuspendThenHibernate` to `no`,
+so logind refuses sleep from Steam's Sleep button, the power key or idle instead of hanging the board.
+
+```bash
+systemctl suspend   # expect an error: Sleep verb "suspend" is not supported
+```
 
 ## Notes
 
