@@ -1,53 +1,28 @@
 # Walter
 
-Named after Walter Bishop from *Fringe*. A **Lenovo ThinkCentre M80q Gen 3**
-running the household media and photo stack — Plex, Immich, Sonarr/Radarr/Bazarr,
-Prowlarr, Transmission and Samba.
+Named after Walter Bishop from *Fringe*. My local AI workstation for trying
+models and experimenting with llama.cpp and vLLM.
 
-i5-12500T (6C/12T, 35 W), Intel UHD 770, 2x8 GB DDR5-4800, I219-LM gigabit.
-Four SSDs, no pooling or RAID — each is an independent btrfs filesystem mounted
-`compress=zstd:3,ssd,space_cache=v2,noatime`.
+Intel i5-13400, RTX 3090, 16 GB RAM, and a 512 GB Samsung NVMe on a Gigabyte
+H610M S2H V2. Runs NixOS with kernel 7.3, NVIDIA's open kernel modules, and my
+usual Zsh setup.
 
-## Storage
+`llama-cpp.nix` provides native CUDA-enabled llama.cpp. `vllm.nix` keeps vLLM in
+its official Docker image, since the native CUDA package is broken in the pinned
+Nixpkgs. Models are chosen and started manually:
 
-| Disk | Mount | Role |
-| --- | --- | --- |
-| Samsung MZALQ256 256 GB NVMe | `/` `/home` `/nix` `/boot` | OS |
-| Kingston NV2 2 TB NVMe | `/data` | Current library, being retired |
-| Crucial BX500 4 TB SATA | `/media` | Movies, series, downloads, public share |
-| Crucial P5 Plus 1 TB NVMe | `/fast` | Immich library, Plex transcode scratch |
+```sh
+llama-serve --model /path/to/model.gguf
+vllm-serve --model MODEL_ID --max-model-len 4096
+```
 
-`/media` is deliberately flat — no subvolumes. Hardlinks cannot cross a subvolume
-boundary, and Sonarr/Radarr rely on them between `downloads/complete` and the
-library; splitting the two would silently turn every import into a full copy.
+Both use `127.0.0.1:8000`. Stop one with Ctrl+C before starting the other.
 
+The NVMe uses btrfs with zstd compression, `noatime`, async TRIM, monthly scrubs,
+and SMART monitoring. The original partition and subvolume layout is preserved.
 
-## Power
-
-Idle: **1.63 W package, 99 % core C10, 99.97 % GFX RC6.** The core side is
-effectively at its floor.
-
-Package C-states stop at PC2, held there independently by two devices:
-
-- **Kingston NV2** — `LnkCap: ASPM not supported`, so root port `00:1b.0` runs
-  with ASPM and all L1 substates disabled.
-- **Crucial BX500** — libata applies the `nolpm` quirk (`LPM support broken,
-  forcing max_power`), and `link_power_management_policy` rejects every write
-  with `EOPNOTSUPP`.
-
-PC8/PC10 requires both to go, which an all-NVMe layout would be the only way to
-achieve. Firmware also declares `FADT indicates ASPM is unsupported`, leaving
-ASPM entirely to the BIOS and making `pcie_aspm.policy=` a no-op.
-
-`tuning.nix` therefore carries only what measurably applies on this board:
-`powersave` governor with `balance_power` EPP via udev, zstd zram at half of RAM
-with `swappiness=100`/`page-cluster=0`, monthly scrubs and smartd. Async discard
-is a kernel default on these mounts, so no `discard=` option and no fstrim timer.
-
-## Configured outside Nix
-
-State that lives in an application's own database rather than the Nix store:
-
-- Plex — hardware transcoding toggle and library paths
-- Immich — Quick Sync toggle in the admin UI
-- Samba — `smbpasswd -a win`
+`gpu-unlock.nix` adds [gpu-unlock](https://github.com/Zagitta/gpu-unlock) as an
+experiment for the RTX 3090. Source and firmware are pinned, and it runs before
+NVIDIA loads. Its benefit on this machine still needs measuring. For a stock
+baseline, remove its import, rebuild, and power-cycle. For a single boot, remove
+`gpu_unlock.targets=0000:01:00.0` in the bootloader editor.
