@@ -1,5 +1,17 @@
-{ lib, stdenvNoCC, fetchFromGitHub, makeWrapper, bash, coreutils, gawk
-, gnugrep, gnused, libdrm, pciutils, python3, systemd, umr
+{ lib
+, stdenvNoCC
+, fetchFromGitHub
+, makeWrapper
+, bash
+, coreutils
+, gawk
+, gnugrep
+, gnused
+, libdrm
+, pciutils
+, python3
+, systemd
+, umr
 }:
 
 stdenvNoCC.mkDerivation {
