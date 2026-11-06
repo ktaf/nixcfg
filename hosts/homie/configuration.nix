@@ -11,13 +11,6 @@
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
       warn-dirty = false;
-      # Enable binary caches for faster downloads
-      trusted-public-keys = [
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      ];
-      substituters = [
-        "https://cache.nixos.org"
-      ];
     };
     gc = {
       automatic = true;

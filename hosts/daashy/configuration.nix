@@ -10,10 +10,6 @@
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
       warn-dirty = false;
-      trusted-public-keys = [
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      ];
-      substituters = [ "https://cache.nixos.org" ];
     };
     gc = {
       automatic = true;
