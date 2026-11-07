@@ -56,6 +56,7 @@
     bat
     eza
     git
+    git-lfs
     vim
     curl
     wget
@@ -76,6 +77,7 @@
     iperf
     docker-compose
     compsize
+    huggingface-cli
   ];
 
   system.stateVersion = "26.05";
