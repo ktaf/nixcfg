@@ -64,13 +64,6 @@ in
       group = mediaGroup;
       openPeerPorts = true;
       settings = {
-        download-queue-enabled = true;
-        download-queue-size = 2;
-        seed-queue-enabled = true;
-        seed-queue-size = 2;
-        queue-stalled-enabled = false;
-        peer-limit-global = 50;
-        peer-limit-per-torrent = 20;
         upload-slots-per-torrent = 4;
         download-dir = "${library}/downloads/complete";
         incomplete-dir = "${library}/downloads/incomplete";
