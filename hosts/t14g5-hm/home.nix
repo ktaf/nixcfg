@@ -16,7 +16,7 @@ in
   };
 
   nixpkgs.overlays = [
-    (final: prev: {
+    (final: _prev: {
       inherit (inputs.nixpkgs-azure-cli.legacyPackages.${final.stdenv.hostPlatform.system})
         azure-cli
         azure-cli-extensions
