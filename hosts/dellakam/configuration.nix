@@ -1,6 +1,7 @@
 { pkgs, user, ... }: {
   imports = [
     ./hardware-configuration.nix
+    ./gpu.nix
     ./media.nix
     ./network.nix
     ./tuning.nix

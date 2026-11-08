@@ -9,6 +9,10 @@ let
 
   mounts = [ library data scratch ];
 
+  # By PCI path: with the GT 730 installed, card/renderD numbering is not stable.
+  igpuRender = "/dev/dri/by-path/pci-0000:00:02.0-render";
+  nvidiaDevices = [ "/dev/nvidia0" "/dev/nvidiactl" "/dev/nvidia-uvm" "/dev/nvidia-uvm-tools" ];
+
   mediaWriter = {
     UMask = lib.mkForce "0002";
   };
@@ -36,7 +40,8 @@ in
       host = "192.168.1.100";
       port = 2283;
       mediaLocation = "${data}/immich";
-      accelerationDevices = [ "/dev/dri/renderD128" ];
+      # iGPU for ML/QSV, GT 730 for NVENC video transcodes (see gpu.nix)
+      accelerationDevices = [ igpuRender ] ++ nvidiaDevices;
       machine-learning.enable = true;
       database.enable = true;
     };
@@ -44,7 +49,8 @@ in
     plex = {
       enable = true;
       openFirewall = true;
-      accelerationDevices = [ "/dev/dri/renderD128" ];
+      # iGPU only: Kepler can't decode HEVC, Quick Sync does it all
+      accelerationDevices = [ igpuRender ];
     };
 
     sonarr.enable = true;
