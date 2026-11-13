@@ -15,14 +15,26 @@ in
     ];
   };
 
-  nixpkgs.overlays = [
-    (final: _prev: {
-      inherit (inputs.nixpkgs-azure-cli.legacyPackages.${final.stdenv.hostPlatform.system})
-        azure-cli
-        azure-cli-extensions
-        ;
-    })
-  ];
+  # nixpkgs.overlays = [
+  #   (final: prev: {
+  #     # The current Rust build hook requires these system libraries.
+  #     # codex = prev.codex.overrideAttrs (old: {
+  #     #   buildInputs = old.buildInputs ++ [ final.aws-lc final.oniguruma final.sqlite final.zstd ];
+  #     # });
+  #     # goose-cli = prev.goose-cli.overrideAttrs (old: {
+  #     #   buildInputs = old.buildInputs ++ [ final.aws-lc final.oniguruma final.sqlite final.zstd ];
+  #     # });
+  #     # tgrep = prev.tgrep.overrideAttrs (old: {
+  #     #   nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ final.pkg-config ];
+  #     #   buildInputs = (old.buildInputs or [ ]) ++ [ final.sqlite ];
+  #     # });
+
+  #     inherit (inputs.nixpkgs-azure-cli.legacyPackages.${final.stdenv.hostPlatform.system})
+  #       azure-cli
+  #       azure-cli-extensions
+  #       ;
+  #   })
+  # ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -30,7 +42,7 @@ in
   programs.google-chrome = {
     enable = true;
     commandLineArgs = [
-      "--enable-unsafe-webgpu"
+      # "--enable-unsafe-webgpu"
       "--ozone-platform=wayland"
       "--use-angle=vulkan"
       "--enable-features=Vulkan,VulkanFromANGLE"
@@ -131,15 +143,15 @@ in
       blueman
       claude-code
       claude-agent-acp
-      codex
-      codex-acp
+      # codex
+      # codex-acp
       comfyui
       eza
       ffmpeg
       firecracker
       fzf
       go
-      goose-cli
+      # goose-cli
       herdr
       htop
       inframap
@@ -183,7 +195,7 @@ in
       terraform-mcp-server
       tfautomv
       tflint
-      tgrep
+      # tgrep
       trousers
       unsloth-desktop
       usbview
@@ -192,7 +204,6 @@ in
       v4l-utils
       virt-manager
       vsh
-      waydroid
       wayvnc
       whois
       winbox

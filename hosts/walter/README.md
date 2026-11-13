@@ -3,7 +3,7 @@
 Named after Walter Bishop from *Fringe*. My local AI workstation for trying
 models and experimenting with llama.cpp and vLLM.
 
-Intel i5-13400, RTX 3090, 16 GB RAM, and a 512 GB Samsung NVMe on a Gigabyte
+Intel i5-13400, RTX 3090, 32 GB RAM, and a 512 GB Samsung NVMe on a Gigabyte
 H610M S2H V2. Runs NixOS with kernel 7.3, NVIDIA's open kernel modules, and my
 usual Zsh setup.
 
