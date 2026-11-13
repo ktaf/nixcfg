@@ -143,15 +143,15 @@ in
       blueman
       claude-code
       claude-agent-acp
-      # codex
-      # codex-acp
+      codex
+      codex-acp
       comfyui
       eza
       ffmpeg
-      firecracker
+      # firecracker
       fzf
       go
-      # goose-cli
+      goose-cli
       herdr
       htop
       inframap
