@@ -51,6 +51,7 @@
       open = true;
       modesetting.enable = true;
       nvidiaSettings = false;
+      nvidiaPersistenced = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
   };

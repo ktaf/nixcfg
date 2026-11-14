@@ -5,6 +5,7 @@ in
 {
   imports = [
     ../../_modules/git.nix
+    ./walter.nix
   ];
 
   nixpkgs.config = {

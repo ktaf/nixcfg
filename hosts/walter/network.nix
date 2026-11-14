@@ -8,14 +8,30 @@
       enable = true;
       dns = "none";
     };
-    firewall.enable = true;
+    firewall = {
+      enable = true;
+      interfaces.enp3s0.allowedTCPPorts = [ 8000 8080 ];
+    };
   };
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "no";
-      X11Forwarding = false;
+  services = {
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      settings = {
+        server.allow-interfaces = [ "enp3s0" ];
+        publish = {
+          disable-publishing = false;
+          publish-addresses = true;
+        };
+      };
+    };
+    openssh = {
+      enable = true;
+      settings = {
+        PermitRootLogin = "no";
+        X11Forwarding = false;
+      };
     };
   };
 }

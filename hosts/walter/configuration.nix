@@ -6,6 +6,9 @@
     ./network.nix
     ./gpu-unlock.nix
     ./llama-cpp.nix
+    ./ai.nix
+    ./comfyui.nix
+    ./open-webui.nix
     ./vllm.nix
     ../../_modules/shell.nix
     ../../_modules/git.nix
@@ -44,6 +47,10 @@
   };
 
   time.timeZone = "Europe/Tallinn";
+  zramSwap = {
+    enable = true;
+    memoryPercent = 25;
+  };
   i18n.defaultLocale = "en_GB.UTF-8";
 
   users.users.${user} = {
