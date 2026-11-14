@@ -27,6 +27,8 @@ does not resolve on this connection. Set the address once in
 `walter.local` is optional when mDNS works. Only the wired LAN interface opens
 ports 8000 and 8080.
 
+If OpenCode is already running, run `opencode reload` after copying credentials.
+
 Open WebUI's initial login is `kourosh@walter.local`; its password is in
 `~/.config/walter/admin-password`. For ComfyUI and model controls, use `kourosh`
 and the contents of `~/.config/walter/api-key` at the browser's login prompt.
@@ -43,6 +45,8 @@ cooling if throttling continues. RAM spikes can use zram. Increasing context or
 running another GPU process can exhaust VRAM.
 
 ComfyUI includes SDXL Turbo and a four-step 512px workflow in Saved Workflows.
+Use Manager → Model Manager to download models directly onto Walter. Manager
+uses its legacy interface; Python dependencies and core updates stay in Nix.
 Open WebUI uses that workflow too. Existing Qwen/LTX weights are linked read-only
 from `~/models`; they still need matching encoders, VAEs, and workflows.
 Images and workflows live in `/var/lib/comfyui`, chats in `/var/lib/open-webui`.

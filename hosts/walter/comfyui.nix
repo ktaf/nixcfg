@@ -16,8 +16,13 @@ in
     package = pkgs.comfyui.override { python3 = python; };
     listen = [ "127.0.0.1" ];
     port = 8188;
-    extraPackages = ps: [ ps.gguf ];
-    extraArgs = [ "--disable-auto-launch" "--preview-method=auto" ];
+    extraPackages = ps: [ ps.gguf ps.comfyui-manager ];
+    extraArgs = [
+      "--disable-auto-launch"
+      "--preview-method=auto"
+      "--enable-manager"
+      "--enable-manager-legacy-ui"
+    ];
     models = [
       {
         name = "sd_xl_turbo_1.0_fp16.safetensors";
@@ -29,6 +34,7 @@ in
   };
 
   systemd.services.comfyui = {
+    path = [ pkgs.git ];
     wants = [ "walter-gpu-power.service" ];
     after = [ "walter-gpu-power.service" ];
     environment = {
