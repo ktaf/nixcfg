@@ -84,6 +84,31 @@ in
           cmd = config.systemd.services.llama-cpp.serviceConfig.ExecStart;
           proxy = "http://127.0.0.1:8001";
         };
+        Qwen38-Unsloth = {
+          cmd = lib.escapeShellArgs [
+            (lib.getExe' config.services.llama-cpp.package "llama-server")
+            "--model"
+            "~/models/Qwen3.8-27B-UD-Q4_K_XL.gguf"
+            "--alias"
+            "Qwen3.8-27B"
+            "--host"
+            "127.0.0.1"
+            "--port"
+            "8001"
+            "--ctx-size"
+            "302768"
+            "--parallel"
+            "1"
+            "--n-gpu-layers"
+            "all"
+            "--fit"
+            "off"
+            "--flash-attn"
+            "on"
+            "--jinja"
+          ];
+          proxy = "http://127.0.0.1:8001";
+        };
         # Browser sockets stay open; Open WebUI sockets end with each image job.
         comfyui_auto = comfyLease;
         comfyui_webui = comfyLease;
@@ -92,7 +117,7 @@ in
         use = "group";
         settings.groups = {
           text = {
-            members = [ "walter-coder" ];
+            members = [ "walter-coder" "Qwen38-Unsloth" ];
             swap = true;
             exclusive = true;
           };

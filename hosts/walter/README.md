@@ -14,15 +14,18 @@ job history survives a switch.
 
 | Use | Address |
 | --- | --- |
-| Open WebUI: chat and image generation | http://walter.local:8080 |
-| ComfyUI: image workflows | http://walter.local:8000/comfyui/ |
-| Model controls | http://walter.local:8000/ui |
-| OpenAI-compatible API | http://walter.local:8000/v1 |
+| Open WebUI: chat and image generation | http://192.168.1.148:8080 |
+| ComfyUI: image workflows | http://192.168.1.148:8000/comfyui/ |
+| Model controls | http://192.168.1.148:8000/ui |
+| OpenAI-compatible API | http://192.168.1.148:8000/v1 |
 
 After rebuilding Walter and the laptop's Home Manager configuration, run
 `walter-connect` once on the laptop. It copies credentials through SSH; everyday
-use needs no tunnel. If mDNS fails, use `192.168.1.148` and check the laptop's
-mDNS resolver. Only the wired LAN interface opens ports 8000 and 8080.
+use needs no tunnel. The laptop uses the IP directly because `walter.local`
+does not resolve on this connection. Set the address once in
+`hosts/t14g5-hm/walter.nix` and reserve it in the router's DHCP settings.
+`walter.local` is optional when mDNS works. Only the wired LAN interface opens
+ports 8000 and 8080.
 
 Open WebUI's initial login is `kourosh@walter.local`; its password is in
 `~/.config/walter/admin-password`. For ComfyUI and model controls, use `kourosh`

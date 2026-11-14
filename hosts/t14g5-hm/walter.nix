@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
 
+let
+  host = "192.168.1.148";
+  baseURL = "http://${host}:8000";
+in
 {
   programs.opencode = {
     enable = true;
@@ -9,7 +13,7 @@
       providers.walter = {
         package = "@opencode/ai/providers/openai-compatible";
         settings = {
-          baseURL = "http://walter.local:8000/v1";
+          baseURL = "${baseURL}/v1";
           apiKey = "{file:${config.xdg.configHome}/walter/api-key}";
         };
         models.walter-coder = {
@@ -37,7 +41,7 @@
       name = "walter-connect";
       runtimeInputs = [ pkgs.openssh pkgs.coreutils ];
       text = ''
-        host="''${1:-walter.local}"
+        host="''${1:-${host}}"
         credentials="''${XDG_CONFIG_HOME:-$HOME/.config}/walter"
         umask 077
         mkdir -p "$credentials"
@@ -46,7 +50,7 @@
         head -n 1 "$credentials/bootstrap" > "$credentials/api-key"
         tail -n 1 "$credentials/bootstrap" > "$credentials/admin-password"
         rm "$credentials/bootstrap"
-        printf 'Credentials saved in %s\nChat: http://walter.local:8080\nImages: http://walter.local:8000/comfyui/\n' "$credentials"
+        printf 'Credentials saved in %s\nChat: http://${host}:8080\nImages: ${baseURL}/comfyui/\n' "$credentials"
       '';
     })
     (pkgs.writeShellApplication {
@@ -61,7 +65,7 @@
       name = "claude-walter";
       runtimeInputs = [ pkgs.claude-code pkgs.coreutils ];
       text = ''
-        export ANTHROPIC_BASE_URL=http://walter.local:8000
+        export ANTHROPIC_BASE_URL=${baseURL}
         ANTHROPIC_AUTH_TOKEN="$(cat "''${XDG_CONFIG_HOME:-$HOME/.config}/walter/api-key")"
         export ANTHROPIC_AUTH_TOKEN
         export ANTHROPIC_MODEL=walter-coder
@@ -80,14 +84,14 @@
   xdg.desktopEntries = {
     walter-chat = {
       name = "Walter Chat";
-      exec = "xdg-open http://walter.local:8080";
+      exec = "xdg-open http://${host}:8080";
       icon = "internet-web-browser";
       terminal = false;
       categories = [ "Network" ];
     };
     walter-images = {
       name = "Walter Images";
-      exec = "xdg-open http://walter.local:8000/comfyui/";
+      exec = "xdg-open ${baseURL}/comfyui/";
       icon = "applications-graphics";
       terminal = false;
       categories = [ "Graphics" ];
