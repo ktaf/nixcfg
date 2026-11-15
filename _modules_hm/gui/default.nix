@@ -7,6 +7,7 @@
     ./kanshi.nix
     ./rofi.nix
     ./waybar.nix
+    ./quickshell.nix
     ./swaync.nix
     ./sway.nix
   ];
