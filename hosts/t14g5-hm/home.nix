@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 let
   user = "ktaf";
 in
@@ -8,34 +8,7 @@ in
     ./walter.nix
   ];
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    permittedInsecurePackages = [
-      "python-2.7.18.8"
-      "python-2.7.18.12"
-    ];
-  };
-
-  # nixpkgs.overlays = [
-  #   (final: prev: {
-  #     # The current Rust build hook requires these system libraries.
-  #     # codex = prev.codex.overrideAttrs (old: {
-  #     #   buildInputs = old.buildInputs ++ [ final.aws-lc final.oniguruma final.sqlite final.zstd ];
-  #     # });
-  #     # goose-cli = prev.goose-cli.overrideAttrs (old: {
-  #     #   buildInputs = old.buildInputs ++ [ final.aws-lc final.oniguruma final.sqlite final.zstd ];
-  #     # });
-  #     # tgrep = prev.tgrep.overrideAttrs (old: {
-  #     #   nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ final.pkg-config ];
-  #     #   buildInputs = (old.buildInputs or [ ]) ++ [ final.sqlite ];
-  #     # });
-
-  #     inherit (inputs.nixpkgs-azure-cli.legacyPackages.${final.stdenv.hostPlatform.system})
-  #       azure-cli
-  #       azure-cli-extensions
-  #       ;
-  #   })
-  # ];
+  nixpkgs.config.allowUnfree = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -43,17 +16,23 @@ in
   programs.google-chrome = {
     enable = true;
     commandLineArgs = [
-      # "--enable-unsafe-webgpu"
       "--ozone-platform=wayland"
       "--use-angle=vulkan"
       "--enable-features=Vulkan,VulkanFromANGLE"
     ];
   };
 
+  xdg.enable = true;
+
   # Ease usage on non-NixOS installations
   targets.genericLinux = {
     enable = true;
     gpu.enable = true;
+  };
+
+  desktop.quickshell = {
+    enable = true;
+    lockCommand = [ "/usr/bin/swaylock" "-f" ];
   };
 
   services = {
@@ -72,40 +51,21 @@ in
       # Wayland configuration
       QT_QPA_PLATFORM = "wayland;xcb";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-      GDK_BACKEND = "wayland";
-      CLUTTER_BACKEND = "wayland";
       SDL_VIDEODRIVER = "wayland";
       # Used by the nixpkgs Chrome wrapper even outside NixOS.
       NIXOS_OZONE_WL = "1";
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
 
-      # Graphics and performance
-      MOZ_ENABLE_WAYLAND = "1";
-      MOZ_ACCELERATED = "1";
-      MOZ_WEBRENDER = "1";
-
-      WLR_DRM_NO_ATOMIC = "1";
-      WLR_NO_HARDWARE_CURSORS = "1";
+      # Graphics
       WLR_RENDERER = "vulkan";
-      __GLX_VENDOR_LIBRARY_NAME = "mesa";
-
-      GSK_RENDERER = "gl"; # Changed from cairo to gl for better performance
-      AMD_VULKAN_ICD = "RADV"; # Explicit RADV for better perf
+      GSK_RENDERER = "gl";
       XCURSOR_THEME = "Adwaita";
-
-      # XDG Base Directories
-      XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
-      XDG_DATA_HOME = "${config.home.homeDirectory}/.local/share";
-      XDG_BIN_HOME = "${config.home.homeDirectory}/.local/bin";
-      XDG_LIB_HOME = "${config.home.homeDirectory}/.local/lib";
-      XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
 
       # Default applications
       SHELL = "$HOME/.nix-profile/bin/zsh";
-      TERM = "xterm-256color";
       TERMINAL = "alacritty";
-      VISUAL = "code";
-      EDITOR = "code";
+      VISUAL = "code --wait";
+      EDITOR = "code --wait";
       BROWSER = "google-chrome-stable";
       PAGER = "less";
 
@@ -113,7 +73,6 @@ in
       DOCKER_CONFIG = "$HOME/.config/docker";
       LESSHISTFILE = "-";
       _JAVA_AWT_WM_NONREPARENTING = "1";
-      PIPEWIRE_RUNTIME_DIR = "/run/user/$(id -u)";
 
       # Work
       KUBE_EDITOR = "code -w";
@@ -124,11 +83,6 @@ in
       SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
 
       OLLAMA_IGPU_ENABLE = "1";
-
-      # Python config
-      # PYTHONDONTWRITEBYTECODE = "true";
-      # PIP_REQUIRE_VIRTUALENV = "true";
-      # POETRY_VIRTUALENVS_IN_PROJECT = "true";
     };
 
     packages = with pkgs; [
@@ -149,7 +103,6 @@ in
       comfyui
       eza
       ffmpeg
-      # firecracker
       fzf
       go
       goose-cli
@@ -166,24 +119,17 @@ in
       kubeseal
       libdigidocpp
       libinput
-      libudfread
-      libxkbcommon
       mcp-grafana
       mesa-demos
-      minimodem
       mission-center
-      # moonlight-qt
       ripgrep
       fastfetch
       nmap
       obsidian
       ollama-vulkan
-      opencode
-      openh264
       rizin
       pi-coding-agent
       pinact
-      polkit_gnome
       pre-commit
       pulseaudio
       qdigidoc
@@ -196,11 +142,8 @@ in
       terraform-mcp-server
       tfautomv
       tflint
-      # tgrep
-      trousers
       unsloth-desktop
       usbview
-      usbrip
       uv
       v4l-utils
       virt-manager
@@ -208,8 +151,6 @@ in
       wayvnc
       whois
       winbox
-      # wireshark
-      xfontsel
       yamllint
       yq
       nodejs_26
@@ -217,7 +158,6 @@ in
       vscode
       rtk
       gh
-      python314Packages.pip
       gnumake
       gcc
     ];
@@ -226,22 +166,10 @@ in
   programs.git = {
     lfs.enable = true;
     settings = {
-      user.email = "kouroshtaf@gmail.com";
       core.editor = "code --wait";
       push.autoSetupRemote = true;
     };
   };
-
-  # Make Electron apps quieter and more consistent on Wayland
-  xdg.configFile."code-flags.conf".text = ''
-    --ozone-platform=wayland
-    --enable-features=WaylandWindowDecorations
-  '';
-
-  xdg.configFile."electron-flags.conf".text = ''
-    --ozone-platform=wayland
-    --enable-features=WaylandWindowDecorations
-  '';
 
   xdg.configFile."environment.d/envvars.conf".text = ''
     PATH="$HOME/.nix-profile/bin:$PATH"

@@ -49,10 +49,10 @@
 
         # Clipboard history & Image clipboard history
         {
-          command = ''
-            wl-paste --type text --watch cliphist store && \
-            wl-paste --type image --watch cliphist store
-          '';
+          command = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.cliphist}/bin/cliphist store";
+        }
+        {
+          command = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${pkgs.cliphist}/bin/cliphist store";
         }
 
         # Applications

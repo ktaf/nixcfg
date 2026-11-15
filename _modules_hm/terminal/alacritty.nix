@@ -3,6 +3,8 @@
   programs.alacritty = {
     enable = true;
     settings = {
+      # Remote hosts often lack the alacritty terminfo; xterm-256color works everywhere.
+      env.TERM = "xterm-256color";
       window = {
         decorations = "None";
         opacity = 0.6;
