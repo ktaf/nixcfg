@@ -2,7 +2,7 @@
 
 let
   python = pkgs.python3.override {
-    packageOverrides = final: prev: {
+    packageOverrides = _final: prev: {
       torch = prev.torch-bin;
       torchvision = prev.torchvision-bin;
       torchaudio = prev.torchaudio-bin;
