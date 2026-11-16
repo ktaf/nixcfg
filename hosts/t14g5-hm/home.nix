@@ -30,10 +30,10 @@ in
     gpu.enable = true;
   };
 
-  desktop.quickshell = {
-    enable = true;
-    lockCommand = [ "/usr/bin/swaylock" "-f" ];
-  };
+  # desktop.quickshell = {
+  #   enable = true;
+  #   lockCommand = [ "/usr/bin/swaylock" "-f" ];
+  # };
 
   services = {
     systembus-notify.enable = true;
@@ -88,11 +88,12 @@ in
     packages = with pkgs; [
       antigravity-cli
       antigravity-ide
-      azure-cli
-      azure-cli-extensions.costmanagement
-      azure-cli-extensions.fzf
-      azure-cli-extensions.resource-graph
-      azure-cli-extensions.quota
+      (azure-cli.withExtensions (with azure-cli-extensions; [
+        costmanagement
+        fzf
+        resource-graph
+        quota
+      ]))
       bat
       bitwarden-desktop
       blueman
