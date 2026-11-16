@@ -38,6 +38,7 @@ in
   services = {
     systembus-notify.enable = true;
     blueman-applet.enable = true;
+    polkit-gnome.enable = true;
   };
 
   home = {
@@ -89,10 +90,12 @@ in
       antigravity-cli
       antigravity-ide
       (azure-cli.withExtensions (with azure-cli-extensions; [
+        azure-devops
         costmanagement
         fzf
         resource-graph
         quota
+        terraform
       ]))
       bat
       bitwarden-desktop
