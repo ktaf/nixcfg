@@ -1,8 +1,9 @@
-{ ... }: {
+{ config, ... }: {
 
   # Enable ZSH and oh-my-zsh
   programs.zsh = {
     enable = true;
+    history.path = "${config.home.homeDirectory}/.zsh_history";
     enableCompletion = true;
     initContent = builtins.readFile ../../extras/zshrc;
     autosuggestion.enable = true;
