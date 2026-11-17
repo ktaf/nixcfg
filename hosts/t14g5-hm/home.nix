@@ -58,7 +58,6 @@ in
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
 
       # Graphics
-      WLR_RENDERER = "vulkan";
       GSK_RENDERER = "gl";
       XCURSOR_THEME = "Adwaita";
 

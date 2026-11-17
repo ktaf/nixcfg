@@ -22,6 +22,11 @@
   wayland.windowManager.sway = {
     enable = true;
     xwayland = true;
+    checkConfig = false; # Vulkan cannot initialize inside the Nix build sandbox.
+
+    extraSessionCommands = lib.mkDefault ''
+      export WLR_RENDERER=vulkan
+    '';
 
     systemd = {
       enable = true;
